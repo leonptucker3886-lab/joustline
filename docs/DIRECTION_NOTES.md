@@ -104,3 +104,32 @@ The squire is **16**. He serves Lord Bart Sheen faithfully — no scheming, no s
 - The Baron's ledger carries a tiny "LL" maker's stamp in one corner of every page. Never explained.
 - His steward's catchphrase: "Every debt balanced, every line accounted for."
 - The ledger is never named. No modern brand names appear in the game; the nod is visual and verbal only.
+
+
+---
+
+## Tone pillars: comedy, tragedy, secrets (Leon, 2026-10-15)
+
+- **Comedy + puns:** every scene earns at least one laugh or pun (Charlie-horse / "Bart-horse", "the sun was in my goblet", Tancrède's opinions). Puns stay in-world and are never explained.
+- **Tragedy:** the player must *feel* for the squire. Jokes are the armour; the hurt shows through the gaps — small, quiet beats, no melodrama.
+- **The game never tells its secrets:** no narrator explains references, backstory or twists. Everything is discovered through objects, overheard lines, ledgers and margin doodles. Some things are never confirmed at all.
+
+## Squire backstory: how Bart found him
+
+Never told outright — pieced together from fragments (see "Discovery" below).
+
+- **The night:** ~6 years before the game, a soaked, half-drunk Bart is riding home from a feast he was thrown out of. He takes a wrong turn (blames the moon) into a burned-out farm/coaching inn on the Loire road.
+- **The boy (≈10):** alone, calmly holding the bridle of a panicked horse in the smoke — the only one who didn't run. That stillness is the first glimpse of his Sang-froid.
+- **What happened to his family:** never stated. Fire, plague, soldiers, or simply left behind — clues contradict. The squire never talks about it.
+- **Bart's choice:** he offers the boy a heel of bread and his goblet ("water, mostly"), then says "You're good with horses. I'm terrible with them. Come along." He tells everyone he "won the boy at dice" — a lie to hide that he did something kind.
+- **Tancrède:** the horse the boy calmed that night. Bart bought it the next morning with money he didn't have. That's why Tancrède only tolerates the squire — and why it hates anyone else singing.
+- **The name:** Bart gave him his name (a bad pun on whatever he was drinking that night). The squire's real name is a secret the game never reveals.
+- **Why it hurts later:** Bart rescued him; Bart is later forced to trade him to the Baron to survive. The squire repays rescue with loyalty and never learns he was bargained away.
+
+### Discovery (fragments, never explained)
+- A child's charcoal drawing of a horse folded inside Bart's saddlebag.
+- A scorched inn sign hanging in the stable that the squire won't let anyone take down.
+- Bart, drunk, mid-toast: "...found him holding a horse in a fire, the little — anyway, to ME!"
+- A Baron's ledger line: "Origin of boy: unknown. Irrelevant."
+- Optional Loire-road side quest leads back to the ruin; the squire stops at the gate and the scene just... holds. No text.
+- Achievement: **"Where It Started"** (+20 XP) — find every fragment. No summary screen is ever shown.
