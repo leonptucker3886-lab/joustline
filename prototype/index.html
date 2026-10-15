@@ -112,6 +112,7 @@ function awake(){
    ['Margot','They are my boots. He looks wonderful in them.'],
    ['Sir Bart Sheen','Ladies! My goddesses! Meet my squire. Best thing I own. Possibly the only thing I own.'],
    ['Sir Bart Sheen','People say, "Bart, you have no money." I say, "I have something better: a boy who stops me falling off things." Duh.'],
+   ['Sir Bart Sheen','Best jouster in France, by the way. Ask anyone. Ask the ladies. Where ARE the ladies? Oh, there you are. Brew?'],
    ['Squire (you)','The joust is at the next bell, my lord.',[['"Your lance is ready, my lord."',()=>{addXP(5);standUp()}],['"Your cousin the Baron will be in the stands."',()=>{addXP(5);baronLine()}]]]
   ]);
 }
@@ -120,6 +121,13 @@ function baronLine(){
    ['Sir Bart Sheen','<i>His smile flickers for half a heartbeat.</i> My cousin. Rich as a cathedral. He has the gold, and I have the good looks and the tiger blood.'],
    ['Isabeau','The tiger blood is Burgundy.'],
    ['Sir Bart Sheen','Burgundy tiger blood. Rare vintage.'],
+   ['Sir Bart Sheen','Mark me, boy: I am the finest lance in France. I\'d be rich as him if not for one tiny loan. Years ago. From him.'],
+   ['Margot','How much was it?'],
+   ['Sir Bart Sheen','<i>counts on his fingers, runs out, borrows Margot\'s</i> I\'ve paid it a hundred times. Yet somehow I still owe it. He has a little book. The book is always right.'],
+   ['Isabeau','Funny, that.'],
+   ['Sir Bart Sheen','<i>shrugs</i> Oh well. Debts are for sober men. Now, where are my ladies, and where is my brew?'],
+   ['Margot','We are right here. And you are holding the brew.'],
+   ['Sir Bart Sheen','<i>peers into goblet</i> So I am. Winning.'],
   ],standUp);
 }
 function standUp(){
