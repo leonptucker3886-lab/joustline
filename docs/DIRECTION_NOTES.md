@@ -81,3 +81,10 @@ The squire is **16**. He serves Lord Bart Sheen faithfully — no scheming, no s
 - Achievements: **"Kept Man"** (+15 XP, finish a tournament as the Baron's ringer), **"Ledger Burned"** (+40 XP, escape the debt).
 
 **Open question:** the Baron's final name/title, and whether he's tied to the Bourbon traitor path.
+
+
+## Bart's fate (decided 2026-10-15)
+- After the cramp-fall mid-pass, Bart is gravely hurt and needs **life-saving surgery in Paris**. He's carted off to the city's surgeons.
+- **His condition is unknown for now.** The game never confirms whether he lives. No letters arrive; rumours contradict each other ("recovering", "dead", "seen at a tavern").
+- Before he's taken away he gives his last order: stay with his cousin, the Baron.
+- Hook: Bart's fate stays an open thread for a later chapter reveal. Players can ask after him in Paris side quests and get only hints.
