@@ -57,3 +57,27 @@ The squire is **16**. He serves Lord Bart Sheen faithfully — no scheming, no s
 **The tragic event:** at the end of the final service quest, Bart is gravely wounded (or killed — to decide) in a joust he never should have ridden, the cramp striking mid-pass. The comedy drops out: no music, no margin doodles, one quiet scene. With Bart down and the house's honour at stake, the 16-year-old squire takes up his lance and mounts Tancrède. → first first-person joust, unlocks "First Lance."
 
 **Tone rule:** Bart stays funny right up to that moment; the shift is sudden and sincere, then the game slowly lets humour back in afterward (the squire keeps Bart's goblet as a keepsake; Tancrède refuses to let anyone else sing).
+
+
+## After Bart: The Baron's Household
+
+**Bart's order.** Before (or right after) the tragic joust, Bart gives the squire one last command: "Go to my cousin, the Baron. He'll look after you, my boy." It's the kindest thing Bart ever does, and it's a mistake.
+
+**The Baron of Vaudrecourt** (working name, fictional barony; open to change). Sober, polished, smiling, everything Bart wasn't. He saw the squire take the lance and he wants that talent.
+
+**How he exploits the squire's natural talents**
+- **Ringer jousts:** enters the squire under the Baron's colours, takes the prize purses and the renown. The squire gets "room and board."
+- **Wagers:** quietly bets against his own rider in some matches and expects the squire to "have an off day." Player choice: throw it, or win and face the fallout.
+- **The squire's cool style:** the Baron notices courtiers copying the squire (Sang-froid / Trend Book) and claims those trends as his own at court.
+- **Errands from above (bird's-eye):** delivering sealed letters, scouting rival stables, "borrowing" a rival's horse for a night. Small jobs that grow shadier.
+- **Debt hook:** Bart's gambling debts "transfer" to the squire. Every win pays down a number that never seems to shrink.
+
+**Tone.** No villain monologue. The Baron is generous in public and only cold in private. The comedy stays (his steward, Tancrède's contempt for him), but the player slowly realises they're being used.
+
+**Gameplay ties**
+- New stat: **Debt** (shown in the Baron's ledger, not on the HUD).
+- Favor with the Baron vs. renown of your own: high Baron favor = better gear, less freedom.
+- Breaking free leads into Chapter 2 and the court of Francis I; how you leave (paid off, exposed him, ran with Tancrède) shapes your starting reputation.
+- Achievements: **"Kept Man"** (+15 XP, finish a tournament as the Baron's ringer), **"Ledger Burned"** (+40 XP, escape the debt).
+
+**Open question:** the Baron's final name/title, and whether he's tied to the Bourbon traitor path.
