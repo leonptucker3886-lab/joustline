@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Joustline — Joust Prototype</title>
+<style>
+html,body{margin:0;height:100%;background:#1b1410;overflow:hidden;touch-action:none;font-family:Georgia,serif;color:#f3e6c4}
+canvas{display:block;margin:0 auto;background:#e9dcb8}
+#ui{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0);text-align:center;pointer-events:none;font-size:15px;padding:8px;text-shadow:0 1px 2px #000}
+#msg{position:fixed;left:8%;right:8%;top:38%;text-align:center;background:rgba(40,20,10,.9);border:3px double #c9a24a;border-radius:10px;padding:18px;font-size:18px}
+button{font:inherit;background:#8b1e1e;color:#f3e6c4;border:2px solid #c9a24a;border-radius:24px;padding:10px 22px;margin-top:12px}
+</style></head><body>
+<canvas id="c"></canvas>
+<div id="ui"></div>
+<div id="msg"><b>The Lists at Montrésor, 1515</b><br><br>Hold to gallop.<br>Drag up/down to aim (helm or shield).<br>Release as the rival meets your lance.<br><br>3 passes. Best score wins.<br><button id="go" style="pointer-events:auto">Ride!</button></div>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d'),ui=document.getElementById('ui'),msg=document.getElementById('msg');
+let W,H;function rs(){H=innerHeight;W=Math.min(innerWidth,H*0.6);c.width=W*devicePixelRatio;c.height=H*devicePixelRatio;c.style.width=W+'px';c.style.height=H+'px';x.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0)}rs();addEventListener('resize',rs);
+const quips=["Tancrède snorts: 'Eh, could be worse.'","Royal Decree: the squire has met the ground. Again.","Bayard nods. That's practically a parade.","The Cartoonist scribbles something yellow in the margin."];
+let st,pass,me,foe,holding,aimY,speed,pos,state='menu',result='';
+function reset(){pass=1;me=0;foe=0;newPass()}
+function newPass(){pos=0;speed=0;aimY=.5;holding=false;state='ride';st={foeAim:Math.random(),struck:false}}
+function pt(e){const t=e.touches?e.touches[0]:e;return (t.clientY)/H}
+c.addEventListener('pointerdown',e=>{if(state!='ride')return;holding=true;aimY=pt(e)});
+c.addEventListener('pointermove',e=>{if(holding)aimY=Math.max(.2,Math.min(.8,pt(e)))});
+c.addEventListener('pointerup',strike);c.addEventListener('pointercancel',strike);
+function strike(){if(state!='ride'||!holding)return;holding=false;if(pos<.15)return;
+ const timing=1-Math.min(1,Math.abs(pos-.82)/.25);const helm=aimY<.42;
+ const accuracy=1-Math.abs(aimY-(helm?.35:.55))*3;
+ let p=Math.max(0,timing*(.6+.4*speed)*Math.max(0,accuracy));
+ let pts=p>.75?(helm?3:2):p>.4?1:0;
+ let fp=Math.random()<.55?(Math.random()<.3?2:1):0; if(pass==3&&Math.random()<.3)fp=3;
+ me+=pts;foe+=fp;
+ result=(pts==3?'Lance broken on the helm! +3':pts==2?'Clean strike to the shield! +2':pts==1?'A glancing touch. +1':'Missed!')+'<br>Rival scores +'+fp;
+ if(pts==0)result+='<br><i>'+quips[Math.random()*quips.length|0]+'</i>';
+ state='result';pos=Math.max(pos,.82);setTimeout(endPass,1600)}
+function endPass(){if(pass<3){pass++;show(result+'<br><button style="pointer-events:auto" onclick="hide();newPass()">Next pass</button>')}
+ else{const win=me>foe;show(result+'<br><br><b>'+(win?'Victory! Sans Peur.':me==foe?'A draw. The ladies are unimpressed.':'Defeat. Royal Decree: try again.')+'</b><br>You '+me+' – Rival '+foe+'<br><button style="pointer-events:auto" onclick="hide();reset()">Ride again</button>');
+ try{if(win&&window.LeonProfile)LeonProfile.unlock('joustline_first_lance')}catch(e){}}}
+function show(h){msg.innerHTML=h;msg.style.display='block';state='menu'}function hide(){msg.style.display='none'}
+document.getElementById('go').onclick=()=>{hide();reset()};
+function loop(){requestAnimationFrame(loop);
+ if(state=='ride'){speed=holding?Math.min(1,speed+.02):Math.max(0,speed-.01);pos+=.002+speed*.006;if(pos>1.05){me+=0;result='You never lowered your lance.';state='result';setTimeout(endPass,800)}}
+ draw()}
+function draw(){x.fillStyle='#e9dcb8';x.fillRect(0,0,W,H);
+ x.strokeStyle='#8b1e1e';x.lineWidth=6;x.strokeRect(8,8,W-16,H-16);x.strokeStyle='#c9a24a';x.lineWidth=2;x.strokeRect(16,16,W-32,H-32);
+ x.fillStyle='#6b4a2b';x.fillRect(W/2-4,H*.15,8,H*.7); // tilt barrier
+ const myY=H*.85-pos*H*.6,foeY=H*.15+pos*H*.6;
+ knight(W/2-36,myY,'#2a4ea0',1);knight(W/2+36,foeY,'#8b1e1e',-1);
+ if(state=='ride'){x.strokeStyle='rgba(139,30,30,.6)';x.setLineDash([6,6]);x.beginPath();x.moveTo(20,aimY*H);x.lineTo(W-20,aimY*H);x.stroke();x.setLineDash([])}
+ x.fillStyle='#2a1a0e';x.font='12px Georgia';x.fillText('HELM',22,H*.35);x.fillText('SHIELD',22,H*.55);
+ ui.innerHTML='Pass '+pass+'/3 &nbsp; You '+me+' – Rival '+foe+'<br>Gallop '+'▮'.repeat(Math.round(speed*10))}
+function knight(px,py,col,d){x.fillStyle='#5a3a20';x.fillRect(px-10,py-18,20,36);x.fillStyle=col;x.beginPath();x.arc(px,py,12,0,7);x.fill();
+ x.strokeStyle='#3a2a1a';x.lineWidth=4;x.beginPath();x.moveTo(px,py);x.lineTo(px+d*32,py-d*50);x.stroke()}
+loop();
+</script></body></html>
