@@ -98,3 +98,9 @@ The squire is **16**. He serves Lord Bart Sheen faithfully — no scheming, no s
 - **The squire never knows.** Bart never tells him he resisted or that he was effectively sold. The player sees the squire go willingly, believing it was Bart's wish.
 - **Reveal (later):** the truth surfaces gradually: a receipt in the Baron's ledger ("Surgeons, Paris: paid. Squire: received."), a servant who overheard the argument, or Bart himself if he turns up again. This reframes the Baron's Debt system: the squire is effectively working off Bart's surgery.
 - **Payoff:** finding the receipt is a key step toward "Ledger Burned".
+
+
+## Easter egg: the 1515 "Ledgerline"
+- The Baron's ledger carries a tiny "LL" maker's stamp in one corner of every page. Never explained.
+- His steward's catchphrase: "Every debt balanced, every line accounted for."
+- The ledger is never named. No modern brand names appear in the game; the nod is visual and verbal only.
