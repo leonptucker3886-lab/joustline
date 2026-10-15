@@ -22,7 +22,7 @@ button:active{background:#f1d79c}
 #meter div{height:100%;width:0;background:linear-gradient(90deg,#c0392b,#e8c77a);border-radius:6px}
 #toast{position:absolute;top:40px;left:0;right:0;text-align:center;font-size:15px;color:#ffe9a8;text-shadow:0 2px 3px #000;opacity:0;transition:opacity .3s;pointer-events:none;padding:0 20px}
 #ach{position:absolute;top:12px;left:50%;transform:translate(-50%,-90px);background:#2b1a0c;border:2px solid #e8c77a;color:#e8c77a;padding:8px 14px;border-radius:12px;font-size:14px;transition:transform .4s;white-space:nowrap}
-</style></head>
+</style><script src="cutscene.js"></script><script src="opening.js"></script></head>
 <body><div id="app">
 <div id="stage"><canvas id="c"></canvas>
 <div id="hud"><span>Chapter 1 · Morning After</span><span id="xp">XP 0</span></div>
@@ -218,5 +218,5 @@ C.addEventListener('pointermove',e=>{if(!down)return;const p=pos(e);if(mini==='k
 addEventListener('pointerup',()=>{down=false;lastX=null});
 let last=performance.now();
 function loop(t){const dt=Math.min(.05,(t-last)/1000);last=t;X.clearRect(0,0,W,H);if(scene==='walk')drawWalk(dt);else drawTent();requestAnimationFrame(loop)}
-requestAnimationFrame(loop);start();
+requestAnimationFrame(loop);openingCut(start);
 </script></body></html>
