@@ -41,3 +41,19 @@ Bart Sheen is a nod to a famous party-loving actor. The game makes it obvious bu
 - **Party-life hints, never named:** he insists he's "winning" after every loss; hosts all-night feasts with "goddesses" of the court; boasts of "tiger blood" (it's wine); keeps a tally of duels he "won in his head."
 - **Rule:** the joke is in situations and catchphrase echoes only. No real names, no direct quotes attributed to anyone, nothing mean about real health or private life.
 - **Achievement:** "Winning?" (+15 XP) — prop Bart up through a full tournament without a single cramp fall.
+
+
+## Faithful Service Arc (Chapter 1)
+
+The squire is **16**. He serves Lord Bart Sheen faithfully — no scheming, no shortcuts — through **2–3 of Bart's quests** before the turning point.
+
+**Quest structure (bird's-eye helper play):**
+1. **Quest 1 – The Tourney at Amboise:** first chores (Work the Knot, lance hand-ups, steering Bart away from the wine tent). Bart wins by accident and takes the credit.
+2. **Quest 2 – The Road Escort:** guarding a noble's cart; the squire props Bart up, calms Tancrède, handles the real danger quietly while Bart naps.
+3. **Quest 3 (optional/branching) – The Feast Challenge:** an all-night feast with a duel at dawn; the squire keeps Bart upright and armored. Players can skip ahead after Quest 2 if they want the joust sooner.
+
+**Loyalty, not resentment:** the squire genuinely cares for Bart. Bart is a mess, but a warm one — he shares his food, calls the squire "my boy," and once, sober for a moment, says something kind. This makes the turn land.
+
+**The tragic event:** at the end of the final service quest, Bart is gravely wounded (or killed — to decide) in a joust he never should have ridden, the cramp striking mid-pass. The comedy drops out: no music, no margin doodles, one quiet scene. With Bart down and the house's honour at stake, the 16-year-old squire takes up his lance and mounts Tancrède. → first first-person joust, unlocks "First Lance."
+
+**Tone rule:** Bart stays funny right up to that moment; the shift is sudden and sincere, then the game slowly lets humour back in afterward (the squire keeps Bart's goblet as a keepsake; Tancrède refuses to let anyone else sing).
