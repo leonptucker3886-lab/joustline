@@ -88,3 +88,13 @@ The squire is **16**. He serves Lord Bart Sheen faithfully — no scheming, no s
 - **His condition is unknown for now.** The game never confirms whether he lives. No letters arrive; rumours contradict each other ("recovering", "dead", "seen at a tavern").
 - Before he's taken away he gives his last order: stay with his cousin, the Baron.
 - Hook: Bart's fate stays an open thread for a later chapter reveal. Players can ask after him in Paris side quests and get only hints.
+
+
+## How the Baron got the squire (manipulation of Bart)
+
+- **Bart never wanted this.** The Baron, Bart's cousin, works on him at his bedside before the trip to Paris: Bart is in lousy shape, broke, and the surgery is expensive.
+- **The deal:** the Baron offers to pay all of Bart's expenses (the Paris surgeons, the journey, his debts) on one condition: the squire is assigned to him.
+- **Bart fights it.** He refuses, argues, and tries to stall, but he's too weak and too broke. He finally gives in to save his own life. His "last order" ("Go to my cousin, he'll look after you, my boy") is said through gritted teeth.
+- **The squire never knows.** Bart never tells him he resisted or that he was effectively sold. The player sees the squire go willingly, believing it was Bart's wish.
+- **Reveal (later):** the truth surfaces gradually: a receipt in the Baron's ledger ("Surgeons, Paris: paid. Squire: received."), a servant who overheard the argument, or Bart himself if he turns up again. This reframes the Baron's Debt system: the squire is effectively working off Bart's surgery.
+- **Payoff:** finding the receipt is a key step toward "Ledger Burned".
