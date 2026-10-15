@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Joustline — Joust Prototype</title>
+<style>
+html,body{margin:0;height:100%;background:#1b1410;overflow:hidden;touch-action:none;font-family:Georgia,serif;color:#f3e6c4;-webkit-user-select:none;user-select:none}
+canvas{display:block;margin:0 auto}
+#hud{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0);text-align:center;pointer-events:none;font-size:16px;padding:10px;text-shadow:0 1px 3px #000}
+#pr{position:fixed;left:0;right:0;top:22%;text-align:center;pointer-events:none;font-size:32px;font-weight:bold;color:#fff2b0;text-shadow:0 2px 4px #000}
+#pick{position:fixed;left:0;right:0;bottom:calc(40px + env(safe-area-inset-bottom,0));display:none;justify-content:center;gap:14px}
+#pick button{width:42%;max-width:190px;padding:20px 0;font-size:22px}
+#msg{position:fixed;left:8%;right:8%;top:28%;text-align:center;background:rgba(40,20,10,.94);border:3px double #c9a24a;border-radius:12px;padding:20px;font-size:18px;line-height:1.45}
+button{font:inherit;background:#8b1e1e;color:#f3e6c4;border:2px solid #c9a24a;border-radius:26px;padding:12px 26px;margin-top:12px}
+button:active{transform:scale(.96)}
+</style></head><body>
+<canvas id="c"></canvas><div id="hud"></div><div id="pr"></div>
+<div id="pick"><button data-t="helm">Helm<br><small style="font-size:13px">+3 · small target</small></button><button data-t="shield">Shield<br><small style="font-size:13px">+2 · big target</small></button></div>
+<div id="msg"><b>The Lists at Montrésor, 1515</b><br><br>You ride in the saddle.<br><b>1.</b> Pick a target: Helm or Shield.<br><b>2.</b> Your horse charges on its own.<br><b>3.</b> Tap anywhere when the marker is in the <span style="color:#e8c25a">gold zone</span>.<br><br>3 passes. Best score wins.<br><button id="go">Ride!</button></div>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d'),hud=document.getElementById('hud'),pr=document.getElementById('pr'),pick=document.getElementById('pick'),msg=document.getElementById('msg');
+let W,H;function rs(){H=innerHeight;W=Math.min(innerWidth,H*.62);const d=devicePixelRatio||1;c.width=W*d;c.height=H*d;c.style.width=W+'px';c.style.height=H+'px';x.setTransform(d,0,0,d,0,0)}rs();addEventListener('resize',rs);
+const quips=["Tancrède snorts: 'Eh, could be worse.'","Royal Decree: the squire has met the ground. Again.","Bayard nods. That's practically a parade.","The Cartoonist scribbles something yellow in the margin."];
+let pass=1,me=0,foe=0,state='menu',target,pos=0,mk=0,md=1,zone=.5,zw=.2,flash=0,shake=0,res='',t0=0;
+let ac;function beep(f,d,t='square',v=.15){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+function reset(){pass=1;me=0;foe=0;choose()}
+function choose(){state='choose';pos=0;target=null;pick.style.display='flex';pr.textContent='Choose your target'}
+pick.querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation();target=b.dataset.t;pick.style.display='none';charge()});
+function charge(){state='charge';pos=0;mk=0;md=1;zw=target=='helm'?.12:.2;zone=.4+Math.random()*.4;pr.textContent='Charge!';beep(220,.2);beep(330,.3);setTimeout(()=>{if(state=='charge')pr.textContent=''},900)}
+addEventListener('pointerdown',e=>{if(state=='charge'&&pos>=.25)strike()});
+function strike(){state='hit';t0=pos;const d=Math.abs(mk-zone);const q=d<zw*.25?2:d<zw/2?1:0;
+ const pts=q==2?(target=='helm'?3:2):q;let r=Math.random(),fp=r<.2+pass*.1?2:r<.65?1:0;if(pass==3&&Math.random()<.2)fp=3;
+ me+=pts;foe+=fp;flash=pts?.9:0;shake=pts?18:6;
+ if(pts){beep(pts>1?660:440,.25,'sawtooth',.2);beep(80,.35,'triangle',.35)}else beep(120,.3,'sine');
+ res=(pts==3?'Lance broken on the helm! +3':pts==2?'Clean strike to the shield! +2':pts==1?'A glancing touch. +1':'Missed!')+'<br>Rival scores +'+fp+(pts?'':'<br><i>'+quips[Math.random()*quips.length|0]+'</i>');
+ pr.textContent=pts==0?'Miss':q==2?'Perfect!':'Good';setTimeout(endPass,1200)}
+function endPass(){pr.textContent='';if(pass<3){pass++;show(res+'<br><button onclick="hide();choose()">Next pass</button>')}
+ else{const w=me>foe;show(res+'<br><br><b>'+(w?'Victory! Sans Peur.':me==foe?'A draw. The ladies are unimpressed.':'Defeat. Royal Decree: try again.')+'</b><br>You '+me+' – Rival '+foe+'<br><button onclick="hide();reset()">Ride again</button>');try{if(w&&window.LeonProfile)LeonProfile.unlock('joustline_first_lance')}catch(e){}}}
+function show(h){msg.innerHTML=h;msg.style.display='block';state='menu'}function hide(){msg.style.display='none'}
+document.getElementById('go').onclick=()=>{hide();reset()};
+function loop(){requestAnimationFrame(loop);
+ if(state=='charge'){pos=Math.min(1,pos+.004);mk+=md*(.011+pos*.013);if(mk>1){mk=1;md=-1}if(mk<0){mk=0;md=1}
+  if(pos>=1){state='hit';foe+=1;res='You never lowered your lance!<br>Rival scores +1';pr.textContent='Too late';setTimeout(endPass,900)}}
+ if(state=='hit')pos=Math.min(1.15,pos+.01);draw()}
+function draw(){const now=performance.now()/1000,riding=state=='charge'||state=='hit';
+ const bob=riding?Math.sin(now*14)*(3+pos*5):Math.sin(now*2)*1.5;let sx=0;if(shake>0){sx=(Math.random()-.5)*shake;shake*=.85}
+ const hz=H*.4+bob,vx=W*.5;x.save();x.translate(sx,0);
+ let g=x.createLinearGradient(0,0,0,hz);g.addColorStop(0,'#7fa6c9');g.addColorStop(1,'#e9dcb8');x.fillStyle=g;x.fillRect(-30,0,W+60,hz);
+ x.fillStyle='#8a9a5b';x.fillRect(-30,hz-14,W+60,14);// far trees/hills
+ x.fillStyle='#4f6b3a';for(let i=0;i<9;i++){x.beginPath();x.arc(i*W/8,hz-10,W/12,Math.PI,0);x.fill()}
+ g=x.createLinearGradient(0,hz,0,H);g.addColorStop(0,'#b99a64');g.addColorStop(1,'#7a5a32');x.fillStyle=g;x.fillRect(-30,hz,W+60,H-hz);
+ // stands & banners
+ x.fillStyle='#8b1e1e';for(let i=0;i<6;i++){const f=i/6;x.fillRect(W*.86+f*-W*.3,hz-30+f*0,6,30-f*15)}
+ // ground rush lines
+ x.strokeStyle='rgba(60,40,20,.35)';x.lineWidth=2;for(let i=0;i<10;i++){let f=((i/10)+(riding?now*(.6+pos):0))%1;f=f*f;const y=hz+f*(H-hz);x.beginPath();x.moveTo(vx+(W*.1)*f,y);x.lineTo(vx+(W*.9)*f,y);x.stroke()}
+ // tilt barrier (left of you)
+ x.fillStyle='#6b4a2b';x.beginPath();x.moveTo(vx-4,hz);x.lineTo(vx+2,hz);x.lineTo(W*.12,H*.78);x.lineTo(-W*.15,H*.78);x.closePath();x.fill();
+ x.fillStyle='#c9a24a';x.beginPath();x.moveTo(vx-3,hz);x.lineTo(vx,hz);x.lineTo(-W*.05,H*.7);x.lineTo(-W*.15,H*.7);x.fill();
+ // rival
+ const p=riding?Math.min(pos,1.1):0,s=.12+p*p*1.25,rx=vx-W*.04-p*p*W*.42,ry=hz+s*H*.08;
+ x.save();x.translate(rx,ry);x.scale(s,s);
+ x.fillStyle='#3a2414';x.beginPath();x.ellipse(0,40,60,40,0,0,7);x.fill();// horse body
+ x.fillStyle='#2a1a0e';x.fillRect(-14,-10,28,70);// horse head front
+ x.fillStyle='#8b1e1e';x.fillRect(-62,30,124,30);// caparison
+ x.fillStyle='#777';x.fillRect(-22,-90,44,80);// torso
+ const hl=target=='helm'&&state!='choose',sl=target=='shield'&&state!='choose';
+ x.fillStyle='#9aa';x.beginPath();x.arc(0,-112,24,0,7);x.fill();if(hl){x.strokeStyle='#ffe066';x.lineWidth=6;x.stroke()}
+ x.fillStyle='#222';x.fillRect(-16,-116,32,5);
+ x.fillStyle='#8b1e1e';x.beginPath();x.moveTo(-50,-80);x.lineTo(-6,-80);x.lineTo(-6,-40);x.lineTo(-28,-20);x.lineTo(-50,-40);x.closePath();x.fill();
+ x.fillStyle='#f3e6c4';x.fillRect(-32,-74,8,36);if(sl){x.strokeStyle='#ffe066';x.lineWidth=6;x.stroke()}
+ x.strokeStyle='#5a3a20';x.lineWidth=8;x.beginPath();x.moveTo(20,-60);x.lineTo(150,40);x.stroke();
+ x.restore();
+ // your lance
+ const ty=target=='helm'?ry-112*s:ry-60*s,tx=rx+(target=='helm'?0:-28*s);
+ const lx=W*.86,ly=H*1.02,ex=riding?tx:W*.62,ey=riding?ty:hz-20;
+ x.strokeStyle='#d9c08a';x.lineWidth=14;x.lineCap='round';x.beginPath();x.moveTo(lx,ly);x.lineTo(lx+(ex-lx)*.75,ly+(ey-ly)*.75+bob);x.stroke();
+ x.fillStyle='#2a4ea0';x.beginPath();x.arc(lx+(ex-lx)*.12,ly+(ey-ly)*.12,30,0,7);x.fill();// vamplate
+ // your horse head & ears
+ x.fillStyle='#4a2e18';x.beginPath();x.ellipse(W*.5,H+10+bob*1.5,W*.2,H*.2,0,0,7);x.fill();
+ x.beginPath();x.moveTo(W*.4,H*.84+bob*1.5);x.lineTo(W*.37,H*.75+bob*1.5);x.lineTo(W*.45,H*.82+bob*1.5);x.fill();
+ x.beginPath();x.moveTo(W*.6,H*.84+bob*1.5);x.lineTo(W*.63,H*.75+bob*1.5);x.lineTo(W*.55,H*.82+bob*1.5);x.fill();
+ x.fillStyle='#2a4ea0';x.fillRect(W*.34,H*.9+bob*1.5,W*.32,H*.04);x.fillStyle='#c9a24a';x.fillRect(W*.34,H*.9+bob*1.5,W*.32,4);
+ // timing bar
+ if(state=='charge'||state=='hit'){const bx=30,bw=W-60,by=H*.62,bh=30;x.fillStyle='rgba(30,20,10,.75)';x.fillRect(bx-4,by-4,bw+8,bh+8);
+  x.fillStyle='#e8c25a';x.fillRect(bx+(zone-zw/2)*bw,by,zw*bw,bh);x.fillStyle='#fff2b0';x.fillRect(bx+(zone-zw/8)*bw,by,zw/4*bw,bh);
+  x.fillStyle=pos<.25&&state=='charge'?'#888':'#fff';x.fillRect(bx+mk*bw-4,by-8,8,bh+16);
+  x.fillStyle='#fff';x.font='bold 15px Georgia';x.textAlign='center';x.shadowColor='#000';x.shadowBlur=4;x.fillText(state=='charge'&&pos<.25?'Get ready…':'TAP in the gold!',W/2,by+bh+24);x.shadowBlur=0}
+ if(flash>0){x.fillStyle='rgba(255,240,180,'+flash+')';x.fillRect(-30,0,W+60,H);flash-=.05}
+ x.restore();hud.innerHTML='Pass '+pass+'/3 &nbsp; You '+me+' – Rival '+foe+(target&&state!='choose'?'<br>Aiming: '+(target=='helm'?'Helm':'Shield'):'')}
+loop();
+</script></body></html>
