@@ -1,5 +1,6 @@
 // joustline — tournament ladder (wired into joust.html Tournament mode)
 // Best-of-3 passes per bout; 3 points for a win, 1 for a tie pass.
+// A double unhorse (both riders score 3) counts as a tied pass and ends the bout as a draw.
 (function (g) {
   function createLadder(names) {
     return { riders: names.map(function (n) { return { name: n, pts: 0, wins: 0, losses: 0 }; }), round: 0 };
@@ -12,7 +13,10 @@
     var A = ladder.riders[iA], B = ladder.riders[iB], wa = 0, wb = 0;
     for (var i = 0; i < passes.length && i < 3 && wa < 2 && wb < 2; i++) {
       var r = scorePass(passes[i][0], passes[i][1]);
-      if (passes[i][0] === 3 || passes[i][1] === 3) { r > 0 ? wa = 2 : r < 0 ? wb = 2 : 0; break; }
+      if (passes[i][0] === 3 || passes[i][1] === 3) {
+        if (r > 0) wa = 2; else if (r < 0) wb = 2; else { A.pts++; B.pts++; wa = wb = 0; }
+        break;
+      }
       if (r > 0) wa++; else if (r < 0) wb++; else { A.pts++; B.pts++; }
     }
     if (wa > wb) { A.pts += 3; A.wins++; B.losses++; return A.name; }
