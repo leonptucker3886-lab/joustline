@@ -15,31 +15,41 @@ button:active{transform:scale(.96)}
 </style></head><body>
 <canvas id="c"></canvas><div id="hud"></div><div id="pr"></div>
 <div id="pick"><button data-t="helm">Helm<br><small style="font-size:13px">+3 · small target</small></button><button data-t="shield">Shield<br><small style="font-size:13px">+2 · big target</small></button></div>
-<div id="msg"><b>The Lists at Montrésor, 1515</b><br><br>You ride in the saddle.<br><b>1.</b> Pick a target: Helm or Shield.<br><b>2.</b> Your horse charges on its own.<br><b>3.</b> Tap anywhere when the marker is in the <span style="color:#e8c25a">gold zone</span>.<br><br>3 passes. Best score wins.<br><button id="go">Ride!</button></div>
+<div id="msg"><b>The Lists at Montrésor, 1515</b><br><br>You ride in the saddle.<br><b>1.</b> Pick a target: Helm or Shield.<br><b>2.</b> Your horse charges on its own.<br><b>3.</b> Tap anywhere when the marker is in the <span style="color:#e8c25a">gold zone</span>.<br><br>3 passes. Best score wins.<br><button id="go">Ride!</button> <button id="tour">Tournament</button></div>
+<script src="ladder.js"></script>
 <script>
 const c=document.getElementById('c'),x=c.getContext('2d'),hud=document.getElementById('hud'),pr=document.getElementById('pr'),pick=document.getElementById('pick'),msg=document.getElementById('msg');
 let W,H;function rs(){H=innerHeight;W=Math.min(innerWidth,H*.62);const d=devicePixelRatio||1;c.width=W*d;c.height=H*d;c.style.width=W+'px';c.style.height=H+'px';x.setTransform(d,0,0,d,0,0)}rs();addEventListener('resize',rs);
 const quips=["Tancrède snorts: 'Eh, could be worse.'","Royal Decree: the squire has met the ground. Again.","Bayard nods. That's practically a parade.","The Cartoonist scribbles something yellow in the margin."];
+let T=null,TR=['Sir Tancrède','Bayard','The Cartoonist'],passes=[];
 let pass=1,me=0,foe=0,state='menu',target,pos=0,mk=0,md=1,zone=.5,zw=.2,flash=0,shake=0,res='',t0=0;
 let ac;function beep(f,d,t='square',v=.15){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
-function reset(){pass=1;me=0;foe=0;choose()}
+function reset(){pass=1;me=0;foe=0;passes=[];choose()}
 function choose(){state='choose';pos=0;target=null;pick.style.display='flex';pr.textContent='Choose your target'}
 pick.querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation();target=b.dataset.t;pick.style.display='none';charge()});
 function charge(){state='charge';pos=0;mk=0;md=1;zw=target=='helm'?.12:.2;zone=.4+Math.random()*.4;pr.textContent='Charge!';beep(220,.2);beep(330,.3);setTimeout(()=>{if(state=='charge')pr.textContent=''},900)}
 addEventListener('pointerdown',e=>{if(state=='charge'&&pos>=.25)strike()});
 function strike(){state='hit';t0=pos;const d=Math.abs(mk-zone);const q=d<zw*.25?2:d<zw/2?1:0;
  const pts=q==2?(target=='helm'?3:2):q;let r=Math.random(),fp=r<.2+pass*.1?2:r<.65?1:0;if(pass==3&&Math.random()<.2)fp=3;
- me+=pts;foe+=fp;flash=pts?.9:0;shake=pts?18:6;
+ me+=pts;foe+=fp;passes.push([pts,fp]);flash=pts?.9:0;shake=pts?18:6;
  if(pts){beep(pts>1?660:440,.25,'sawtooth',.2);beep(80,.35,'triangle',.35)}else beep(120,.3,'sine');
  res=(pts==3?'Lance broken on the helm! +3':pts==2?'Clean strike to the shield! +2':pts==1?'A glancing touch. +1':'Missed!')+'<br>Rival scores +'+fp+(pts?'':'<br><i>'+quips[Math.random()*quips.length|0]+'</i>');
  pr.textContent=pts==0?'Miss':q==2?'Perfect!':'Good';setTimeout(endPass,1200)}
 function endPass(){pr.textContent='';if(pass<3){pass++;show(res+'<br><button onclick="hide();choose()">Next pass</button>')}
- else{const w=me>foe;show(res+'<br><br><b>'+(w?'Victory! Sans Peur.':me==foe?'A draw. The ladies are unimpressed.':'Defeat. Royal Decree: try again.')+'</b><br>You '+me+' – Rival '+foe+'<br><button onclick="hide();reset()">Ride again</button>');try{if(w&&window.LeonProfile)LeonProfile.unlock('joustline_first_lance')}catch(e){}}}
+ else{const w=me>foe;show(res+'<br><br><b>'+(w?'Victory! Sans Peur.':me==foe?'A draw. The ladies are unimpressed.':'Defeat. Royal Decree: try again.')+'</b><br>You '+me+' – Rival '+foe+'<br><button onclick="hide();reset()">Ride again</button>');if(T)return tourEnd();try{if(w&&window.LeonProfile)LeonProfile.unlock('joustline_first_lance')}catch(e){}}}
 function show(h){msg.innerHTML=h;msg.style.display='block';state='menu'}function hide(){msg.style.display='none'}
-document.getElementById('go').onclick=()=>{hide();reset()};
+document.getElementById('go').onclick=()=>{T=null;hide();reset()};
+document.getElementById('tour').onclick=()=>{T=JoustLadder.createLadder(['You'].concat(TR));T.round=0;hide();reset()};
+function rq(){return Math.random()*3.4|0}
+function tourEnd(){const L=JoustLadder,o=T.round+1,a=[1,2,3].filter(i=>i!=o);
+ const w=L.bout(T,0,o,passes);L.bout(T,a[0],a[1],[[rq(),rq()],[rq(),rq()],[rq(),rq()]]);T.round++;
+ const tb=L.standings(T).map((r,i)=>(i+1)+'. '+r.name+' — '+r.pts+' pts ('+r.wins+'-'+r.losses+')').join('<br>');
+ const done=T.round>=3,champ=done&&L.standings(T)[0].name=='You';
+ if(champ){try{window.LeonProfile&&LeonProfile.unlock('joustline_champion')}catch(e){}}
+ show(res+'<br><br><b>Bout vs '+TR[o-1]+': '+(w=='You'?'Won!':w?'Lost.':'Drawn.')+'</b><br><br><u>Ladder</u><br>'+tb+'<br>'+(done?'<b>'+(champ?'Champion of the Lists!':'Tournament over. '+L.standings(T)[0].name+' takes the crown.')+'</b><br><button onclick="hide();T=null;reset()">Ride again</button>':'Next: '+TR[T.round]+'<br><button onclick="hide();reset()">Next bout</button>'))}
 function loop(){requestAnimationFrame(loop);
  if(state=='charge'){pos=Math.min(1,pos+.004);mk+=md*(.011+pos*.013);if(mk>1){mk=1;md=-1}if(mk<0){mk=0;md=1}
-  if(pos>=1){state='hit';foe+=1;res='You never lowered your lance!<br>Rival scores +1';pr.textContent='Too late';setTimeout(endPass,900)}}
+  if(pos>=1){state='hit';foe+=1;passes.push([0,1]);res='You never lowered your lance!<br>Rival scores +1';pr.textContent='Too late';setTimeout(endPass,900)}}
  if(state=='hit')pos=Math.min(1.15,pos+.01);draw()}
 function draw(){const now=performance.now()/1000,riding=state=='charge'||state=='hit';
  const bob=riding?Math.sin(now*14)*(3+pos*5):Math.sin(now*2)*1.5;let sx=0;if(shake>0){sx=(Math.random()-.5)*shake;shake*=.85}
@@ -85,6 +95,6 @@ function draw(){const now=performance.now()/1000,riding=state=='charge'||state==
   x.fillStyle=pos<.25&&state=='charge'?'#888':'#fff';x.fillRect(bx+mk*bw-4,by-8,8,bh+16);
   x.fillStyle='#fff';x.font='bold 15px Georgia';x.textAlign='center';x.shadowColor='#000';x.shadowBlur=4;x.fillText(state=='charge'&&pos<.25?'Get ready…':'TAP in the gold!',W/2,by+bh+24);x.shadowBlur=0}
  if(flash>0){x.fillStyle='rgba(255,240,180,'+flash+')';x.fillRect(-30,0,W+60,H);flash-=.05}
- x.restore();hud.innerHTML='Pass '+pass+'/3 &nbsp; You '+me+' – Rival '+foe+(target&&state!='choose'?'<br>Aiming: '+(target=='helm'?'Helm':'Shield'):'')}
+ x.restore();hud.innerHTML=(T?'Tournament · vs '+TR[T.round]+'<br>':'')+'Pass '+pass+'/3 &nbsp; You '+me+' – Rival '+foe+(target&&state!='choose'?'<br>Aiming: '+(target=='helm'?'Helm':'Shield'):'')}
 loop();
 </script></body></html>
