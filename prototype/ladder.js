@@ -10,7 +10,7 @@
   }
   function bout(ladder, iA, iB, passes) { // passes: [[a,b],...] up to 3
     var A = ladder.riders[iA], B = ladder.riders[iB], wa = 0, wb = 0;
-    for (var i = 0; i < passes.length && wa < 2 && wb < 2; i++) {
+    for (var i = 0; i < passes.length && i < 3 && wa < 2 && wb < 2; i++) {
       var r = scorePass(passes[i][0], passes[i][1]);
       if (passes[i][0] === 3 || passes[i][1] === 3) { r > 0 ? wa = 2 : r < 0 ? wb = 2 : 0; break; }
       if (r > 0) wa++; else if (r < 0) wb++; else { A.pts++; B.pts++; }
