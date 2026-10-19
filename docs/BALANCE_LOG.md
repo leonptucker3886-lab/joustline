@@ -17,4 +17,5 @@ Owner: 2nd LT Real. Baseline taken from `docs/MECHANICS.md` (2026-10-15).
 ## Changes
 | Date | Area | Old | New | Rationale | Build |
 |---|---|---|---|---|---|
-| (none yet) | | | | | |
+| 2026-10-19 | Tournament bout length | unbounded on tied passes (could run a 4th pass) | max 3 passes | Bout is best of 3 per MECHANICS.md; bug caught by unit tests | e8443b0 |
+| 2026-10-19 | Tournament points (new) | n/a | win 3, tied pass 1 each, loss 0 | Baseline for ladder ranking; review after first QA pass | proto-v2 + ladder |
