@@ -1,5 +1,5 @@
 # QA Checklist: Joust Prototype v2 (Chapter 1 vertical slice)
-Status: Draft v0.1, ready for QA when a 2 is assigned. Design owner: 2nd LT Real.
+Status: Draft v0.2, ready for QA when a 2 is assigned. Design owner: 2nd LT Real.
 Target platforms (all items): mobile browser portrait 9:16, 360px wide minimum; desktop browser as a secondary check.
 Build under test: `prototype/joust.html`, `prototype/index.html`. Report bugs per `sops/Tester_SOP_v1.0.md`.
 
@@ -15,3 +15,7 @@ Build under test: `prototype/joust.html`, `prototype/index.html`. Report bugs pe
 | 8 | Opening + cutscenes | Start Chapter 1 | `opening.js` / `cutscene.js` play and can be advanced | None logged |
 | 9 | Narrow screen | Set viewport to 360px wide | No clipped UI or overlapping controls | None logged |
 | 10 | Exploratory | 10 minutes free play | Log anything odd with Severity + Frequency | n/a |
+| 11 | Tournament mode | Tap Tournament; ride all 3 bouts (Sir Tancrède, Bayard, The Cartoonist) | Standings table shows after each bout; AI-vs-AI bouts auto-resolve; points: win 3, tied pass 1 | Not yet played in a browser |
+| 12 | Tournament tie bout | Tie all 3 passes of a bout | Bout ends after pass 3 (no 4th pass); each rider gets 1 pt per tied pass | Fixed in e8443b0, covered by `tests/ladder.test.js` |
+| 13 | Champion unlock | Finish 1st in the standings | "joustline_champion" unlocks and persists after reload | None logged |
+| 14 | Unit tests | Run `node tests/ladder.test.js` | 7/7 pass | None logged |
