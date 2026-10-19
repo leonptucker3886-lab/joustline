@@ -10,4 +10,7 @@ eq(L.bout(lad, 0, 2, [[1, 1], [2, 1], [0, 1], [1, 0]]), null, 'only 3 passes cou
 eq(L.bout(lad, 0, 2, [[1, 1], [2, 1], [2, 0]]), 'A', 'tie pass gives both 1 pt');
 eq(L.standings(lad).map(function (r) { return r.name; }), ['A', 'C', 'B'], 'standings order');
 eq(L.scorePass(3, 3), 0, 'double unhorse is a tie');
+var d = L.createLadder(['X', 'Y']);
+eq(L.bout(d, 0, 1, [[3, 3], [2, 0]]), null, 'double unhorse ends bout as a draw');
+eq([d.riders[0].pts, d.riders[1].pts], [1, 1], 'double unhorse gives both 1 pt');
 console.log(n - fails + '/' + n + ' passed'); process.exit(fails ? 1 : 0);
