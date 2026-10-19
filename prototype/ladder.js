@@ -1,4 +1,4 @@
-// joustline — tournament ladder (standalone module, not yet wired into joust.html)
+// joustline — tournament ladder (wired into joust.html Tournament mode)
 // Best-of-3 passes per bout; 3 points for a win, 1 for a tie pass.
 (function (g) {
   function createLadder(names) {
