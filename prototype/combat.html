@@ -1,0 +1,34 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JoustLine Combat (beta)</title>
+<style>body{margin:0;font-family:sans-serif;background:#fafaf9;color:#18181b;text-align:center}
+.beta{background:#e6b800;padding:6px;font-weight:bold}canvas{width:100%;max-width:720px;border:1px solid #ccc}
+button{margin:3px;padding:8px 12px}.on{background:#2a78d6;color:#fff}</style></head><body>
+<div class="beta">BETA: rough draft for testing. Expect bugs.</div>
+<select id="fight"></select>
+<h2 id="p1"></h2><div id="p2"></div>
+<canvas id="cv" width="720" height="420"></canvas>
+<div id="prep"></div>
+<div><button id="charge">CHARGE</button><button id="strike">STRIKE</button></div>
+<script type="module">
+import { Combat, FIGHTS } from './combat.js';
+const $ = (i) => document.getElementById(i), sel = $('fight');
+for (const k in FIGHTS) sel.add(new Option(FIGHTS[k].name, k));
+const opts = { zone: ['Helm','Shield','Breastplate'], angle: ['Low','Level','High'], grip: ['Loose','Firm','Braced'] };
+let c;
+const btn = (t, fn, on) => { const b = document.createElement('button'); b.textContent = t; if (on) b.className = 'on'; b.onclick = fn; return b; };
+const ui = {
+  prompt: (a, b) => { $('p1').textContent = a; $('p2').textContent = b || ''; },
+  showPrep: (on, p) => { $('prep').innerHTML = ''; if (!on) return;
+    for (const k in opts) { const row = document.createElement('div'); row.append(k.toUpperCase() + ': ');
+      opts[k].forEach((l, i) => row.append(btn(l, () => c.setPrep(k, i), p[k] === i))); $('prep').append(row); } },
+  finaleChoice: () => { ui.prompt('THE BARON IS BEATEN', 'Choose your ending'); $('prep').innerHTML = '';
+    ['Win', 'Lose', 'Yield'].forEach((o) => $('prep').append(btn(o, () => c.finish(o.toLowerCase())))); },
+};
+const start = () => { c = new Combat({ fightId: sel.value, canvas: $('cv'), ui,
+  onFinish: (r) => { ui.prompt(r.outcome.toUpperCase(), r.fight.name + ' complete. Pick a fight to replay.'); $('prep').innerHTML = ''; } }); };
+sel.onchange = start; $('charge').onclick = () => c.charge(); $('strike').onclick = () => c.strike();
+addEventListener('keydown', (e) => { if (e.code === 'Space') { e.preventDefault(); c.phase === 'prepare' ? c.charge() : c.strike(); } });
+let last = performance.now();
+const loop = (n) => { c.update(Math.min(0.05, (n - last) / 1000)); last = n; c.draw(); requestAnimationFrame(loop); };
+start(); requestAnimationFrame(loop);
+</script></body></html>
