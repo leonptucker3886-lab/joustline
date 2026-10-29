@@ -30,3 +30,11 @@ Base story first; these slot in after.
 - **Squire's Ledger (Jack):** count Jack's joust pay as the Baron skims half. Running gag: the numbers never add up in Jack's favor.
 - **Write the Herald's Call (story-writing):** fill in blanks for the herald announcing "Sir Jack" in Bart's armor; the crowd reacts to the player's lines.
 - **Inn Night (Jack):** quiet scene-building game at the inn before Charles bursts in — arrange the room, choose Jack's silent thoughts.
+## Cast pool — famous couriers and people at court (Leon, 12:51 UTC)
+Use well-known historical messengers and court figures as the knights, heralds and couriers Jack meets, so the joust roster and court scenes feel real.
+- Couriers/messengers carry the plot's news (the false "Bart has died" message, Charles's envoy). Draw them from famous historical couriers and royal messengers.
+- Knights in the lists and nobles at the Baron's court are drawn from people at court in the period of the Capet bloodline hints.
+- OPEN: final named list to be confirmed with Leon before anyone appears on screen. Names are checked against history before use.
+
+## Leon's priority meanwhile
+Leon wants visible progress on jousting and on the characters (knights, etc.) while the Chapter 2 story is filled in.
