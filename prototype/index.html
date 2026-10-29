@@ -167,10 +167,12 @@ function armorDone(){
 // ---------- SCENE: bird's-eye walk to the lists ----------
 let sq,bt,target,wine,gate,slips=0,walkT=0,tugs=0;
 function setupWalk(){
-  sq={x:W*.5,y:H*.88};bt={x:W*.5,y:H*.95};target={x:sq.x,y:sq.y};
+  fit();sq={x:W*.5,y:H*.88};bt={x:W*.5,y:H*.95};target={x:sq.x,y:sq.y};
   wine={x:W*.78,y:H*.5,r:Math.min(W,H)*.12};gate={x:W*.3,y:H*.08};slips=0;walkT=0;mini='walk';
   instr('To the Lists','<b>Hold and drag</b> to lead the way. Bart follows you, but he drifts toward the <b>wine tent</b>. Stay between him and it.');
+  const sk=document.createElement('button');sk.textContent='Skip to the Lists \u25b8';sk.onclick=e=>{e.stopPropagation();if(mini==='walk'){mini=null;slips=1;arrive()}};opts.appendChild(sk);
 }
+function field(){const g=X.createLinearGradient(0,0,0,H);g.addColorStop(0,'#6f8f4a');g.addColorStop(1,'#4d6a32');X.fillStyle=g;X.fillRect(0,0,W,H);X.fillStyle='rgba(255,255,255,.06)';for(let i=0;i<40;i++){X.fillRect((i*97)%W,(i*53)%H,3,3)}}
 function drawWalk(dt){
   field();
   X.fillStyle='#c9b27a';X.beginPath();X.moveTo(W*.45,H);X.quadraticCurveTo(W*.2,H*.5,gate.x,gate.y);X.lineTo(gate.x+40,gate.y);X.quadraticCurveTo(W*.35,H*.5,W*.6,H);X.fill();
@@ -212,11 +214,11 @@ function arrive(){
 // ---------- input + loop ----------
 function pos(e){const r=C.getBoundingClientRect();const p=e.touches?e.touches[0]:e;return{x:p.clientX-r.left,y:p.clientY-r.top}}
 let down=false;
-C.addEventListener('pointerdown',e=>{down=true;const p=pos(e);
+C.addEventListener('pointerdown',e=>{e.preventDefault();down=true;try{C.setPointerCapture(e.pointerId)}catch(_){}const p=pos(e);
   if(mini==='wake')wakeTap();else if(mini==='armor')armorTap(p.x,p.y);else if(mini==='walk')target=p;else if(mini==='knot')lastX=p.x;});
 C.addEventListener('pointermove',e=>{if(!down)return;const p=pos(e);if(mini==='knot')knotMove(p.x);else if(mini==='walk')target=p});
-addEventListener('pointerup',()=>{down=false;lastX=null});
+addEventListener('pointerup',()=>{down=false;lastX=null});addEventListener('pointercancel',()=>{down=false;lastX=null});
 let last=performance.now();
-function loop(t){const dt=Math.min(.05,(t-last)/1000);last=t;X.clearRect(0,0,W,H);if(scene==='walk')drawWalk(dt);else drawTent();requestAnimationFrame(loop)}
+function loop(t){const dt=Math.max(0,Math.min(.05,(t-last)/1000));last=t;X.clearRect(0,0,W,H);if(scene==='walk')drawWalk(dt);else drawTent();requestAnimationFrame(loop)}
 requestAnimationFrame(loop);openingCut(start);
 </script></body></html>
