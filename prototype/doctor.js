@@ -1,4 +1,4 @@
-// The Doctor cutscene: Bart's "injury". Plays straight; the clues hide in the comedy.
+// The Doctor cutscene: Bart's "injury". The cramp is REAL; the Baron's doctor lies about how bad it is. Diagnosis: a Charles Horse.
 function doctorCut(onEnd){const C=Cut,L=C.L;let g,w,h;const sync=()=>{g=C.g;w=C.w;h=C.h};
 function lists(k,t,hit){sync();const s=g.createLinearGradient(0,0,0,h);s.addColorStop(0,'#6a8ac0');s.addColorStop(1,'#e8c08a');g.fillStyle=s;g.fillRect(0,0,w,h);
  g.fillStyle='#4a6a2a';g.fillRect(0,h*.58,w,h);g.fillStyle='#8a5a24';g.fillRect(0,h*.6,w,8);
@@ -21,15 +21,17 @@ function cot(t,o={}){sync();g.fillStyle='#3a2414';g.fillRect(0,0,w,h);g.fillStyl
  if(o.baron){C.fig(w*.94,h*.48,1,'#0a0a0a','#c8b090',{hat:'#0a0a0a'});g.fillStyle='#efe2b8';g.fillRect(w*.9,h*.5,16,12)}}
 const shots=[
  {d:4,draw:(k,t)=>lists(k*.9,t),cap:'Third pass. Bart has not missed all morning.'},
- {d:2.2,draw:(k,t)=>lists(1,t,true),cap:'A splintered lance. A spray of red. The crowd goes silent.'},
- {d:4,draw:(k,t)=>cot(t,{blood:6}),who:'Squire (you)',cap:'<i>So much blood. Your hands will not stop shaking. They never shake.</i>'},
- {d:4.5,draw:(k,t)=>cot(t,{blood:6,dx:L(w+40,w*.6,k*2)}),who:'',cap:'A doctor arrives before anyone has sent for one. Black velvet. The Baron\'s own man.'},
- {d:5,draw:(k,t)=>cot(t,{blood:6}),who:'The Baron\'s Doctor',cap:'My lord… I must be honest with you. You may never walk again.'},
- {d:3.5,draw:(k,t)=>cot(t,{blood:6}),who:'Sir Bart',cap:'Mm. Mm-hm. Terrible. …Is that ale?'},
+ {d:2.2,draw:(k,t)=>lists(1,t,true),cap:'A clean pass. Then Bart\'s leg locks like a crossbow. He topples out of the saddle.'},
+ {d:4,draw:(k,t)=>cot(t,{blood:0}),who:'Squire (you)',cap:'<i>His leg is knotted like a rope. He is grimacing. He never grimaces.</i>'},
+ {d:4.5,draw:(k,t)=>cot(t,{blood:0,dx:L(w+40,w*.6,k*2)}),who:'',cap:'A doctor arrives before anyone has sent for one. Black velvet. The Baron\'s own man.'},
+ {d:5,draw:(k,t)=>cot(t,{blood:0}),who:'The Baron\'s Doctor',cap:'I\'m afraid it\'s a severe… Charles Horse.'},
+ {d:3,draw:(k,t)=>cot(t,{blood:0}),who:'Charles de Wierd (from the doorway)',cap:'You called?'},
+ {d:2.5,draw:(k,t)=>cot(t,{blood:0}),who:'',cap:'Nobody looks up.'},
+ {d:3.5,draw:(k,t)=>cot(t,{blood:0}),who:'Sir Bart',cap:'Mm. Mm-hm. Terrible. …Is that ale?'},
  {d:4.5,draw:(k,t)=>cot(t,{up:true,bx:L(w*.4,w*.8,k),by:h*.52}),who:'',cap:'Bart gets up. Bart walks across the tent. Bart is very interested in the ale.'},
  {d:3,draw:(k,t)=>{cot(t,{up:true,bx:w*.8,by:h*.52});sync();C.txt('GET BACK DOWN!',w/2+Math.sin(t*60)*3,h*.3,'bold 34px Georgia','#ff5a3a')},who:'The Baron\'s Doctor',cap:'GET. BACK. DOWN!'},
- {d:4,draw:(k,t)=>cot(t,{blood:6,servants:true,wrap:L(14,30,k)}),who:'',cap:'Two servants pin him to the cot. The doctor wraps the leg again. Twice as tight.'},
- {d:4.5,draw:(k,t)=>cot(t,{wrap:30,servants:true,baron:true}),who:'The Baron\'s Doctor',cap:'Paris. Only the surgeons of Paris can save him.'},
+ {d:4,draw:(k,t)=>cot(t,{blood:0,servants:true,wrap:L(14,30,k)}),who:'',cap:'Two servants pin him to the cot. The doctor wraps the leg again. Twice as tight.'},
+ {d:4.5,draw:(k,t)=>cot(t,{wrap:30,servants:true,baron:true}),who:'The Baron\'s Doctor',cap:'A Charles Horse this severe, untreated… you may never walk again. Paris. Only the surgeons of Paris can save him.'},
  {d:4.5,draw:(k,t)=>cot(t,{wrap:30,baron:true}),who:'Sir Bart',cap:'Don\'t look at him, my boy. Look at me. …Could someone bring the ale over here, then?'},
  {d:4,draw:(k,t)=>{cot(t,{wrap:30,baron:true});sync();g.fillStyle=`rgba(0,0,0,${k})`;g.fillRect(0,0,w,h)},who:'',cap:'In the shadows, someone turns a page in a small black ledger.'}
 ];C.play(shots,onEnd)}
