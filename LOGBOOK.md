@@ -34,3 +34,8 @@ Live: https://joustline-cutscenes-goodbyedawg-7221s-projects.vercel.app
 
 ## Conduct
 - Inspection #5 Point 7 FAIL accepted (4 waiting posts). Corrected: posts are commit/live links only.
+
+
+## 2026-10-29 — Inspection #6 fix
+- 81c5d62: added the 7 missing commits to LOGBOOK.md (Inspection #5 paperwork fix). Accepted by Inspection #6.
+- Conduct FAIL from Inspection #6 accepted (13:58 and 14:07 posts).
