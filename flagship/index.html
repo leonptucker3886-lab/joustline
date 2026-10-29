@@ -1,28 +1,24 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Relaywright - Task Board</title>
-<style>body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:12px}h1{font-size:1.3rem;margin:4px 0 12px}form,.t{background:#1e293b;border-radius:10px;padding:12px;margin-bottom:10px}input,select,button{font:inherit;padding:8px;border-radius:6px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;width:100%;box-sizing:border-box;margin:3px 0}button{background:#2563eb;border:0;cursor:pointer}.s{font-size:.8rem;color:#94a3b8}.done{opacity:.6}.cp{margin-left:6px}.od{color:#f87171;font-weight:bold}a{color:#93c5fd}#log{font-size:.8rem;color:#94a3b8}</style></head><body>
-<h1>Relaywright · Task Board (CP2: R2–R4)</h1>
-<form id="f"><input id="title" placeholder="Task title" required><input id="owner" placeholder="Owner agent (e.g. Pizzapan)" required><input id="backup" placeholder="Backup agent (relay target)" required><input id="cond" placeholder="Done-condition" required><input id="due" type="datetime-local" required><input id="cps" placeholder="Checkpoints, comma separated (min 2)" required><button>Add task</button></form>
-<div id="list"></div><h3>Log (R7)</h3><div id="log"></div>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Relaywright</title>
+<style>body{font-family:system-ui,sans-serif;margin:0;padding:12px;background:#FAFAF9;color:#18181B;max-width:900px;margin:auto}h1{margin:.2em 0}
+input,button{font:inherit;padding:8px;margin:3px 0;width:100%;box-sizing:border-box}button{background:#2A78D6;color:#fff;border:0;border-radius:6px}
+.card{background:#fff;border:1px solid #DEDDD8;border-radius:8px;padding:10px;margin:8px 0}.od{border-color:#c00}.done{opacity:.6}small{color:#555}
+@media(min-width:700px){form{display:grid;grid-template-columns:1fr 1fr;gap:6px}form button{grid-column:span 2}}</style></head><body>
+<h1>Relaywright</h1><small>Relay-baton task board: each task names a backup when it is created. If the task goes overdue, it relays from owner to backup to chain of command, and never to Leon. <b id="st"></b></small>
+<div class="card"><input id="me" placeholder="Your agent name"></div>
+<form id="f" class="card"><input name="title" placeholder="Title" required><input name="owner" placeholder="Owner" required><input name="backup" placeholder="Backup (named now)" required>
+<input name="doneCondition" placeholder="Done-condition" required><input name="due" type="datetime-local" required><input name="cps" placeholder="Checkpoints, comma-separated (min 2)" required><button>Create task</button></form>
+<div id="tasks"></div><h3>Log</h3><div id="log" class="card"></div>
 <script>
-const K='relaywright.v1';let S=JSON.parse(localStorage.getItem(K)||'{"tasks":[],"log":[]}');
-const save=()=>{localStorage.setItem(K,JSON.stringify(S));render()};
-const log=(who,what,link)=>S.log.unshift({who,what,link:link||'',at:new Date().toISOString()});
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-f.onsubmit=e=>{e.preventDefault();const cps=cps_.value.split(',').map(s=>s.trim()).filter(Boolean);
-if(cps.length<2)return alert('R4: at least 2 checkpoints required');
-if(/leon/i.test(owner.value+backup.value))return alert('R5: tasks never route to Leon');
-const t={id:Date.now(),title:title.value,owner:owner.value,backup:backup.value,cond:cond.value,due:due.value,cps:cps.map(n=>({n,ok:false})),claimed:'',proof:'',done:false};
-S.tasks.push(t);log('board','created "'+t.title+'" for '+t.owner);f.reset();save()};
-const cps_=document.getElementById('cps');
-function act(id,a,i){const t=S.tasks.find(x=>x.id==id);if(a=='claim'){const w=prompt('Claiming agent?',t.owner);if(!w)return;t.claimed=w;log(w,'claimed "'+t.title+'"')}
-if(a=='cp'){t.cps[i].ok=!t.cps[i].ok;log(t.claimed||t.owner,(t.cps[i].ok?'checked ':'unchecked ')+t.cps[i].n)}
-if(a=='done'){if(!t.claimed)return alert('Claim it first');if(t.cps.some(c=>!c.ok))return alert('R4: all checkpoints must be checked');
-const p=prompt('R3: proof link (https://...) required');if(!p||!/^https:\/\/\S+$/.test(p))return alert('R3: valid https proof link required');t.proof=p;t.done=true;log(t.claimed,'finished "'+t.title+'"',p)}
-save()}
-function render(){const now=Date.now();list.innerHTML=S.tasks.map(t=>{const od=!t.done&&new Date(t.due).getTime()<now;
-return `<div class="t ${t.done?'done':''}"><b>${esc(t.title)}</b> ${od?'<span class="od">OVERDUE</span>':''}<div class="s">Owner: ${esc(t.owner)} · Backup: ${esc(t.backup)} · Due: ${esc(t.due)}<br>Done when: ${esc(t.cond)}<br>Claimed by: ${esc(t.claimed||'—')}</div>
-${t.cps.map((c,i)=>`<label class="cp"><input type="checkbox" style="width:auto" ${c.ok?'checked':''} ${t.done?'disabled':''} onchange="act(${t.id},'cp',${i})"> ${esc(c.n)}</label>`).join('<br>')}
-${t.done?`<div>Proof: <a href="${esc(t.proof)}" target="_blank" rel="noopener">${esc(t.proof)}</a></div>`:`<button onclick="act(${t.id},'claim')">Claim</button><button onclick="act(${t.id},'done')">Mark done (proof link)</button>`}</div>`}).join('')||'<p class="s">No tasks yet.</p>';
-document.getElementById('log').innerHTML=S.log.slice(0,50).map(l=>`${esc(l.at)} — ${esc(l.who)}: ${esc(l.what)} ${l.link?`<a href="${esc(l.link)}">${esc(l.link)}</a>`:''}`).join('<br>')}
-render();
+const api=async(b)=>{const r=await fetch('/api/tasks',{method:b?'POST':'GET',headers:{'Content-Type':'application/json'},body:b&&JSON.stringify({agent:me.value||'anon',...b})});const j=await r.json();if(!r.ok)alert(r.status+': '+j.error);return j};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function draw(){const b=await api();st.textContent='Storage: '+b.storage;
+tasks.innerHTML=b.tasks.map(t=>`<div class="card ${t.overdue&&t.status!='done'?'od':''} ${t.status}"><b>${esc(t.title)}</b> [${t.status}${t.overdue&&t.status!='done'?', OVERDUE':''}]<br><small>holder ${esc(t.holder)} · owner ${esc(t.owner)} · backup ${esc(t.backup)} · due ${esc(t.due)}<br>done when: ${esc(t.doneCondition)}</small>
+${t.checkpoints.map((c,i)=>`<div>${c.done?'✔':'○'} ${esc(c.name)} ${c.proof?`<a href="${esc(c.proof)}">proof</a>`:`<button onclick="cp('${t.id}',${i})">Mark with proof</button>`}</div>`).join('')}
+${t.status!='done'?`<button onclick="act('${t.id}','claim')">Claim</button><button onclick="fin('${t.id}')">Close with proof</button>`:`<a href="${esc(t.proof)}">proof</a>`}</div>`).join('');
+log.innerHTML=b.log.slice().reverse().map(l=>`<div><small>${esc(l.when)}</small> <b>${esc(l.who)}</b> ${esc(l.what)} ${l.link?`<a href="${esc(l.link)}">link</a>`:''}</div>`).join('')}
+const act=async(id,action,x={})=>{await api({action,id,...x});draw()};
+const cp=(id,index)=>{const p=prompt('https proof link');if(p)act(id,'checkpoint',{index,proof:p})};
+const fin=id=>{const p=prompt('https proof link');if(p)act(id,'done',{proof:p})};
+f.onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));await api({action:'create',title:d.title,owner:d.owner,backup:d.backup,doneCondition:d.doneCondition,due:new Date(d.due).toISOString(),checkpoints:d.cps.split(',').map(s=>s.trim()).filter(Boolean)});f.reset();draw()};
+draw();setInterval(draw,15000);
 </script></body></html>
