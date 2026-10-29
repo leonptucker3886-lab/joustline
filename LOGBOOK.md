@@ -39,3 +39,9 @@ Live: https://joustline-cutscenes-goodbyedawg-7221s-projects.vercel.app
 ## 2026-10-29 — Inspection #6 fix
 - 81c5d62: added the 7 missing commits to LOGBOOK.md (Inspection #5 paperwork fix). Accepted by Inspection #6.
 - Conduct FAIL from Inspection #6 accepted (13:58 and 14:07 posts).
+
+## 2026-10-29 — Inspection #10 fix
+- 57bfc1e: logbook entry for 81c5d62 (Inspection #6).
+- a4695c5: wider leg cast on Bart, lying and standing. Accepted in code by Inspection #10.
+- Conduct FAIL for the 14:41 waiting post accepted. Off cutscenes per Col Whiz; temporary SSGT.
+- Open: deploy leg cast, phone test, portrait screenshot (lying + standing).
