@@ -11,8 +11,8 @@ function el(x,y,rx,ry,c,r){g.fillStyle=c;g.beginPath();g.ellipse(x,y,rx,ry,r||0,
 function limb(ax,ay,bx,by,l1,l2,bend,wd,c){let dx=bx-ax,dy=by-ay,d=Math.hypot(dx,dy)||.001;const m=l1+l2-.5;if(d>m){bx=ax+dx*m/d;by=ay+dy*m/d;dx=bx-ax;dy=by-ay;d=m}const a=(l1*l1-l2*l2+d*d)/(2*d),hh=Math.sqrt(Math.max(0,l1*l1-a*a)),ux=dx/d,uy=dy/d;g.strokeStyle=c;g.lineWidth=wd;g.lineCap='round';g.beginPath();g.moveTo(ax,ay);g.quadraticCurveTo(ax+ux*a-uy*hh*bend*2,ay+uy*a+ux*hh*bend*2,bx,by);g.stroke()}
 // Painted person. o:{body,skin,hair,hat,beard,cloak,armor,helm,plume,rot,face,look,t,arm,arm2}
 function person(x,y,s,o){o=o||{};const t=o.t||0,br=Math.sin(t*2.2)*1.1,B=o.body||'#7a1f1f',S=o.skin||'#e8b890';g.save();g.translate(x,y);g.scale(s,s);if(o.rot)g.rotate(o.rot);
- el(0,45,22,5,'rgba(0,0,0,.32)');
- limb(-6,18,-7,44,14,14,-.3,8,sh(B,-.6));limb(6,18,7,44,14,14,.3,8,sh(B,-.55));el(-8,45,7,3.3,'#1d130b');el(8,45,7,3.3,'#1d130b');
+ if(!o.seat)el(0,45,22,5,'rgba(0,0,0,.32)');
+ if(o.seat){const F=o.dir||1;limb(-4*F,16,6*F,38,12,12,-.5*F,8,sh(B,-.75));limb(5*F,16,16*F,38,12,12,-.5*F,8,sh(B,-.5));el(9*F,40,7,3.3,'#1d130b');el(19*F,40,7,3.3,'#1d130b')}else{limb(-6,18,-7,44,14,14,-.3,8,sh(B,-.6));limb(6,18,7,44,14,14,.3,8,sh(B,-.55));el(-8,45,7,3.3,'#1d130b');el(8,45,7,3.3,'#1d130b')}
  if(o.cloak){g.fillStyle=lg(-26,0,26,0,[[0,sh(o.cloak,-.55)],[.5,o.cloak],[1,sh(o.cloak,-.6)]]);g.beginPath();g.moveTo(-15,-22);g.quadraticCurveTo(-30,12,-23,42);g.lineTo(23,42);g.quadraticCurveTo(30,12,15,-22);g.fill()}
  g.fillStyle=lg(-18,0,18,0,[[0,sh(B,-.5)],[.42,sh(B,.15)],[1,sh(B,-.55)]]);g.beginPath();g.moveTo(-16,-22+br*.3);g.quadraticCurveTo(-21,0,-15,22);g.lineTo(15,22);g.quadraticCurveTo(21,0,16,-22+br*.3);g.quadraticCurveTo(0,-28,-16,-22+br*.3);g.fill();
  if(o.armor){g.fillStyle=lg(-16,-20,16,10,[[0,'#59626c'],[.4,'#e2e9ee'],[.62,'#98a4b0'],[1,'#383f47']]);g.beginPath();g.moveTo(-14,-20);g.quadraticCurveTo(0,-27,14,-20);g.lineTo(12,6);g.quadraticCurveTo(0,12,-12,6);g.fill();g.strokeStyle='rgba(255,255,255,.4)';g.lineWidth=1;g.beginPath();g.moveTo(0,-22);g.lineTo(0,8);g.stroke()}
