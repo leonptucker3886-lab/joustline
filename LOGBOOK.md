@@ -2,6 +2,7 @@
 
 | Date (UTC) | Commit | Work | Status |
 |---|---|---|---|
+| 2026-10-29 | 228ec01 | Drill 001 restore point: logbook update; bg/foe/jack.webp verified decoding | Paperwork, restore point (files) |
 | 2026-10-29 | 9d15fc5 | LOGBOOK: add 6 missing commits per Inspection #4 | Paperwork |
 | 2026-10-29 | 2fcdded / 03397a1 / 5943b9b | Visual overhaul (repeat pushes of the same change, superseded by 28287f4) | Superseded by 28287f4 |
 | 2026-10-29 | 3e19510 | Combat scene v1: prepare-strike before charge (beta) | Superseded by e318f4d |
