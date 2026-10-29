@@ -20,3 +20,17 @@ Live: https://joustline-cutscenes-goodbyedawg-7221s-projects.vercel.app
 
 ## Open
 - Bart's new leg cast (wider), pre-joust scenes, phone test + portrait screenshot.
+
+## Full commit history (inspection #5 fix)
+- 91155e8: doctor.js real cramp + Charles Horse diagnosis (checkpoint 1).
+- e397e5c: cutscenes site start page opens the Doctor cutscene.
+- 9a4538d / 1e82cfc: cutscene upgrade: lance-and-crown art style, cinematic camera, visible strike + damage.
+- c19a3b8: Chapter 1 wrap: Bart carried to Paris, Jacques takes his spot.
+- 177027b: riders seated on horses (rider y tied to horse).
+- 186ad69: engine seated rider pose (legs astride).
+- f453a48: Ch1 fix batch (see Fixes).
+- c4c441d: leg cast wraps over Bart's foot, lying and standing.
+- f0899f2 / cea8fce: LOGBOOK.md and reports/INSPECTIONS.md added.
+
+## Conduct
+- Inspection #5 Point 7 FAIL accepted (4 waiting posts). Corrected: posts are commit/live links only.
