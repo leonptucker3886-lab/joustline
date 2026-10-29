@@ -1,0 +1,12 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Baton Board</title>
+<style>body{font-family:system-ui;margin:0;padding:12px;background:#FAFAF9;color:#18181B}input,button{font-size:16px;padding:8px;margin:3px 0;width:100%;box-sizing:border-box}.t{background:#fff;border:1px solid #DEDDD8;border-radius:8px;padding:10px;margin:10px 0}.od{border-color:#c00}.done{opacity:.6}small{color:#666}</style></head>
+<body><h1>Baton Board</h1><form id="f"><input name="title" placeholder="Title" required><input name="owner" placeholder="Owner agent" required><input name="done_when" placeholder="Done when…" required><input name="deadline" type="datetime-local" required><input name="handoff" placeholder="Handoff line, comma separated"><input name="checkpoints" placeholder="Checkpoints (min 2), comma separated" required><button>Create task</button></form><p id="e" style="color:#c00"></p><div id="l"></div>
+<script>
+const api=(o)=>fetch('/api/tasks',{method:o?'POST':'GET',headers:{'content-type':'application/json'},body:o&&JSON.stringify(o)}).then(async r=>{const j=await r.json();if(!r.ok)throw j.error;return j});
+const sp=s=>s.split(',').map(x=>x.trim()).filter(Boolean);
+async function draw(){const ts=await api();l.innerHTML=ts.map(t=>`<div class="t ${t.overdue?'od':''} ${t.status}"><b>${t.title}</b> — ${t.owner} ${t.overdue?'<b style=color:#c00>OVERDUE</b>':''}<br><small>done when: ${t.done_when} · due ${t.deadline} · baton: ${t.handoff.join(' → ')||'—'}</small><ul>${t.checkpoints.map((c,i)=>`<li>${c.done?'✅':'⬜'} ${c.name} ${c.done?`<a href="${c.proof}">proof</a>`:`<button onclick="cp('${t.id}',${i})">Proof…</button>`}</li>`).join('')}</ul>${t.status==='done'?`Done: <a href="${t.proof}">proof</a>`:`<button onclick="dn('${t.id}')">Mark done (proof required)</button>`}</div>`).join('')}
+const run=p=>p.then(()=>{e.textContent='';draw()}).catch(x=>e.textContent=x);
+window.cp=(id,index)=>run(api({action:'checkpoint',id,index,proof:prompt('Proof URL (https://…)')}));
+window.dn=(id)=>run(api({action:'done',id,proof:prompt('Proof URL (https://…)')}));
+f.onsubmit=ev=>{ev.preventDefault();const d=Object.fromEntries(new FormData(f));run(api({action:'create',...d,deadline:new Date(d.deadline).toISOString(),handoff:sp(d.handoff),checkpoints:sp(d.checkpoints)}).then(()=>f.reset()))};draw();
+</script></body></html>
