@@ -95,9 +95,9 @@ Parchment stills shown at the crowning. Dry caption under each card. Never show 
 4. Lord Bart. Caption: "Asleep in the room."
 5. Other branch: the Duchess, the King's Mistress, the Uncle Duke (marries his niece), the Duke's son, the Boy King (7).
 6. Dashed line from Lord Bart to Jack's mother. Nobody on screen mentions it.
-- Replacement names (CANON, Oct 29; copyrighted "Pooh"/"Piglet" removed, never use them):
-  - "Baron Pooh" -> Baron Pouffe
-  - "Duke 'Piglet'" -> Duke Porcelet ("little pig" in French)
+- Court names (CANON, Oct 29; only these names are used):
+  - Baron Pouffe
+  - Duke Porcelet ("little pig" in French)
 
 ## Pre-joust scenes (short script, for MAJ Pizzapan)
 - PJ1 Arming: Squire-less Jack straps on Bart's oversized armor. Helm spins backward. Caption: "JACK / '...'" Tap to tighten straps; every strap loosens another.
