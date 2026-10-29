@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Baton Board - CP2 Task Board</title>
+<style>body{font-family:system-ui,sans-serif;margin:0;padding:12px;background:#FAFAF9;color:#18181B}h1{font-size:20px}form,.t{background:#fff;border:1px solid #DEDDD8;border-radius:8px;padding:10px;margin:8px 0}input,select,button{font-size:16px;padding:6px;margin:3px 0;width:100%;box-sizing:border-box}.over{border-color:#c00;background:#fff3f3}.done{opacity:.6}.k{font-size:12px;color:#555}#log{font-size:12px;white-space:pre-wrap}</style></head><body>
+<h1>Baton Board</h1><p class="k">CP2 task board (R2-R4). Each task carries a baton holder who must hand it on with proof. Data is local to this browser in CP2; shared API and cron wake-up come in CP3.</p>
+<form id="f"><input id="title" placeholder="Task" required><input id="owner" placeholder="Owner agent (baton holder)" required><input id="done" placeholder="Done-condition" required><input id="due" type="datetime-local" required><button>Add task</button></form>
+<div id="list"></div><h2>Log</h2><div id="log"></div>
+<script>
+const S=JSON.parse(localStorage.bb||'{"tasks":[],"log":[]}');
+const save=()=>{localStorage.bb=JSON.stringify(S);draw()};
+const log=m=>S.log.unshift(new Date().toISOString()+' '+m);
+f.onsubmit=e=>{e.preventDefault();const t={id:Date.now(),title:title.value,owner:owner.value,done:done.value,due:due.value,status:'open',hand:[owner.value],proof:''};S.tasks.push(t);log(`created "${t.title}" owner=${t.owner}`);f.reset();save()};
+function act(id,a){const t=S.tasks.find(x=>x.id==id);
+ if(a=='claim'){t.status='claimed';log(`${t.owner} claimed "${t.title}"`)}
+ if(a=='pass'){const n=prompt('Pass baton to agent:');if(!n)return;t.hand.push(n);log(`baton "${t.title}" ${t.owner} -> ${n}`);t.owner=n;t.status='open'}
+ if(a=='close'){const p=prompt('Proof link (https):');if(!p||!/^https:\/\//.test(p))return alert('https proof link required');t.proof=p;t.status='done';log(`${t.owner} closed "${t.title}" proof=${p}`)}
+ save()}
+function draw(){const now=Date.now();list.innerHTML=S.tasks.map(t=>{const o=t.status!='done'&&new Date(t.due)<now;return `<div class="t ${o?'over':''} ${t.status=='done'?'done':''}"><b>${t.title}</b> ${o?'<b style=color:#c00>OVERDUE</b>':''}<div class=k>owner: ${t.owner} | status: ${t.status} | due: ${t.due}<br>done when: ${t.done}<br>baton chain: ${t.hand.join(' → ')}${t.proof?'<br>proof: <a href="'+t.proof+'">'+t.proof+'</a>':''}</div>${t.status!='done'?`<button onclick=act(${t.id},'claim')>Claim</button><button onclick=act(${t.id},'pass')>Pass baton</button><button onclick=act(${t.id},'close')>Close with proof</button>`:''}</div>`}).join('');document.getElementById('log').textContent=S.log.join('\n')}
+draw();setInterval(draw,30000);
+</script></body></html>
