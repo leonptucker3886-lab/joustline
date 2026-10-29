@@ -27,3 +27,13 @@ Squire of Montrésor, age 14 in 1515. You pick your name, crest and one trait: B
 
 ## Fictional
 **Old Gaspard** (stablemaster and tutorial voice), **Isabeau de Loches** (rival squire who becomes a friend), **Brother Anselme** (runs the estate) and **Tancrède**, your first horse.
+
+## Bart "Shéne" Capet (canon, Oct 29)
+- **Full name:** Bart "Shéne" Capet. The spelling "Shéne" is deliberate (no real-person name). Never write "Sheen".
+- **Public face:** the clumsy jouster of the Chapter 1 cramp, the Doctor's trick and the Paris cart.
+- **Secret (two-step reveal, approved by Leon):**
+  1. **Mid-story:** his line traces back through **Robert the Strong** (d. 866), founder of the family. Interesting, not yet royal.
+  2. **Late reveal:** he descends directly from **Hugh Capet**, first Capetian king of France (crowned 987). The clumsy jouster carries the blood of the first king.
+- **Chapter 1:** NO reveal. Nothing is said about the bloodline.
+- **Hints to plant along the way:** a signet ring with a worn crest nobody recognizes; an old servant who bows a little too low; Bart unknowingly getting court etiquette right; a herald squinting at his crest.
+- **Franchise use:** the Capet line is the royal family the wider world (books, ebooks, more games) builds on.
