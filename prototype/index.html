@@ -25,7 +25,8 @@ button:active{background:#f1d79c}
 </style><script src="cutscene.js"></script><script src="opening.js"></script></head>
 <body><div id="app">
 <div id="stage"><canvas id="c"></canvas>
-<div id="hud"><span>Chapter 1 · Morning After</span><span id="xp">XP 0</span></div>
+<div id="hud"><span>Chapter 1 · Morning After</span><span><button id="chapBtn" style="margin-right:8px;padding:4px 10px;font:inherit;border-radius:6px;border:1px solid #e8c77a;background:#2a1a10;color:#e8c77a">Chapters ☰</button><span id="xp">XP 0</span></span></div>
+<div id="chapMenu" style="display:none;position:absolute;top:44px;right:8px;z-index:50;background:#1b120b;border:2px solid #e8c77a;border-radius:10px;padding:10px;min-width:220px"></div>
 <div id="toast"></div><div id="meter"><div></div></div><div id="ach"></div></div>
 <div id="box"><div id="who"></div><div id="line"></div><div id="opts"></div></div>
 </div>
@@ -220,5 +221,18 @@ C.addEventListener('pointermove',e=>{if(!down)return;const p=pos(e);if(mini==='k
 addEventListener('pointerup',()=>{down=false;lastX=null});addEventListener('pointercancel',()=>{down=false;lastX=null});
 let last=performance.now();
 function loop(t){const dt=Math.max(0,Math.min(.05,(t-last)/1000));last=t;X.clearRect(0,0,W,H);if(scene==='walk')drawWalk(dt);else drawTent();requestAnimationFrame(loop)}
-requestAnimationFrame(loop);openingCut(start);
+const CHAPTERS=[['1 · Wake Bart (start)','start'],['1 · To the Lists (walk)','walk'],['1 · Arrive at the Lists','arrive'],['2 · Joust prototype','joust'],['3 · Combat (5 fights)','combat'],['Doctor cutscene','doctor']];
+const cm=document.getElementById('chapMenu');
+CHAPTERS.forEach(([n,k])=>{const b=document.createElement('button');b.textContent=n;b.style.cssText='display:block;width:100%;margin:4px 0;padding:10px;font-size:15px;border-radius:6px;border:0;background:#3a2716;color:#ffe;text-align:left';b.onclick=e=>{e.stopPropagation();location.href='index.html?chapter='+k};cm.appendChild(b)});
+document.getElementById('chapBtn').onclick=e=>{e.stopPropagation();cm.style.display=cm.style.display==='none'?'block':'none'};
+function jump(k){
+  if(k==='joust'){location.href='joust.html';return true}
+  if(k==='combat'){location.href='combat.html';return true}
+  if(k==='doctor'){location.href='doctor.html';return true}
+  if(k==='walk'){scene='walk';setupWalk();return true}
+  if(k==='arrive'){scene='walk';fit();gate={x:W*.3,y:H*.08};wine={x:W*.78,y:H*.5,r:Math.min(W,H)*.12};mini=null;slips=1;arrive();return true}
+  return false}
+requestAnimationFrame(loop);
+const _ch=new URLSearchParams(location.search).get('chapter');
+if(!(_ch&&_ch!=='start'&&jump(_ch)))openingCut(start);
 </script></body></html>
