@@ -61,3 +61,28 @@ Use well-known historical messengers and court figures as the knights, heralds a
 
 ## Leon's priority meanwhile
 Leon wants visible progress on jousting and on the characters (knights, etc.) while the Chapter 2 story is filled in.
+
+## Later-chapter canon (Leon, Oct 29) — NOT Chapter 2 scenes
+
+### "Just there" mechanics (core running joke)
+- Jack is just there at the inn when Charles de Wierd checks in.
+- Bart is just there when they need to crown a royal: the only royal around.
+- Their family inherits and gets things by never asking — they're just there.
+- Show this with still images of a fake family history at the crowning moment.
+- Never state Bart's place in the line to the throne.
+
+### Bart is secretly Jack's dad
+- Neither Bart nor Jack knows. Do not reveal on screen until Leon decides when.
+
+### The king dies
+- The king is visiting the castle and chokes on a piece of chicken.
+
+### The Baron's war (much later)
+- Bart doesn't want to be king and tries to give the crown to the Baron.
+- The Baron isn't listening and wages war trying to kill Bart.
+
+### Charles de Wierd
+- Nobody notices him. (Running gag.)
+
+### Open
+- Jack gets into something else with plays on his name (to be pitched).
