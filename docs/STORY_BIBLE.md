@@ -1,11 +1,12 @@
-# JoustLine — Story Bible v0.2
+# JoustLine — Story Bible v0.4
 Director: COL Whiz · Branch: whiz/story-bible · Source of truth: this file + docs/ (DIRECTION_NOTES wins on conflicts until merged)
-Status: v0.2. Creative control delegated by Leon to GEN Paperwork (29 Oct). Items marked [GEN] need the General's call; Leon may overrule. Nothing is built from a [LEON] item until decided.
+Status: v0.4 — LOCKED AS CANON (29 Oct). Creative control: GEN Paperwork. Whiz directs the game. Name/story questions go to the General, not Leon. Build from this file now; rough is fine.
 
 ## 1. Tone rules (locked)
 - Comedy, tragedy, secrets. Never explain a joke. Never explain a twist.
 - The squire stays cool (Sang-froid meter; Trend Book tracks who copies him).
-- Bart-horse cramps are SHOWN, never named or explained.
+- Bart's cramps are SHOWN, never explained. Named only by the doctor, as "a Charles Horse."
+- COPYRIGHT RULE: nothing copyrighted goes in as-is; anything close is altered just enough to keep its flavor. Real historical figures (Bayard, Henri II, Catherine, Leonardo) are public history.
 - Setting: France 1515–1559. Titles Squire -> Archduke. Six chapters: Montresor, Tournament Circuit, Cloth of Gold, Pavia, Fontainebleau, 1559 Joust.
 
 ## 2. Cast
@@ -32,7 +33,8 @@ Fragments: scorched inn sign in the stable nobody may take down; Loire-road side
 2. **Quests** — Tourney at Amboise; Road Escort (Bart naps, squire quietly handles the danger; the Baron "happens" to meet them); optional Feast Challenge (all night, duel at dawn).
 3. **The Pass** — a REAL cramp hits mid-pass. Bart goes down. Comedy stops dead; tone turns sincere.
 4. **The Doctor's Visit (Leon's scene, locked):**
-   - Doctor: "You may never walk again." (Diagnosis: "a Charles Horse." Charles de Wierd thinks every mention is about him. Nobody corrects him.)
+   - Doctor: "You may never walk again." (Diagnosis: "a Charles Horse." Charles de Wierd, from the doorway: "You called?" Nobody looks up. Nobody corrects him.)
+   - Running gag "Charlie's back": every time the cramp hits mid-pass Bart groans "Charlie's back"; Charles blushes in the stands. Sound: slide whistle + hay-bale thump on every "Charles Horse"; hopeful harp swell for Charles, cut off each time.
    - Bart: "Is that ale?" — gets up and starts walking to it.
    - Doctor has him held down, orders to stay down.
    - Bart: "That's a close one." — and secretly gets the ale anyway.
@@ -55,9 +57,10 @@ Fragments: scorched inn sign in the stable nobody may take down; Loire-road side
 
 ## 7. Château de Sampsonne (canon)
 - Bart learns he has become King (he was "just there")... and doesn't care.
+- Bart keeps trying to give the crown to his cousin (the Baron), but his cousin never hears him.
 - The Baron gathers champions and pushes his weak claim to the throne. EPIC BATTLE.
 
-## 8. Endings (GEN call: Ending 3 is main; 1 and 2 are alternates)
+## 8. Endings (GEN call, locked: Ending 3 is main; 1 and 2 are alternates)
 **Ending 3 — The Final Joust (MAIN).** The Baron's last champion is Bart, healed and sober, still believing his debts are owed. Player chooses:
 - Win: Bart is unhorsed and laughs, finally free.
 - Lose: Bart sees how hard the boy fought and switches sides.
@@ -65,7 +68,18 @@ Fragments: scorched inn sign in the stable nobody may take down; Loire-road side
 All paths reunite knight and squire.
 **Alt 1 — The Crown Nobody Wants.** Squire beats the last champion while Bart feasts; the Baron's claim collapses; Bart hands the throne to the 5-year-old heir, names the squire protector, goes back to partying. Last shot: squire pours Bart's goblet — water — Bart drinks it anyway.
 **Alt 2 — The Curse Turns.** The Baron wins and is crowned; the herald reads the old charter: whoever seizes the crown by force takes the family name, and the curse with it. Paranoia ruins him. Bart and the squire ride off; Charles de Wierd waves; nobody waves back.
-- Road to the lists: saving Henri II, Leonardo's helm and Catherine's favor feed into the battle (director proposal). [GEN] Bourbon traitor path for the Baron?
+- Road to the lists (GEN, locked): saving Henri II, Leonardo's helm and Catherine's favor feed into the battle.
+- No Bourbon-traitor path. The Baron is plain greed, no curse.
+
+## 8b. Alternate Endings (unlockable; GEN call 29 Oct)
+**Alt 3 — The Ledger Joust.** Squire challenges the Baron to an audit — first time he speaks to anyone but Bart. Reads it out: Bart's debts paid years ago; beside it, "Squire: received." Nobles turn; champions ask about back pay. Bart: "So I'm rich?" Squire: "No. Sober." Bart: "...That's a close one."
+**Alt A — Just There.** Battle won; Baron off counting wages. The 5-year-old heir wanders in for his ball, the only royal in the room, crowned on the spot. Bart cheers loudest. Boy-king knights the squire; the squire gives the smallest nod — his first emotion in the game.
+**Alt B — The Crown Nobody Hears.** Bart keeps offering the crown to the Baron, who never hears — even while shouting "Give me the crown!" Charles de Wierd is the only one listening; Bart hands it to him by accident. King Charles's first decree: a holiday in his own honor. Nobody comes. Bart and the squire ride out; the Baron still yelling.
+
+## 8c. Joke Endings (unlock after the main ending)
+1. **The Tourist** — future visitor with a glowing slab asks for a "selfie with the king." Bart thinks it's a magic mirror, toasts it, knights it. The squire confiscates it silently.
+2. **The Inspector** — future man in a hard hat condemns Château de Sampsonne for "zero fire exits." Bart throws a farewell party in the courtyard. The Baron gets the eviction notice.
+3. **The Shorts** — a time traveller: "History remembers you for one thing." Cut to Tancrede eating a little spiky-haired kid's shorts. Kid: « Monsieur ! Le cheval ! Il a mangé mon short ! » (subtitle: "Sir! The horse! He ate my shorts!"). Bart: "...Is that ale?" Roll credits.
 
 ## 8a. Cleanup to do in docs/ (on branch)
 - CHARACTERS.md: age 14 -> 16; Bayard to Chapter 2; add Charles de Wierd; Baron illegitimacy; Bart third in line.
@@ -74,7 +88,13 @@ All paths reunite knight and squire.
 - lance-and-crown rival picker offering the Baron as a knight conflicts with canon — flag.
 
 ## 9. Assignments under this bible
-- Pizzapan: story cutscenes — Opening, Doctor's Visit (keep ale gag; rebuild to section 4), Bedside Deal/Trick, Butterfly escape, fake-death/Charles de Wierd scene, Sampsonne battle and endings (after Announcement's proofread).
+- Pizzapan: story cutscenes — Opening, Doctor's Visit (keep ale gag; rebuild to section 4), Bedside Deal/Trick, Butterfly escape, fake-death/Charles de Wierd scene, Sampsonne battle and endings (start now; Announcement proofreads as work lands). First checkpoint: doctor.js rebuilt — real cramp, "a Charles Horse" diagnosis.
 - datasheet: top-down mini-games & quests — Work the Knot, lance hand-ups, wine-tent steering, Tancrede calming, Amboise, Road Escort, Feast, packing scene.
-- Announcement: proofread this bible; sound (Bart's tavern theme, cramp sting, Baron harpsichord motif, goblet clink).
+- Announcement: proofread as work lands; French line verified; sound (+ slide whistle, Charles harp swell) (Bart's tavern theme, cramp sting, Baron harpsichord motif, goblet clink).
 - All work on branches. Main untouched. Leon's base combat graphics untouched. Every scene reviewed by Whiz before "done."
+
+## 10. Director's game plan (Whiz)
+Checkpoints per assignment: (1) mid-point, (2) code-freeze, (3) final report — each posted in the topic.
+- Order of build: Ch1 Opening -> Doctor's Visit -> Trick -> Packing -> First Lance -> squire's journey -> Sampsonne battle -> Final Joust -> alternates -> joke endings.
+- Whiz writes scripts per scene into docs/scripts/ and reviews every scene before "done"; GEN Paperwork and Biana Bar inspect.
+- Leon reviews when the first rough draft is playable.
