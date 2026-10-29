@@ -84,5 +84,31 @@ Leon wants visible progress on jousting and on the characters (knights, etc.) wh
 ### Charles de Wierd
 - Nobody notices him. (Running gag.)
 
-### Open
-- Jack gets into something else with plays on his name (to be pitched).
+### Jack in the box (Leon pick, Oct 29)
+- Jack hides in a chest to get into the castle and pops out at the worst moment.
+
+### "Just there" family-tree still sequence (from Leon's video)
+Parchment stills shown at the crowning. Dry caption under each card. Never show Bart's place in line.
+1. The Old King. Caption: "The Crusades. And wine."
+2. His son, a prince with no titles. Caption: "Was in the room."
+3. Bart's father, no rank. Caption: "Also in the room."
+4. Lord Bart. Caption: "Asleep in the room."
+5. Other branch: the Duchess, the King's Mistress, the Uncle Duke (marries his niece), the Duke's son, the Boy King (7).
+6. Dashed line from Lord Bart to Jack's mother. Nobody on screen mentions it.
+- Replacement names (PROPOSED, pending Leon approval; copyrighted "Pooh"/"Piglet" removed):
+  - "Baron Pooh" -> Baron Pouffe
+  - "Duke 'Piglet'" -> Duke Porcelet ("little pig" in French)
+
+## Pre-joust scenes (short script, for MAJ Pizzapan)
+- PJ1 Arming: Squire-less Jack straps on Bart's oversized armor. Helm spins backward. Caption: "JACK / '...'" Tap to tighten straps; every strap loosens another.
+- PJ2 Mounting: Mildahouse lowers her head, sighs, and lets Jack climb up her neck. Wrong-way-round first try.
+- PJ3 Herald's call: herald reads the player's line from Write the Herald's Call. Crowd repeats Jack's new nickname.
+- PJ4 Lance pickup: the squire hands Jack a lance twice his length. He wobbles to the lists. Cut to the joust.
+
+## Paris town walk (short script, for MAJ datasheet)
+- Map stops: the Inn, the Tavern, the Lists, the Castle Gate.
+- Inn: innkeeper "You're just there again." Opens Inn Night.
+- Tavern: Bart's tall tale ("may never walk again") in progress; opens Tall Tales.
+- Lists: herald board shows today's opponent; tapping starts the pre-joust scenes.
+- Castle Gate: guards refuse Jack. A chest sits by the cart (sets up Jack in the box later).
+- Charles de Wierd stands in the background of every stop. Nobody notices.
