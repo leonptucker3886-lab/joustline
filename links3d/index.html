@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeonLink Links 3D - Hole 1 (beta)</title>
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:#87b8e8;font-family:system-ui,sans-serif;touch-action:none}
+#beta{position:fixed;top:0;left:0;right:0;background:#b91c1c;color:#fff;text-align:center;font-size:13px;padding:4px;z-index:5}
+#hud{position:fixed;top:30px;left:10px;color:#fff;text-shadow:0 1px 3px #000;font-size:16px;z-index:4;line-height:1.5}
+#msg{position:fixed;bottom:20px;left:0;right:0;text-align:center;color:#fff;font-size:20px;text-shadow:0 1px 4px #000;z-index:4}
+#pow{position:fixed;bottom:60px;left:50%;width:200px;margin-left:-100px;height:10px;background:#0006;border-radius:5px;z-index:4}
+#powf{height:100%;width:0;background:linear-gradient(90deg,#22c55e,#eab308,#ef4444);border-radius:5px}
+</style></head><body>
+<div id="beta">BETA - testing build. Phase 1: one playable hole.</div>
+<div id="hud">Hole 1 - Par 3<br>Strokes: <b id="st">0</b><br>To pin: <b id="dp">-</b> m</div>
+<div id="pow"><div id="powf"></div></div>
+<div id="msg">Drag back from anywhere and release to shoot</div>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+const PIN={x:0,z:-60},TEE={x:0,z:20};
+function h(x,z){return 0.6*Math.sin(x*0.08)*Math.cos(z*0.05)+0.012*x*(z<-40?1:0.3)+0.004*(z+60);}
+function grad(x,z){const e=0.05;return{x:(h(x+e,z)-h(x-e,z))/(2*e),z:(h(x,z+e)-h(x,z-e))/(2*e)};}
+function onGreen(x,z){return Math.hypot(x-PIN.x,z-PIN.z)<9;}
+function inBounds(x,z){return Math.abs(x)<22&&z<30&&z>-75;}
+const R=new THREE.WebGLRenderer({antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
+R.setSize(innerWidth,innerHeight);document.body.appendChild(R.domElement);
+const S=new THREE.Scene();S.background=new THREE.Color(0x87b8e8);S.fog=new THREE.Fog(0x87b8e8,60,160);
+const C=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,500);
+S.add(new THREE.HemisphereLight(0xffffff,0x335522,0.9));
+const sun=new THREE.DirectionalLight(0xffffff,0.9);sun.position.set(20,40,10);S.add(sun);
+const g=new THREE.PlaneGeometry(60,120,120,240);g.rotateX(-Math.PI/2);g.translate(0,0,-25);
+const pos=g.attributes.position,col=[];
+for(let i=0;i<pos.count;i++){const x=pos.getX(i),z=pos.getZ(i);pos.setY(i,h(x,z));
+ const c=onGreen(x,z)?[0.3,0.75,0.3]:inBounds(x,z)?(Math.abs(x)<12?[0.25,0.6,0.22]:[0.18,0.45,0.15]):[0.12,0.32,0.1];col.push(...c);}
+g.setAttribute('color',new THREE.Float32BufferAttribute(col,3));g.computeVertexNormals();
+S.add(new THREE.Mesh(g,new THREE.MeshLambertMaterial({vertexColors:true})));
+const cup=new THREE.Mesh(new THREE.CircleGeometry(0.22,24),new THREE.MeshBasicMaterial({color:0x111111}));
+cup.rotation.x=-Math.PI/2;cup.position.set(PIN.x,h(PIN.x,PIN.z)+0.01,PIN.z);S.add(cup);
+const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,3),new THREE.MeshLambertMaterial({color:0xeeeeee}));
+pole.position.set(PIN.x,h(PIN.x,PIN.z)+1.5,PIN.z);S.add(pole);
+const flag=new THREE.Mesh(new THREE.PlaneGeometry(0.9,0.55),new THREE.MeshLambertMaterial({color:0xdc2626,side:2}));
+flag.position.set(PIN.x+0.45,h(PIN.x,PIN.z)+2.7,PIN.z);S.add(flag);
+const ball=new THREE.Mesh(new THREE.SphereGeometry(0.2,16,12),new THREE.MeshLambertMaterial({color:0xffffff}));S.add(ball);
+const aimLine=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3()]),new THREE.LineBasicMaterial({color:0xffff00}));S.add(aimLine);aimLine.visible=false;
+const B={x:TEE.x,y:h(TEE.x,TEE.z),z:TEE.z,vx:0,vy:0,vz:0,moving:false,holed:false};
+let strokes=0,last={x:B.x,z:B.z};
+const $=id=>document.getElementById(id);
+function dist(){return Math.hypot(B.x-PIN.x,B.z-PIN.z);}
+function shoot(aimDeg,power){
+ if(B.moving||B.holed)return false;
+ power=Math.max(0,Math.min(1,+power||0));aimDeg=+aimDeg||0;
+ const a=Math.atan2(PIN.x-B.x,PIN.z-B.z)+aimDeg*Math.PI/180;
+ const putt=onGreen(B.x,B.z),sp=power*(putt?14:42),loft=putt?0:0.45;
+ B.vx=Math.sin(a)*sp*Math.cos(loft);B.vz=Math.cos(a)*sp*Math.cos(loft);B.vy=sp*Math.sin(loft);
+ last={x:B.x,z:B.z};B.moving=true;strokes++;$('st').textContent=strokes;$('msg').textContent='';return true;}
+function step(dt){
+ if(!B.moving)return;
+ const gy=h(B.x,B.z);
+ if(B.y>gy+0.001||B.vy>0){
+  B.vy-=9.81*dt;B.x+=B.vx*dt;B.y+=B.vy*dt;B.z+=B.vz*dt;
+  const ng=h(B.x,B.z);
+  if(B.y<=ng){B.y=ng;if(Math.abs(B.vy)>2){B.vy=-B.vy*0.3;B.vx*=0.6;B.vz*=0.6;}else B.vy=0;}
+ }else{
+  const gr=grad(B.x,B.z),fr=onGreen(B.x,B.z)?0.9:(Math.abs(B.x)<12?2.2:4.5);
+  B.vx-=9.81*gr.x*dt*0.7;B.vz-=9.81*gr.z*dt*0.7;
+  const sp=Math.hypot(B.vx,B.vz);
+  if(sp>0){const ns=Math.max(0,sp-fr*dt);B.vx*=ns/sp;B.vz*=ns/sp;}
+  B.x+=B.vx*dt;B.z+=B.vz*dt;B.y=h(B.x,B.z);
+  if(dist()<0.22&&sp<4){B.holed=true;B.moving=false;B.x=PIN.x;B.z=PIN.z;B.y=h(PIN.x,PIN.z)-0.15;
+   const n=['Hole-in-one!','Eagle','Birdie','Par','Bogey'][strokes-1]||('+'+(strokes-3));
+   $('msg').textContent='In the hole! '+strokes+' strokes - '+n;return;}
+  if(sp<0.05){B.vx=B.vz=0;B.moving=false;}
+ }
+ if(!inBounds(B.x,B.z)){B.moving=false;B.x=last.x;B.z=last.z;B.y=h(B.x,B.z);B.vx=B.vy=B.vz=0;strokes++;$('st').textContent=strokes;$('msg').textContent='Out of bounds - +1 penalty';}
+}
+function state(){const gr=grad(B.x,B.z);return{hole:1,par:3,strokes,holed:B.holed,moving:B.moving,
+ ball:{x:+B.x.toFixed(2),y:+B.y.toFixed(2),z:+B.z.toFixed(2)},pin:{x:PIN.x,z:PIN.z},
+ distanceToPin:+dist().toFixed(2),onGreen:onGreen(B.x,B.z),slope:{x:+gr.x.toFixed(4),z:+gr.z.toFixed(4)},
+ shotFormat:{aim:'degrees; 0 = straight at pin; positive = right',power:'0..1'}};}
+// Agent API: window.leonlink.state() -> JSON; window.leonlink.shoot({aim,power}) -> {accepted,state}
+window.leonlink={state,shoot:s=>{if(typeof s==='string')s=JSON.parse(s);return{accepted:shoot(s.aim,s.power),state:state()};},
+ reset:()=>{Object.assign(B,{x:TEE.x,y:h(TEE.x,TEE.z),z:TEE.z,vx:0,vy:0,vz:0,moving:false,holed:false});strokes=0;$('st').textContent=0;$('msg').textContent='';return state();}};
+// Same API over postMessage for an embedding page/agent: {type:'state'|'shot'|'reset', id, aim, power}
+addEventListener('message',e=>{const d=e.data||{};let r;
+ if(d.type==='state')r=state();else if(d.type==='shot')r=window.leonlink.shoot(d);else if(d.type==='reset')r=window.leonlink.reset();else return;
+ (e.source||window).postMessage({type:'leonlink-result',id:d.id,result:r},'*');});
+let drag=null;
+R.domElement.addEventListener('pointerdown',e=>{if(B.moving||B.holed)return;drag={x:e.clientX,y:e.clientY,aim:0,p:0};});
+addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+ drag.p=Math.min(1,Math.max(0,dy)/(innerHeight*0.4));drag.aim=Math.max(-45,Math.min(45,-dx*0.25));
+ $('powf').style.width=(drag.p*100)+'%';$('msg').textContent='Power '+Math.round(drag.p*100)+'%  Aim '+drag.aim.toFixed(0)+'deg';});
+addEventListener('pointerup',()=>{if(!drag)return;const d=drag;drag=null;$('powf').style.width='0';if(d.p>0.02)shoot(d.aim,d.p);else $('msg').textContent='Drag back further';});
+addEventListener('resize',()=>{C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix();R.setSize(innerWidth,innerHeight);});
+let t0=performance.now();
+function loop(t){const dt=Math.min(0.05,(t-t0)/1000);t0=t;for(let i=0;i<4;i++)step(dt/4);
+ ball.position.set(B.x,B.y+0.2,B.z);
+ const a=Math.atan2(PIN.x-B.x,PIN.z-B.z);
+ C.position.lerp(new THREE.Vector3(B.x-Math.sin(a)*7,B.y+3.2,B.z-Math.cos(a)*7),0.08);C.lookAt(B.x+Math.sin(a)*6,B.y,B.z+Math.cos(a)*6);
+ if(drag&&!B.moving){const aa=a+drag.aim*Math.PI/180,L=2+drag.p*10;aimLine.visible=true;
+  aimLine.geometry.setFromPoints([new THREE.Vector3(B.x,B.y+0.2,B.z),new THREE.Vector3(B.x+Math.sin(aa)*L,h(B.x+Math.sin(aa)*L,B.z+Math.cos(aa)*L)+0.2,B.z+Math.cos(aa)*L)]);}
+ else aimLine.visible=false;
+ flag.rotation.y=Math.sin(t/400)*0.3;$('dp').textContent=dist().toFixed(1);
+ R.render(S,C);requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+</script></body></html>
