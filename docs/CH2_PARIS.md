@@ -21,15 +21,38 @@ Chapter 1 is unchanged. Source: Leon Tucker, 2026-10-29 (12:31–12:49 UTC).
 - **The thieves:** a band of thieves sets out to rob Bart, but Bart robs himself first. They can't believe it, take him for a drunken fool, and make him one of them.
 - **Rule the Mule:** Bart rides a mule named Rule.
 
-## Filler — comedy and story-writing mini games (draft)
-Base story first; these slot in after.
-- **Rob Yourself (Bart, comedy):** timing game — empty Bart's own pockets into the thieves' sack before they reach him. The faster and sillier, the more the thieves gape.
-- **Steer Rule the Mule (Bart):** Rule only goes where he wants. Coax him down the road with carrots, songs and bad threats; wrong choices send Bart into ditches and taverns.
-- **Tall Tales at the Tavern (story-writing):** pick phrases to build Bart's "I may never walk again" story for patrons. Bigger lies earn more free ale, until someone sees him walk.
-- **Thieves' Initiation (comedy):** the band tests the "drunken fool" — pickpocket a dummy, hide in a barrel, keep a straight face. Bart passes by accident.
-- **Squire's Ledger (Jack):** count Jack's joust pay as the Baron skims half. Running gag: the numbers never add up in Jack's favor.
-- **Write the Herald's Call (story-writing):** fill in blanks for the herald announcing "Sir Jack" in Bart's armor; the crowd reacts to the player's lines.
-- **Inn Night (Jack):** quiet scene-building game at the inn before Charles bursts in — arrange the room, choose Jack's silent thoughts.
+## Filler — comedy and story-writing mini games (full draft)
+Base story first; these slot in after. Beat numbers refer to the 5-beat order above. "B" = Bart's side thread, which runs alongside Jack's beats.
+
+### Mini games
+1. **Squire's Ledger** — *Beat 1 (forced knighthood).*
+   - Play: after each payday, tally Jack's coins on a ledger while the Baron's steward slides half off the table. Drag coins back before he notices; get caught and he takes more.
+   - Hook: the numbers never add up in Jack's favor. Sets up the Baron's unfairness for later chapters.
+2. **Write the Herald's Call** — *Beat 2 (a few jousts).*
+   - Play: fill in the blanks of the herald's announcement for "Sir Jack" in Bart's armor. The crowd cheers, boos or laughs at the player's lines.
+   - Hook: the herald can't pronounce anything right; the player's call sticks as Jack's crowd nickname for the next joust.
+3. **Steer Rule the Mule** — *B, runs between Beats 1–2.*
+   - Play: Rule only goes where he wants. Coax him down the road with carrots, songs or bad threats. Wrong choices land Bart in a ditch, a pond or a tavern.
+   - Hook: every "wrong" path is funnier than the right one; the tavern path leads straight into Tall Tales.
+4. **Tall Tales at the Tavern** — *B, alongside Beat 2.* (story-writing)
+   - Play: pick phrases to build Bart's "I may never walk again" story for the patrons. Bigger lies earn more free ale — until a patron watches him stroll to the privy.
+   - Hook: rumors from this tale travel and later feed the false "Bart has died" message (Beat 5).
+5. **Rob Yourself** — *B, just before Beat 3.*
+   - Play: timing game — empty Bart's own pockets into the thieves' sack before they reach him. Faster and sillier = the thieves' jaws drop lower.
+   - Hook: the thieves can't believe it; leads into the Initiation.
+6. **Thieves' Initiation** — *B, after Rob Yourself.*
+   - Play: three silly trials — pickpocket a straw dummy, hide in a barrel, keep a straight face while the chief sings. Bart fails each one so badly he passes.
+   - Hook: they make him one of them, "assuming he's a drunken fool." Gives Bart a gang for later chapters.
+7. **Inn Night** — *Beat 3 (the inn).*
+   - Play: quiet scene-building game — arrange Jack's room, choose his silent thoughts as thought-cards. The last card is the sword. Charles de Wierd bursts in before the player can pick it.
+   - Hook: dark beat undercut by Charles's excited, oblivious entrance ("I found Bart heading to the castle!").
+
+### Comedy side scenes
+1. **Bart and Rule the Mule.** Bart gives Rule a grand knightly speech about their quest. Rule sits down in the road. Bart finishes the speech anyway, to the mule's backside, then rides off sideways because Rule turned toward a cabbage cart.
+2. **Bart with the thieves.** At the thieves' camp Bart "teaches" them a robbing technique that's just him patting his own pockets. The newest thief copies him exactly and robs himself. The chief starts to wonder who the fool really is.
+3. **The tavern tall tales.** Bart, mug raised, swears to the patrons he may never walk again — leg cast, tragic voice. A barmaid's butterfly walks past; Bart sprints after her. Silence. A patron: "...Miracle." Another: "Write that down."
+4. **Jack's silent misery in Bart's armor.** Jack clanks to the stables; the helm swivels round at every step so he faces backward. Mildahouse nudges him like a fond mother. Grooms bow to "Sir Bart." Jack says nothing. Just lifts the visor, sighs, and the visor drops shut again.
+
 ## Cast pool — famous couriers and people at court (Leon, 12:51 UTC)
 Use well-known historical messengers and court figures as the knights, heralds and couriers Jack meets, so the joust roster and court scenes feel real.
 - Couriers/messengers carry the plot's news (the false "Bart has died" message, Charles's envoy). Draw them from famous historical couriers and royal messengers.
