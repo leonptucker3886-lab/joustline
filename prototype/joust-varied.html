@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JoustLine - The Lists (BETA)</title>
+<style>body{margin:0;background:#2b1d12;color:#f3e6c8;font-family:Georgia,serif;display:flex;flex-direction:column;align-items:center}
+#beta{background:#b33;color:#fff;font:12px sans-serif;padding:4px;width:100%;text-align:center}
+canvas{width:100%;max-width:480px;background:#cbb68a;border:3px solid #6b4a2b}
+#ui{max-width:480px;width:100%;padding:8px;box-sizing:border-box}.row{display:flex;gap:6px;margin:6px 0}
+button{flex:1;padding:12px 4px;font:bold 15px Georgia;background:#6b4a2b;color:#f3e6c8;border:2px solid #d9b46a;border-radius:8px}
+button.sel{background:#d9b46a;color:#2b1d12}#cap{min-height:56px;text-align:center}.sc{font-variant:small-caps;font-weight:bold}</style></head><body>
+<div id="beta">BETA - testing build, not final art</div>
+<canvas id="c" width="480" height="640"></canvas>
+<div id="ui"><div id="hud"></div><div id="cap"></div>
+<div class="row" id="aims"><button data-v="helm">Helm</button><button data-v="shield" class="sel">Shield</button><button data-v="chest">Chest</button></div>
+<div class="row" id="spd"><button data-v="0.8">Trot</button><button data-v="1" class="sel">Canter</button><button data-v="1.3">Gallop</button></div>
+<div class="row"><button id="go">RIDE!</button></div></div>
+<script>
+const FOES=[{n:"Jean de Saintre",st:"steady",g:"shield",sk:.5,hp:3,c:"#2f5d9e",h:"#7a5230",l:"A gentleman's pass, squire."},
+{n:"Jacques de Lalaing",st:"precise",g:"helm",sk:.7,hp:3,c:"#c8a020",h:"#e8e2d0",l:"Lalaing is never unhorsed!"},
+{n:"Suero de Quinones",st:"wild",g:"chest",sk:.55,hp:4,c:"#8e2a2a",h:"#3a2a1a",l:"For love! And this iron collar!"},
+{n:"Boucicaut",st:"brute",g:"shield",sk:.65,hp:5,c:"#2b2b2b",h:"#555",l:"Boucicaut does not tire."},
+{n:"Charles de Wierd",st:"weird",g:"none",sk:.3,hp:2,c:"#6a3d8a",h:"#999",l:"(Nobody noticed he was riding.)"}];
+const c=document.getElementById('c'),x=c.getContext('2d'),W=480,H=640,cap=document.getElementById('cap'),hud=document.getElementById('hud');
+let S={f:0,j:4,fh:3,aim:"shield",sp:1,ph:"ready",t:0,sh:0,fr:0,sp2:[],res:"",hit:0,pass:1,w:0,lo:0};
+const F=()=>FOES[S.f];
+function say(a,b){cap.innerHTML='<div class="sc">'+a+'</div><i>"'+b+'"</i>';}
+function bar(){hud.innerHTML='Jack '+'&#9829;'.repeat(Math.max(0,S.j))+' | '+F().n+' '+'&#9829;'.repeat(Math.max(0,S.fh))+' | Wins '+S.w+' Falls '+S.lo;}
+['aims','spd'].forEach(g=>document.querySelectorAll('#'+g+' button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#'+g+' button').forEach(o=>o.classList.remove('sel'));b.classList.add('sel');if(g=='aims')S.aim=b.dataset.v;else S.sp=+b.dataset.v;}));
+document.getElementById('go').onclick=()=>{if(S.ph=="charge")return;if(S.res=="fd"){S.f=(S.f+1)%5;S.fh=F().hp;S.pass=1;}if(S.res=="jd"){S.j=4;S.fh=F().hp;S.pass=1;}S.res="";S.ph="charge";S.t=0;S.hit=0;bar();};
+function resolve(){const f=F();let acc=.75-(S.sp-1)*.6+(Math.random()-.5)*.3,pw=S.sp,o=[];
+if(S.aim=="helm"){acc-=.2;pw+=.8;}if(S.aim=="chest")pw+=.3;if(f.g==S.aim)acc-=.25;if(f.st=="weird")acc+=.3;
+let fa=f.sk+(f.st=="wild"?(Math.random()-.5)*.6:0);const jh=Math.random()<acc,fh=Math.random()<fa;let d=0;
+if(jh){d=pw>1.9?3:pw>1.2?2:1;if(Math.random()<.3){o.push("LANCE SHATTERED!");d++;}S.fh-=d;}
+if(fh){S.j-=(f.st=="brute"||(f.st=="precise"&&Math.random()<.3))?2:1;}
+if(S.fh<=0){S.res="fd";S.w++;o.push(f.n.toUpperCase()+" UNHORSED!");}else if(S.j<=0){S.res="jd";S.lo++;}else S.res=jh&&fh?"b":jh?"h":fh?"x":"m";
+const L={b:["CROWD","Both lances strike!"],h:["CROWD","A clean hit for 'Lord Bart'!"],x:["JACK","(silent misery inside the helm)"],m:["HERALD","Both miss. Mildahouse yawns."],fd:[f.n.toUpperCase(),f.l],jd:["CROWD","Somebody please help Jack off the horse!"]}[S.res];
+say(L[0],(o.length?o.join(" ")+" ":"")+L[1]);
+if(jh||fh){S.fr=12;S.sh=16;navigator.vibrate&&navigator.vibrate(d>2?[60,40,140]:90);for(let i=0;i<24;i++)S.sp2.push({x:W/2,y:H*.45,vx:(Math.random()-.5)*12,vy:-Math.random()*10});}
+S.pass++;bar();}
+function knight(px,py,dir,col,hc,tilt,fall){x.save();x.translate(px,py);x.scale(dir,1);
+x.fillStyle=hc;x.beginPath();x.ellipse(0,40,48,22,0,0,7);x.fill();x.fillRect(30,6,16,32);x.beginPath();x.ellipse(48,4,16,10,.4,0,7);x.fill();
+x.fillStyle="#3a2a1a";[-34,-18,18,34].forEach(l=>x.fillRect(l,56,7,30));x.fillStyle=col;x.fillRect(-46,30,92,14);
+x.rotate(fall);x.fillStyle="#9aa3ad";x.fillRect(-12,-24,22,40);x.beginPath();x.arc(0,-34,12,0,7);x.fill();x.fillStyle="#222";x.fillRect(2,-37,10,3);
+x.fillStyle=col;x.fillRect(-16,-16,10,26);x.strokeStyle="#c9a26b";x.lineWidth=6;x.beginPath();x.moveTo(0,-6);x.lineTo(110,-6+tilt);x.stroke();x.restore();}
+function draw(){if(S.fr>0)S.fr--;else if(S.ph=="charge"){S.t+=.011*S.sp;if(S.t>=.5&&!S.hit){S.hit=1;resolve();}if(S.t>=1)S.ph="done";}
+const k=S.sh>0?(Math.random()-.5)*S.sh:0;S.sh*=.85;x.save();x.translate(k,k/2);
+let g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#9ec3d9");g.addColorStop(.3,"#e8d9b0");g.addColorStop(1,"#a88a55");x.fillStyle=g;x.fillRect(-20,-20,W+40,H+40);
+for(let i=0;i<14;i++){x.fillStyle=["#8e2a2a","#2f5d9e","#c8a020"][i%3];x.fillRect(i*36,110,30,36);x.beginPath();x.moveTo(i*36+15,84);x.lineTo(i*36,110);x.lineTo(i*36+30,110);x.fill();x.fillStyle="#6b4a2b";x.beginPath();x.arc(i*36+15,160+Math.sin(Date.now()/200+i)*3,7,0,7);x.fill();}
+x.fillStyle="#5a3d22";x.fillRect(0,H*.47,W,10);
+const p=S.ph=="ready"?0:S.t,jx=-60+p*(W+120),fx=W+60-p*(W+120),f=F();
+const jf=S.res=="jd"&&p>.5?Math.min(1.6,(p-.5)*5):0,ff=S.res=="fd"&&p>.5?-Math.min(1.6,(p-.5)*5):0;
+knight(fx,H*.47-75,-1,f.c,f.h,0,ff);knight(jx,H*.47+30,1,"#d9b46a","#b8b8b0",S.aim=="helm"?-14:S.aim=="chest"?6:-4,jf);
+x.fillStyle="#efe2c2";S.sp2=S.sp2.filter(s=>{s.x+=s.vx;s.y+=s.vy;s.vy+=.4;x.fillRect(s.x,s.y,7,3);return s.y<H;});
+if(S.fr>0){x.fillStyle="rgba(255,255,255,.35)";x.fillRect(0,0,W,H);}
+x.fillStyle="#2b1d12";x.font="bold 22px Georgia";x.textAlign="center";x.fillText("PASS "+S.pass+" - vs "+f.n,W/2,40);x.restore();requestAnimationFrame(draw);}
+say("HERALD","Jack, riding as Lord Bart upon Mildahouse, versus "+F().n+"!");bar();draw();
+</script></body></html>
