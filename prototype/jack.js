@@ -1,7 +1,8 @@
-// Scene 2B - JACK TAKES THE SPOT (slot: scene_jack). Script: docs/scenes/CH1_JACK_FINALE.md
+// Scene 2B - JACK TAKES THE SPOT (slot: scene_jack) + Scene 2C - JACK'S RIDE (slot: scene_jack_ride).
+// Canon: Story Bible v0.4 (Lord Bart Sheen; the squire speaks only to Bart). Script: docs/scenes/CH1_JACK_FINALE.md
 // Layout rule: everything sits on one ground line (gy) and one scale (u), so riders,
 // horses, stands and cart stay together on tall phones and wide screens.
-function jackCut(onEnd){const C=Cut,L=C.L;let g,w,h,u,gy,cx;
+function jackCut(onEnd,part){const C=Cut,L=C.L;let g,w,h,u,gy,cx;
 const sync=()=>{g=C.g;w=C.w;h=C.h;u=Math.min(w/800,h/520);gy=h*.62;cx=w/2};
 function horse(x,y,s,col,dir,cloth){g.save();g.translate(x,y);g.scale(s*dir,s);g.fillStyle=col;
  g.beginPath();g.ellipse(0,-34,42,17,0,0,7);g.fill();
@@ -53,16 +54,42 @@ function road(k,t){sync();const s=g.createLinearGradient(0,0,0,gy);s.addColorSto
  g.restore();
  if(k>.35)C.txt('Paris!',x-24*v,y-100*v,`italic ${Math.round(20*u)}px Georgia`,'#fff3c8')}
 const shots=[
- {d:3.5,draw:(k,t)=>{lists(t);herald(cx-40*u,true)},who:'Herald',cap:'Sir Bartholomew is called to the lance!'},
+ {d:3.5,draw:(k,t)=>{lists(t);herald(cx-40*u,true)},who:'Herald',cap:'Lord Bart Sheen is called to the lance!'},
  {d:3,draw:(k,t)=>{lists(t);herald(cx-40*u)},who:'',cap:'Silence. The crowd murmurs.'},
  {d:4.5,draw:(k,t)=>road(k,t),who:'Sir Bart',cap:'<i>(far down the road)</i> Paris!'},
  {d:4,draw:(k,t)=>{lists(t);marshal()},who:'The Baron',cap:'A forfeit, surely. Such a shame.'},
  {d:4,draw:(k,t)=>{lists(t);marshal()},who:'Marshal',cap:'No knight, no lance. Unless his house sends another.'},
  {d:3.5,draw:(k,t)=>{lists(t);marshal();jack(L(cx-200*u,cx-70*u,k*1.5))},who:'',cap:'Jack steps forward, holding Bart\'s lance. No expression.'},
  {d:3,draw:(k,t)=>{lists(t,{quiet:true});marshal();jack(cx-70*u)},who:'Marshal',cap:'…You are his house?'},
- {d:3,draw:(k,t)=>{lists(t,{quiet:true});marshal();jack(cx-70*u)},who:'Jack',cap:'I carry his lance.'},
+ {d:3,draw:(k,t)=>{lists(t,{quiet:true});marshal();jack(cx-70*u)},who:'',cap:'Jack says nothing. He raises Bart\'s lance a little higher.'},
  {d:4,draw:(k,t)=>{lists(t);marshal();jack(cx-70*u)},who:'The Baron',cap:'He\'s a squire. He\'s hardly bigger than the lance.'},
  {d:3,draw:(k,t)=>{lists(t);marshal();jack(cx-70*u)},who:'Charles de Wierd',cap:'You called? <i>Nobody looks up.</i>'},
  {d:3.5,draw:(k,t)=>{lists(t);marshal();jack(cx-70*u)},who:'Marshal',cap:'Rules are rules. Mount him.'},
  {d:5,draw:(k,t)=>{lists(t,{grooms:true,rider:{big:true,lance:true,up:true,helmRot:k>.5?Math.sin(t*14)*.6:0}})},who:'',cap:'Two grooms lift Jack into Bart\'s saddle. The armor is far too big. The helm spins when he nods.'}
-];C.play(shots,onEnd)}
+];
+// ---- Scene 2C: JACK'S RIDE. Script: docs/scenes/CH1_JACK_FINALE.md (Scene 2C) ----
+function charge(k,t,o={}){sync();stands(t,o.quiet);
+ const meet=cx, jx=L(cx-300*u,meet-40*u,o.pass?k*2:(o.at||0)), ox=L(cx+300*u,meet+40*u,o.pass?k*2:(o.at||0));
+ const shake=o.hit&&k>.5&&k<.75?Math.sin(t*90)*6*u:0;g.save();g.translate(shake,0);
+ horse(ox,gy,1.1*u,'#2a2a2a',-1,'#444');knight(ox+4*u,gy-52*u,1.1*u,'#444',{helm:'#333',lance:true});
+ horse(jx,gy,1.1*u,'#8a5a2a',1,'#7a1f1f');
+ knight(jx-4*u,gy-52*u,1.1*u,'#9aa0a8',{big:true,lance:true,helmRot:o.helm||0});
+ if(o.hit&&k>.5){g.fillStyle='#e8d8b0';for(let i=0;i<9;i++){const a=i*.7+t,r=L(0,90*u,(k-.5)*3);g.fillRect(meet+Math.cos(a)*r,gy-90*u+Math.sin(a)*r,8*u,3*u)}
+  C.txt('PERFECT',meet,gy-180*u,`bold ${Math.round(34*u)}px Georgia`,'#e8c77a')}
+ g.restore()}
+function tilt(k,t,a){sync();stands(t,true);const tx=cx+240*u;horse(tx,gy,1.1*u,'#8a5a2a',1,'#7a1f1f');
+ g.save();g.translate(tx-4*u,gy-52*u);g.rotate(a);g.translate(-(tx-4*u),-(gy-52*u));
+ knight(tx-4*u,gy-52*u,1.1*u,'#9aa0a8',{big:true,lance:true,up:true,helmRot:Math.PI});g.restore()}
+const ride=[
+ {d:3,draw:(k,t)=>{charge(k,t,{at:0});herald(cx-40*u,true)},who:'',cap:'Trumpet. Tancr\u00e8de charges. He knows the way. Jack does not steer.'},
+ {d:4,draw:(k,t)=>charge(k,t,{pass:true,hit:true}),who:'',cap:'The pass. Dead center. The shield cracks.'},
+ {d:3.5,draw:(k,t)=>charge(k,t,{at:1}),who:'',cap:'The opponent stays seated. So does Jack, but only because the armor is wedged in the saddle.'},
+ {d:4,draw:(k,t)=>tilt(k,t,0),who:'',cap:'Tancr\u00e8de stops at the far end. Jack does not move. The helm slowly turns backward.'},
+ {d:3,draw:(k,t)=>tilt(k,t,0),who:'',cap:'The crowd goes quiet. The Baron\'s goblet stops halfway to his mouth.'},
+ {d:3.5,draw:(k,t)=>tilt(k,t,0),who:'Jack',cap:'<i>(muffled, inside the helm, to his absent master)</i> \u2026Sir would have wanted this.'},
+ {d:3.5,draw:(k,t)=>{tilt(k,t,0);herald(cx-200*u)},who:'Herald',cap:'A hit! A clean hit for the house of Sheen!'},
+ {d:3,draw:(k,t)=>tilt(k,t,L(0,.7,k)),who:'',cap:'Jack tips slowly sideways and hangs off the horse at an angle.'},
+ {d:3.5,draw:(k,t)=>{tilt(k,t,.7);marshal()},who:'Marshal',cap:'<b style="display:inline;font-size:18px;color:#f3e6c8;text-transform:none;letter-spacing:0">Somebody please help Jack off the horse!</b>'}
+];
+C.play(part==='ride'?ride:shots,onEnd)}
+
