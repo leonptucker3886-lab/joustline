@@ -1,1 +1,32 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>Joustline — Jack Takes the Spot</title><style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#end{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#e8c77a;font:20px Georgia,serif}#end a{color:#f3e6c8;font-size:16px;border:2px solid #8a5a24;padding:10px 16px;border-radius:10px;text-decoration:none}</style><script src="cutscene.js"></script><script src="jack.js"></script></head><body><div id="end" style="display:none">Next: Jack's ride…<a href="#" onclick="location.reload()">Watch again</a><a href="/">Back to the opening</a></div><script>jackCut(()=>document.getElementById('end').style.display='flex')</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>JoustLine — Chapter 1 Finale: Jack Takes the Spot</title>
+<style>
+html,body{margin:0;height:100%;background:#000;overflow:hidden}
+.card{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#e8c77a;font:20px Georgia,serif;text-align:center}
+.card h1{font-size:30px;margin:0}
+.card a{color:#f3e6c8;font-size:16px;border:2px solid #8a5a24;padding:10px 16px;border-radius:10px;text-decoration:none}
+</style>
+<script src="cutscene.js"></script>
+<script src="jack.js"></script>
+</head>
+<body>
+<!-- Scene 2B (scene_jack) -> Scene 2C (scene_jack_ride) -> end_card_ch1. Script: docs/scenes/CH1_JACK_FINALE.md -->
+<div id="end" class="card">
+  <h1>End of Chapter 1.</h1>
+  <div>Chapter 2 — Paris.</div>
+  <a href="#" onclick="location.reload();return false">Replay Chapter 1 finale</a>
+  <a href="index.html">Chapters ☰</a>
+</div>
+<script>
+// ?part=ride starts at Scene 2C (Chapters menu / testing)
+const startRide=new URLSearchParams(location.search).get('part')==='ride';
+const endCard=()=>{document.getElementById('end').style.display='flex'};
+if(startRide) jackCut(endCard,'ride');
+else jackCut(()=>jackCut(endCard,'ride'));
+</script>
+</body>
+</html>
