@@ -1,6 +1,6 @@
 # The Squire's Style: "Le Cool"
 
-The squire is ordinary: a minor-estate kid with no title and no money. But he has an effortless, understated style, and the geniuses and time travelers around him keep picking it up. He never brags or explains. He just does his thing, and others copy him.
+The squire is ordinary: a minor-estate kid with no title and no money. But he has an effortless, understated style, and the geniuses and time travelers around him keep picking it up. He never brags or explains, and he speaks only to Bart: every influence moment is silent. He just does his thing, and others copy him.
 
 ## Tone rules
 - Keep it cool: the squire never makes a joke at his own expense to land it. Others react; he shrugs.
@@ -19,13 +19,13 @@ The squire is ordinary: a minor-estate kid with no title and no money. But he ha
 | Who | What the squire does | What it becomes |
 |---|---|---|
 | The Cartoonist | Leans on a fence, half-lidded, unbothered by a rival's insults | Back in his sketchbook: a laid-back kid character with spiky hair and a slingshot attitude. Never named. |
-| The Cartoonist | Says "eh, could be worse" after losing a pass | The Cartoonist writes it down: "catchphrase??" |
+| The Cartoonist | Shrugs and dusts off his tabard after losing a pass, without a word | The Cartoonist writes it down: "catchphrase?? (he didn't even say anything)" |
 | The Influencer | Doesn't look at her phone when she films him | She realizes not trying is the look; her stream finally gets views (still no signal) |
 | The Tourist | Calmly eats an apple while a battle starts | Tourist copies him and stops spoiling Pavia, just to look as relaxed |
-| The Nervous Historian | Tells him history is "more of a suggestion" | Historian relaxes for the first time; unlocks the hidden save-Henri path hint |
+| The Nervous Historian | Calmly keeps polishing a lance while the Historian panics about 1559 | Historian relaxes for the first time; unlocks the save-Henri hint (feeds the Sampsonne battle) |
 
 ## Mechanics
-- **Style meter (Sang-froid):** a small 0-100 gauge. Raised by calm choices: not over-gripping in a joust, short dialogue replies, declining to boast after a win.
+- **Style meter (Sang-froid):** a small 0-100 gauge. Raised by calm choices: not over-gripping in a joust, silent choices, declining to boast after a win.
 - **Influence moments:** at high Sang-froid, a gold quill icon appears on certain characters. One tap shows a 3-second vignette of them copying the squire. No reading walls, phone friendly.
 - **Trend Book:** a collection page in the manuscript journal showing each habit and who picked it up (12 entries).
 - **Rewards:** cosmetics only (sleeve styles, crooked buckle, the four-note hum as menu music). No pay-to-win.
