@@ -15,3 +15,8 @@
 - 7f74c1e (7f74c1ecc4adac3e6076ad68873814e6c9228dd1): added docs/FIELD_MANUAL_ANNEX_W.pdf. Superseded by abb9227.
 - abb9227 (abb92270c6f3c6a5ac1870fff589c86a9b83a20e): added docs/FIELD_MANUAL.pdf, Field Manual edition 1, one complete text from 024f271 + 7f74c1e, every rule checked against the standing orders. Replaces d0a783b. Rule 15 PDF for Leon's 07:20 order. Awaiting the General's line-by-line approval.
 - Known gap: the commit adding this entry gets logged in the next entry.
+
+## 2026-10-30 — 7b26359, 691de88
+- Commit 7b26359: LOGBOOK entry logging 668cbc7, 7f74c1e and abb9227.
+- Commit 691de88: Field Manual Art. 4 corrected per the General's 07:35 review. A probation violation is an automatic drop to the rank set in the probation terms, no review (precedent: MAJ to 2nd Lt, 30 Oct 06:42). Previously said "one rank" in error.
+- Branch: whiz/pipday. Nothing pushed to main.
