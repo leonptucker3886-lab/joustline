@@ -31,12 +31,12 @@ The knight the squire serves in Chapter 1 is **Lord Bart Sheen**, a famously dru
 
 Comedy: Bart wins by accident, takes all the credit, toasts himself mid-joust, and has a new excuse each time ("the sun was in my goblet"). The squire stays calm and unbothered, which feeds the Sang-froid / squire-style system.
 
-Story hook: Bart's drinking is why the squire ends up in the saddle — one day Bart is too drunk (or hungover) to ride, and the squire takes his place for the first first-person joust ("First Lance").
+Story hook (canon, Bible v0.4): a REAL cramp hits Bart mid-pass, he goes down, and the squire takes his place for the first first-person joust ("First Lance").
 
 ## The Charlie-horse origin (Bart's reference — show, never tell)
 Bart Sheen is a nod to a famous party-loving actor. The game makes it obvious but **never says the name** — no character, menu or achievement text spells it out.
 
-- **The opening:** Bart's very first scene. Mid-toast, his leg seizes in a cramp and he topples off Tancrède into a hay bale. The squire's first chore is rubbing the knot out. Tancrède (the horse) snorts. A court physician declares it "a most unusual horse-cramp" — and from then on the court calls a leg cramp "a Bart-horse." The pun lands; nobody explains it.
+- **The opening:** Bart's very first scene. Mid-toast, his leg seizes in a cramp and he topples off Tancrède into a hay bale. The squire's first chore is rubbing the knot out. Tancrède (the horse) snorts. The cramp is shown, never explained. Only the Baron's Doctor ever names it: "a Charles Horse" (Charles de Wierd, from the doorway: "You called?" Nobody looks up). Nobody explains the pun.
 - **Running gag:** the cramp returns at the worst moments (mid-pass, kneeling to the king). Helper mini-game: "Work the Knot" — rapid thumb rubs before he falls off.
 - **Party-life hints, never named:** he insists he's "winning" after every loss; hosts all-night feasts with "goddesses" of the court; boasts of "tiger blood" (it's wine); keeps a tally of duels he "won in his head."
 - **Rule:** the joke is in situations and catchphrase echoes only. No real names, no direct quotes attributed to anyone, nothing mean about real health or private life.
@@ -54,14 +54,14 @@ The squire is **16**. He serves Lord Bart Sheen faithfully — no scheming, no s
 
 **Loyalty, not resentment:** the squire genuinely cares for Bart. Bart is a mess, but a warm one — he shares his food, calls the squire "my boy," and once, sober for a moment, says something kind. This makes the turn land.
 
-**The tragic event:** at the end of the final service quest, Bart is gravely wounded (or killed — to decide) in a joust he never should have ridden, the cramp striking mid-pass. The comedy drops out: no music, no margin doodles, one quiet scene. With Bart down and the house's honour at stake, the 16-year-old squire takes up his lance and mounts Tancrède. → first first-person joust, unlocks "First Lance."
+**The tragic event:** at the end of the final service quest, Bart is gravely wounded (he survives; see Bible §5–7) in a joust he never should have ridden, the cramp striking mid-pass. The comedy drops out: no music, no margin doodles, one quiet scene. With Bart down and the house's honour at stake, the 16-year-old squire takes up his lance and mounts Tancrède. → first first-person joust, unlocks "First Lance."
 
 **Tone rule:** Bart stays funny right up to that moment; the shift is sudden and sincere, then the game slowly lets humour back in afterward (the squire keeps Bart's goblet as a keepsake; Tancrède refuses to let anyone else sing).
 
 
 ## After Bart: The Baron's Household
 
-**Bart's order.** Before (or right after) the tragic joust, Bart gives the squire one last command: "Go to my cousin, the Baron. He'll look after you, my boy." It's the kindest thing Bart ever does, and it's a mistake.
+**Bart's order.** Before he is carted to Paris, Bart gives the squire one last command: "Go to my cousin, he'll look after you, my boy." It's the kindest thing Bart ever does, and it's a mistake.
 
 **The Baron of Vaudrecourt** (working name, fictional barony; open to change). Sober, polished, smiling, everything Bart wasn't. He saw the squire take the lance and he wants that talent.
 
@@ -70,24 +70,24 @@ The squire is **16**. He serves Lord Bart Sheen faithfully — no scheming, no s
 - **Wagers:** quietly bets against his own rider in some matches and expects the squire to "have an off day." Player choice: throw it, or win and face the fallout.
 - **The squire's cool style:** the Baron notices courtiers copying the squire (Sang-froid / Trend Book) and claims those trends as his own at court.
 - **Errands from above (bird's-eye):** delivering sealed letters, scouting rival stables, "borrowing" a rival's horse for a night. Small jobs that grow shadier.
-- **Debt hook:** Bart's gambling debts "transfer" to the squire. Every win pays down a number that never seems to shrink.
+- **Debt hook (the Baron's lie):** the Baron tells the squire Bart's debts now fall on him. In truth they were paid long ago (Bible §2); the number never shrinks because it is invented. Exposed by the ledger: "Squire: received."
 
 **Tone.** No villain monologue. The Baron is generous in public and only cold in private. The comedy stays (his steward, Tancrède's contempt for him), but the player slowly realises they're being used.
 
 **Gameplay ties**
 - New stat: **Debt** (shown in the Baron's ledger, not on the HUD).
 - Favor with the Baron vs. renown of your own: high Baron favor = better gear, less freedom.
-- Breaking free leads into Chapter 2 and the court of Francis I; how you leave (paid off, exposed him, ran with Tancrède) shapes your starting reputation.
+- Breaking free leads into the squire's journey to Paris, the fake-death knight, Charles de Wierd's accidental rescue, and the pursuit to Château de Sampsonne (Bible §6–7; chapter map in PLOT.md).
 - Achievements: **"Kept Man"** (+15 XP, finish a tournament as the Baron's ringer), **"Ledger Burned"** (+40 XP, escape the debt).
 
-**Open question:** the Baron's final name/title, and whether he's tied to the Bourbon traitor path.
+**Closed (Bible v0.4):** there is no Bourbon traitor path. The Baron is plain greed, untouched by the family curse. His name remains a working name.
 
 
 ## Bart's fate (decided 2026-10-15)
 - After the cramp-fall mid-pass, Bart is gravely hurt and needs **life-saving surgery in Paris**. He's carted off to the city's surgeons.
-- **His condition is unknown for now.** The game never confirms whether he lives. No letters arrive; rumours contradict each other ("recovering", "dead", "seen at a tavern").
+- **Superseded by Bible v0.4:** Bart survives. He escapes the Baron and the Doctor by following a butterfly and goes to Château de Sampsonne, where he becomes King. News reaches the squire only in fragments (sober letter, inn rumour, surgeon's bill).
 - Before he's taken away he gives his last order: stay with his cousin, the Baron.
-- Hook: Bart's fate stays an open thread for a later chapter reveal. Players can ask after him in Paris side quests and get only hints.
+- The Baron sends a paid knight to convince the squire Bart is dead; Charles de Wierd accidentally spills the truth. Endgame: the Final Joust against Bart at Sampsonne.
 
 
 ## How the Baron got the squire (manipulation of Bart)
@@ -110,7 +110,7 @@ The squire is **16**. He serves Lord Bart Sheen faithfully — no scheming, no s
 
 ## Tone pillars: comedy, tragedy, secrets (Leon, 2026-10-15)
 
-- **Comedy + puns:** every scene earns at least one laugh or pun (Charlie-horse / "Bart-horse", "the sun was in my goblet", Tancrède's opinions). Puns stay in-world and are never explained.
+- **Comedy + puns:** every scene earns at least one laugh or pun ("a Charles Horse" / "Charlie's back", "the sun was in my goblet", Tancrède's opinions). Puns stay in-world and are never explained.
 - **Tragedy:** the player must *feel* for the squire. Jokes are the armour; the hurt shows through the gaps — small, quiet beats, no melodrama.
 - **The game never tells its secrets:** no narrator explains references, backstory or twists. Everything is discovered through objects, overheard lines, ledgers and margin doodles. Some things are never confirmed at all.
 

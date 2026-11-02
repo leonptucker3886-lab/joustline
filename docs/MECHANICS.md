@@ -4,10 +4,10 @@
 1. **Gallop:** hold to build speed. Hold too long and the horse stumbles.
 2. **Aim:** drag a swaying reticle onto the shield, helm or chest. It sways more as you go faster.
 3. **Strike:** release inside the gold window for Perfect, Good or Miss.
-**Scoring:** shield or body = 1 point, helm = 2, unhorsing = instant win. Perfect hits get slow motion and a haptic buzz, and guarding is automatic.
+**Scoring (matches the v2 prototype):** shield = +2, helm = +3, unhorsing = instant win. Perfect hits get slow motion and a haptic buzz, and guarding is automatic.
 
 ## Other modes
-Quintain (the daily challenge), ring tilt, swipe melee (Ch.3 onward) and court dialogue cards with Bold, Courtly or Wit replies.
+Quintain (the daily challenge), ring tilt, swipe melee (Ch.3 onward) and court choice cards with Bold, Courtly or Wit responses. The squire answers with silent actions (a nod, a look, a gesture, an act); he speaks only to Bart.
 
 ## Progression
 - **Favor:** -100 to +100 with each character.
