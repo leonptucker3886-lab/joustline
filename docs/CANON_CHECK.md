@@ -43,3 +43,22 @@ Rule: the Bible is canon, and locked GEN/Leon calls win. Only this file was adde
 3. Rewrite PLOT to the Bible's arc and chapter map (C6, C7, C13, G1, G11).
 4. Copyright pass on COMEDY and the joke endings (C15). Align scoring (C14).
 5. Each fix goes in as its own commit on the branch and needs Whiz's review before it counts as done.
+
+## D. Script checks (PVT Noel, branch noel/canon-check)
+Checked against docs/STORY_BIBLE.md v0.4 and docs/CH2_PARIS.md, which has Leon's newer Ch.2 calls.
+Source: fencer/ch2-scenes @ 5df41546f4a34806710a5f7e400f0ecc467b3ff3
+
+| Item | Verdict | Line | Reason |
+|---|---|---|---|
+| scripts/ch2/01_forced_knighthood.md | FAIL | L10 | "Bartholomew" isn't a canon name. The canon knight is Lord Bart Sheen (Bible §2, C1). Use "Bart" or "Lord Bart". Everything else passes, including the Baron taking half, no new armor, Jack staying silent and Charles going unnoticed. |
+| scripts/ch2/02_a_few_jousts.md | FAIL | L7 | "Sir Bartholomew's armor" has the same name problem. Use "Sir Bart's armor" or "Lord Bart's armor". The herald's garbled name for Jack is fine. |
+| scripts/ch2/03_inn_night.md | FAIL | L18; L8, L14 | L18: JACK says "...Goodnight." aloud to Charles. Canon says the squire talks ONLY to Bart (Bible §2, C4), so make it a silent nod or a "..." card. L8 and L14: "Bartholomew" should be "Bart". The tone (no self-harm shown, cut on Charles's entrance) and Charles staying oblivious are on canon. |
+| scripts/ch2/04_knight_rescue.md | PASS | none | Matches Beat 4. The knight offers his sword and his hand, and Jack refuses both without speaking (L13, L15, L17 "..."). The knight is unnamed until the cast list is confirmed. |
+| scripts/ch2/05_the_payoff.md | FAIL | L9, L13 | "Sir Bartholomew" should be "Lord Bart" or "Sir Bart". The neutral lines for the OPEN question are correct. Jack staying silent and the Charles background gag both pass. |
+
+**Notes for Whiz (canon conflicts, not Fencer's errors):**
+- Bible §2/§4 names Bart's horse Tancrede. CH2_PARIS names it Mildahouse. The scripts follow CH2.
+- Bible §6 puts the sword moment AFTER the fake-death message. CH2_PARIS puts the inn (Beat 3) BEFORE the payoff (Beat 5). The scripts follow CH2.
+- Bible §5 says the player never sees Paris. CH2_PARIS sets scenes in Paris.
+- Bible §2: the squire's real name is never revealed. CH2 calls him "Jack". If that's the name Bart gave him, it's consistent.
+- Bible "Baron of Vaudrecourt" (working name) is now "Baron Pouffe" (CH2 court names). The scripts use Pouffe.
