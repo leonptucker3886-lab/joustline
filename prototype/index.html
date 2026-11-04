@@ -92,7 +92,7 @@ function start(){
   scene='tent';
   talk([
    ['','<i>Dawn. Tourney day at Amboise. The tent smells of spilled wine and worse decisions.</i>'],
-   ['','<i>Your lord, Sir Bart Sheen, lies sideways across the bed, boots on and goblet in hand, between two ladies of the court, Isabeau and Margot. All three are snoring in harmony.</i>'],
+   ['','<i>Your lord, Lord Bart Sheen, lies sideways across the bed, boots on and goblet in hand, between two ladies of the court, Isabeau and Margot. All three are snoring in harmony.</i>'],
    ['','<i>The blanket is patched. The tent pole is wallpapered with IOUs. Bart\'s title is very old. His money is very gone.</i>'],
    ['Squire (you)','<i>You are sixteen, calm as still water, and the joust starts at the next bell.</i>'],
    ['Squire (you)','My lord. It is morning.',[['Shake him gently',wake],['Ring the tourney bell in his ear',()=>{addXP(5);say('Bold.');wake()}]]]
@@ -107,34 +107,34 @@ function wakeTap(){
 }
 function awake(){
   talk([
-   ['Sir Bart Sheen','<i>bolts upright</i> WINNING! I was winning. In the dream. And in life, obviously.'],
+   ['Lord Bart Sheen','<i>bolts upright</i> WINNING! I was winning. In the dream. And in life, obviously.'],
    ['Isabeau','<i>without opening her eyes</i> He was not winning. He lost his boots at cards. Those are Margot\'s boots.'],
    ['Margot','They are my boots. He looks wonderful in them.'],
-   ['Sir Bart Sheen','Ladies! My goddesses! Meet my squire. Best thing I own. Possibly the only thing I own.'],
-   ['Sir Bart Sheen','People say, "Bart, you have no money." I say, "I have something better: a boy who stops me falling off things." Duh.'],
-   ['Sir Bart Sheen','Best jouster in France, by the way. Ask anyone. Ask the ladies. Where ARE the ladies? Oh, there you are. Brew?'],
+   ['Lord Bart Sheen','Ladies! My goddesses! Meet my squire. Best thing I own. Possibly the only thing I own.'],
+   ['Lord Bart Sheen','People say, "Bart, you have no money." I say, "I have something better: a boy who stops me falling off things." Duh.'],
+   ['Lord Bart Sheen','Best jouster in France, by the way. Ask anyone. Ask the ladies. Where ARE the ladies? Oh, there you are. Brew?'],
    ['Squire (you)','The joust is at the next bell, my lord.',[['"Your lance is ready, my lord."',()=>{addXP(5);standUp()}],['"Your cousin the Baron will be in the stands."',()=>{addXP(5);baronLine()}]]]
   ]);
 }
 function baronLine(){
   talk([
-   ['Sir Bart Sheen','<i>His smile flickers for half a heartbeat.</i> My cousin. Rich as a cathedral. He has the gold, and I have the good looks and the tiger blood.'],
+   ['Lord Bart Sheen','<i>His smile flickers for half a heartbeat.</i> My cousin. Rich as a cathedral. He has the gold, and I have the good looks and the tiger blood.'],
    ['Isabeau','The tiger blood is Burgundy.'],
-   ['Sir Bart Sheen','Burgundy tiger blood. Rare vintage.'],
-   ['Sir Bart Sheen','Mark me, boy: I am the finest lance in France. I\'d be rich as him if not for one tiny loan. Years ago. From him.'],
+   ['Lord Bart Sheen','Burgundy tiger blood. Rare vintage.'],
+   ['Lord Bart Sheen','Mark me, boy: I am the finest lance in France. I\'d be rich as him if not for one tiny loan. Years ago. From him.'],
    ['Margot','How much was it?'],
-   ['Sir Bart Sheen','<i>counts on his fingers, runs out, borrows Margot\'s</i> I\'ve paid it a hundred times. Yet somehow I still owe it. He has a little book. The book is always right.'],
+   ['Lord Bart Sheen','<i>counts on his fingers, runs out, borrows Margot\'s</i> I\'ve paid it a hundred times. Yet somehow I still owe it. He has a little book. The book is always right.'],
    ['Isabeau','Funny, that.'],
-   ['Sir Bart Sheen','<i>shrugs</i> Oh well. Debts are for sober men. Now, where are my ladies, and where is my brew?'],
+   ['Lord Bart Sheen','<i>shrugs</i> Oh well. Debts are for sober men. Now, where are my ladies, and where is my brew?'],
    ['Margot','We are right here. And you are holding the brew.'],
-   ['Sir Bart Sheen','<i>peers into goblet</i> So I am. Winning.'],
+   ['Lord Bart Sheen','<i>peers into goblet</i> So I am. Winning.'],
   ],standUp);
 }
 function standUp(){
-  talk([['Sir Bart Sheen','Right! To the joust! <i>He stands up, grins and turns grey.</i>'],
-        ['Sir Bart Sheen','AAGH! My leg! It\'s seizing! It\'s… galloping on its own!'],
+  talk([['Lord Bart Sheen','Right! To the joust! <i>He stands up, grins and turns grey.</i>'],
+        ['Lord Bart Sheen','AAGH! My leg! It\'s seizing! It\'s… galloping on its own!'],
         ['Margot','A cramp! The horse kind!'],
-        ['Sir Bart Sheen','Do NOT tell Tancrède. He\'ll think I\'m competition.']],
+        ['Lord Bart Sheen','Do NOT tell Tancrède. He\'ll think I\'m competition.']],
    ()=>{mini='knot';rubs=0;lastX=null;rubDir=0;meterOn(0);instr('Work the Knot','<b>Rub left and right</b> across the glowing knot until it loosens.')});
 }
 function knotMove(x){
@@ -143,7 +143,7 @@ function knotMove(x){
   if(rubs>=16){mini=null;meterOff();ach('Work the Knot',10);knotDone()}
 }
 function knotDone(){
-  talk([['Sir Bart Sheen','Ohhh. Gone. You\'ve got healer\'s hands, my boy. Wasted on me. Gloriously wasted.'],
+  talk([['Lord Bart Sheen','Ohhh. Gone. You\'ve got healer\'s hands, my boy. Wasted on me. Gloriously wasted.'],
         ['Isabeau','The physicians call that a "horse-cramp."'],
         ['Margot','At court they\'ll call it a Bart-horse by supper.'],
         ['Squire (you)','Armour, my lord. Quickly.']],
@@ -157,10 +157,10 @@ function armorTap(x,y){
   else say('"That\'s not a strap, that\'s my goblet."');
 }
 function armorDone(){
-  talk([['Sir Bart Sheen','Magnificent. Ladies, how do I look?'],
+  talk([['Lord Bart Sheen','Magnificent. Ladies, how do I look?'],
         ['Isabeau','Expensive.'],
         ['Margot','Borrowed.'],
-        ['Sir Bart Sheen','Both! Now, squire, lead the way. And whatever happens, steer me away from the wine tent. I mean it this time. Mostly.']],
+        ['Lord Bart Sheen','Both! Now, squire, lead the way. And whatever happens, steer me away from the wine tent. I mean it this time. Mostly.']],
    ()=>{scene='walk';setupWalk()});
 }
 
@@ -202,10 +202,10 @@ function arrive(){
   if(slips===0)ach('Tent? What Tent?',15);else addXP(10);
   talk([
    ['','<i>The bell rings out over Amboise. Banners snap in the wind and the crowd roars.</i>'],
-   ['Sir Bart Sheen',slips?'Made it! Barely! You can\'t fault a man for visiting friends. Wine counts as a friend.':'Made it! Sober-ish! Do you know how rare that is? Write it down. Someone write it down.'],
+   ['Lord Bart Sheen',slips?'Made it! Barely! You can\'t fault a man for visiting friends. Wine counts as a friend.':'Made it! Sober-ish! Do you know how rare that is? Write it down. Someone write it down.'],
    ['','<i>High in the stands, in a coat that cost more than Bart\'s whole life, a man in black velvet watches. He doesn\'t clap. He writes something down in a small ledger.</i>'],
-   ['Sir Bart Sheen','<i>quietly, for once</i> …Don\'t look at him, my boy. Look at me. I\'m much more fun.'],
-   ['Sir Bart Sheen','Lance, please. Let\'s go win something. Duh.'],
+   ['Lord Bart Sheen','<i>quietly, for once</i> …Don\'t look at him, my boy. Look at me. I\'m much more fun.'],
+   ['Lord Bart Sheen','Lance, please. Let\'s go win something. Duh.'],
    ['','<b>End of the opening.</b> Next: the Tourney at Amboise, with lance hand-ups from the barrier.',[['▶ Try the joust prototype',()=>location.href='joust.html'],['↺ Play the opening again',()=>location.reload()]]]
   ]);
 }
