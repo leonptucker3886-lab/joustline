@@ -7,7 +7,7 @@
 1. BARON POUFFE (sword raised, bored): "By the power of whoever is watching... arise, Sir Jack."
 2. The sword taps Jack's shoulder. The pauldron slides down his arm. SFX: `sfx_armor_clank`.
 3. JACK says nothing. No expression.
-4. BARON: "You'll ride in Bartholomew's armor. On Bartholomew's horse."
+4. BARON: "You'll ride in Lord Bart Sheen's armor. On Lord Bart Sheen's horse."
 5. Cut to Mildahouse in the doorway. She snorts.
 6. BARON: "New armor costs money. Money is for people who have it."
 7. STEWARD (unrolling a ledger): "Your pay, Sir Jack. Minus the Baron's half."

@@ -4,7 +4,7 @@
 
 **Setting:** the Paris lists, over several days. Same armor, same horse.
 
-1. HERALD: "Sir... Jock? Sir Jake? The knight in Sir Bartholomew's armor!"
+1. HERALD: "Sir... Jock? Sir Jake? The knight in Lord Bart Sheen's armor!"
    (Write the Herald's Call mini game replaces this line once built; the player's call becomes Jack's crowd nickname.)
 2. Montage, three passes. Mildahouse charges; Jack does not steer. Each pass ends with Jack still seated only because the armor is wedged in the saddle.
 3. After each joust the STEWARD appears at the rail, takes half the purse and walks away.
