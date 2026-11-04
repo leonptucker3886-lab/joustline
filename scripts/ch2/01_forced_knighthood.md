@@ -2,13 +2,14 @@
 **Slot:** `ch2_knighthood` | **Length:** ~50s | **Beat:** 1 (CH2_PARIS.md) | **Canon:** Story Bible v0.4
 **Music:** courtly fanfare, played too slowly.
 
-**Setting:** Baron Pouffe's hall, Paris. Morning. Jack stands in Bart's armor, which is far too big. Mildahouse waits outside the open door.
+**Setting:** the Baron of Vaudrecourt's hall, at his estate (Paris is never shown; Bible §5). Morning. Jack stands in Bart's armor, which is far too big. Tancrede waits outside the open door.
 
-1. BARON POUFFE (sword raised, bored): "By the power of whoever is watching... arise, Sir Jack."
+1. BARON OF VAUDRECOURT (sword raised, bored): "By the power of whoever is watching... arise, Sir Jack."
 2. The sword taps Jack's shoulder. The pauldron slides down his arm. SFX: `sfx_armor_clank`.
 3. JACK says nothing. No expression.
+3b. BARON: "Jack. That's what my cousin calls you, isn't it? It will do." (Bart named him. His real name is never said; Bible §2.)
 4. BARON: "You'll ride in Lord Bart Sheen's armor. On Lord Bart Sheen's horse."
-5. Cut to Mildahouse in the doorway. She snorts.
+5. Cut to Tancrede in the doorway. He snorts.
 6. BARON: "New armor costs money. Money is for people who have it."
 7. STEWARD (unrolling a ledger): "Your pay, Sir Jack. Minus the Baron's half."
 8. Jack looks at the ledger. Looks at the Baron. Says nothing.
