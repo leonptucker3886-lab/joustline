@@ -17,6 +17,8 @@ Status: v0.4 — LOCKED AS CANON (29 Oct). Creative control: GEN Paperwork. Whiz
 - **Baron of Vaudrecourt** (working name; names may change) — Bart's cousin. Sober, polished, generous in public, cold in private. Pays only when he gets something back. ILLEGITIMATE, never legitimized — far down the line of succession. Because he is illegitimate, the family curse does not touch him: his greed is entirely his own.
 - **The Baron's Doctor** — the Baron's man. Gloomy pronouncements, sticky fingers.
 - **Bayard** — the squire's mentor from Chapter 2, after Bart is gone (director call).
+- **Isabeau** — minor Chapter 1 character (already in the game; added to canon 4 Nov, Pizzapan call). Tone rules apply: the squire never speaks to her.
+- **Margot** — minor Chapter 1 character (already in the game; added to canon 4 Nov, Pizzapan call). Tone rules apply: the squire never speaks to her.
 - **Time travelers** (running gag): Cartoonist, Tourist, Influencer, Historian.
 
 ## 2a. Core & family rules (canon)
