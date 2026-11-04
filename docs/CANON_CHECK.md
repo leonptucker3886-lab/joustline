@@ -62,3 +62,18 @@ Source: fencer/ch2-scenes @ 5df41546f4a34806710a5f7e400f0ecc467b3ff3
 - Bible §5 says the player never sees Paris. CH2_PARIS sets scenes in Paris.
 - Bible §2: the squire's real name is never revealed. CH2 calls him "Jack". If that's the name Bart gave him, it's consistent.
 - Bible "Baron of Vaudrecourt" (working name) is now "Baron Pouffe" (CH2 court names). The scripts use Pouffe.
+
+
+## Recheck: Chapter 2 scenes 1, 2, 3, 5 (fix commit d4ab074, fencer/ch2-scenes)
+
+Checked against Story Bible v0.4. Whiz ruled Bible v0.4 wins on all 5 CH2-vs-Bible conflicts.
+
+| Scene | Verdict | Notes |
+|---|---|---|
+| 1 Forced Knighthood | PASS | "Bartholomew" -> Lord Bart Sheen. |
+| 2 A Few Jousts | PASS | Herald line now Lord Bart Sheen. |
+| 3 Inn Night | PASS | Name fixed (L2, L7). Jack's spoken "Goodnight" -> silent nod. |
+| 4 Knight Rescue | PASS (unchanged) | Already passed at 5df4154. |
+| 5 The Payoff | PASS | Name fixed in both lines. |
+
+Open item: the 5 CH2-vs-Bible conflicts (Tancrede/Mildahouse, sword-moment order, Paris on screen, the name Jack, Vaudrecourt/Pouffe) are not yet applied to the scripts. Scripts must be rechecked after that commit.
