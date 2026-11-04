@@ -1,0 +1,84 @@
+{
+  "slot": "ch2_rescue",
+  "scene": 4,
+  "canon": "Story Bible v0.4",
+  "source": "scripts/ch2/04_knight_rescue.md@d4ab074 (Noel PASS)",
+  "length_s": 45,
+  "music": "drum_rising",
+  "setting": "road outside the lists, next morning; river bank",
+  "props": {
+    "knight_armor": "patched",
+    "knight_bridle": "rope"
+  },
+  "shots": [
+    {
+      "t": 0,
+      "who": "KNIGHT",
+      "line": "Help! Anyone!",
+      "action": "dragged by one stirrup toward river"
+    },
+    {
+      "t": 3,
+      "action": "Jack is just there, leading Mildahouse"
+    },
+    {
+      "t": 6,
+      "action": "Jack climbs up Mildahouse's neck; she sighs; she charges"
+    },
+    {
+      "t": 12,
+      "action": "Jack holds out Bart's lance; knight grabs it",
+      "input": {
+        "type": "tap_timing",
+        "optional": true,
+        "fail_state": false
+      }
+    },
+    {
+      "t": 16,
+      "action": "Mildahouse plants hooves; knight pulled free a hand's width from water"
+    },
+    {
+      "t": 20,
+      "action": "Knight stands, muddy, kneels"
+    },
+    {
+      "t": 23,
+      "who": "KNIGHT",
+      "line": "You saved my life. My sword is yours."
+    },
+    {
+      "t": 27,
+      "action": "Jack shakes head; helm spins"
+    },
+    {
+      "t": 29,
+      "who": "KNIGHT",
+      "line": "Then my hand, in friendship!"
+    },
+    {
+      "t": 32,
+      "action": "Jack shakes head again"
+    },
+    {
+      "t": 34,
+      "who": "KNIGHT",
+      "line": "Then... what do you want?",
+      "tone": "confused"
+    },
+    {
+      "t": 37,
+      "who": "JACK",
+      "line": "...",
+      "card": true,
+      "action": "rides off; Mildahouse knows the way"
+    },
+    {
+      "t": 41,
+      "who": "KNIGHT",
+      "line": "I'll repay you, Sir... whoever you are!",
+      "tone": "calling after"
+    }
+  ],
+  "exit": "ch2_payoff"
+}
