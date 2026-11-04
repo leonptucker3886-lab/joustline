@@ -95,6 +95,6 @@ function draw(){const now=performance.now()/1000,riding=state=='charge'||state==
   x.fillStyle=pos<.25&&state=='charge'?'#888':'#fff';x.fillRect(bx+mk*bw-4,by-8,8,bh+16);
   x.fillStyle='#fff';x.font='bold 15px Georgia';x.textAlign='center';x.shadowColor='#000';x.shadowBlur=4;x.fillText(state=='charge'&&pos<.25?'Get ready…':'TAP in the gold!',W/2,by+bh+24);x.shadowBlur=0}
  if(flash>0){x.fillStyle='rgba(255,240,180,'+flash+')';x.fillRect(-30,0,W+60,H);flash-=.05}
- x.restore();hud.innerHTML=(T?'Tournament · vs '+TR[T.round]+'<br>':'')+'Pass '+pass+'/3 &nbsp; You '+me+' – Rival '+foe+(target&&state!='choose'?'<br>Aiming: '+(target=='helm'?'Helm':'Shield'):'')}
+ x.restore();hud.innerHTML=(T?(TR[T.round]?'Tournament · vs '+TR[T.round]:'Tournament complete')+'<br>':'')+'Pass '+pass+'/3 &nbsp; You '+me+' – Rival '+foe+(target&&state!='choose'?'<br>Aiming: '+(target=='helm'?'Helm':'Shield'):'')}
 loop();
 </script></body></html>
