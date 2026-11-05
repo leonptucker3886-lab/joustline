@@ -28,7 +28,7 @@ function reset(){pass=1;me=0;foe=0;passes=[];choose()}
 function choose(){state='choose';pos=0;target=null;pick.style.display='flex';pr.textContent='Choose your target'}
 pick.querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation();target=b.dataset.t;pick.style.display='none';charge()});
 function charge(){state='charge';pos=0;mk=0;md=1;zw=target=='helm'?.12:.2;zone=.4+Math.random()*.4;pr.textContent='Charge!';beep(220,.2);beep(330,.3);setTimeout(()=>{if(state=='charge')pr.textContent=''},900)}
-addEventListener('pointerdown',e=>{if(state=='charge'&&pos>=.25)strike()});
+addEventListener('pointerdown',e=>{if(state!='charge')return;if(pos>=.25)strike();else{pr.textContent='Too early! Wait for the marker';beep(150,.12,'sine')}});
 function strike(){state='hit';t0=pos;const d=Math.abs(mk-zone);const q=d<zw*.25?2:d<zw/2?1:0;
  const pts=q==2?(target=='helm'?3:2):q;let r=Math.random(),fp=r<.2+pass*.1?2:r<.65?1:0;if(pass==3&&Math.random()<.2)fp=3;
  me+=pts;foe+=fp;passes.push([pts,fp]);flash=pts?.9:0;shake=pts?18:6;
