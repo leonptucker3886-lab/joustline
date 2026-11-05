@@ -21,8 +21,8 @@ button:active{transform:scale(.96)}
 <script>
 const c=document.getElementById('c'),x=c.getContext('2d'),hud=document.getElementById('hud'),pr=document.getElementById('pr'),pick=document.getElementById('pick'),msg=document.getElementById('msg');
 let W,H;function rs(){H=innerHeight;W=Math.min(innerWidth,H*.62);const d=devicePixelRatio||1;c.width=W*d;c.height=H*d;c.style.width=W+'px';c.style.height=H+'px';x.setTransform(d,0,0,d,0,0)}rs();addEventListener('resize',rs);
-const quips=["Tancrède snorts: 'Eh, could be worse.'","Royal Decree: the squire has met the ground. Again.","Bayard nods. That's practically a parade.","The Cartoonist scribbles something yellow in the margin."];
-let T=null,TR=['Sir Tancrède','Bayard','The Cartoonist'],passes=[];
+const quips=["Tancrède snorts: 'Eh, could be worse.'","Royal Decree: the squire has met the ground. Again.","Sir Guichard nods. That's practically a parade.","The Cartoonist scribbles something yellow in the margin."];
+let T=null,TR=['Sir Tancrède','Sir Guichard','The Cartoonist'],passes=[];
 let pass=1,me=0,foe=0,state='menu',target,pos=0,mk=0,md=1,zone=.5,zw=.2,flash=0,shake=0,res='',t0=0;
 let ac;function beep(f,d,t='square',v=.15){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
 function reset(){pass=1;me=0;foe=0;passes=[];choose()}
