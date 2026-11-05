@@ -1,4 +1,4 @@
-# CH2 Scene 3 — The Payoff (fake-death message)
+# CH2 Scene 4 — The Payoff (fake-death message)
 **Slot:** `ch2_payoff` | **Length:** ~45s | **Beat:** 5 (CH2_PARIS.md); before the sword moment per Bible §6 | **Canon:** Story Bible v0.4
 **Music:** the Baron's theme, then a quiet sting.
 
