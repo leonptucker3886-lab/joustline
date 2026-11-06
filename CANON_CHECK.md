@@ -7,5 +7,6 @@
 | e8ac1ca | fencer/ch2-scenes | Fencer | PASS | All 5 conflicts fixed: Mildahouse->Tancrede, sword moment after fake-death message (order knighthood > jousts > rescue > payoff > inn night), Paris off-screen, "Jack" = name Bart gave, Pouffe->Baron of Vaudrecourt. Old names only in README changelog. Squire speaks only to Bart. |
 | 69745e9 | fencer/ch2-scenes | Fencer | PASS | One-line change: 04_the_payoff.md header "Scene 3" -> "Scene 4". No names or lines touched. |
 | 0cfa4e4 | pizzapan/canon-fixes | Pizzapan | PASS | Bayard removed from joust.html; "Sir Guichard" replaces him in rival list and quip (2 lines). Tancrede and the Cartoonist untouched. Open: "Sir Guichard" not yet checked against the Bible. |
+| 0cfa4e4 | pizzapan/canon-fixes | Pizzapan | PASS (Sir Guichard) | "Sir Guichard" checked vs docs/STORY_BIBLE.md v0.4 and docs/CHARACTERS.md: name appears in neither, so no conflict. Generic invented joust rival, not a canon character or historical figure. Removing Bayard from the rival list matches Bible line 18 (Bayard = Ch2 mentor). Caveat: Bible line 89 still flags the rival picker offering the Baron as a knight; separate open item. |
 
-Pending: Pizzapan rival rename; "Sir Guichard" Bible check; B1 stub check; Ch2 scene builds.
+Pending: Pizzapan rival rename; B1 stub check; Ch2 scene builds.
