@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Lance Dodge</title>
+<style>body{margin:0;background:#18181B;color:#FAFAF9;font-family:system-ui,sans-serif;text-align:center}svg{max-width:100%;height:auto;background:#2A78D6;touch-action:none}button{font-size:18px;padding:8px 16px;margin:8px}</style></head><body>
+<h1>Lance Dodge</h1><p>Move your knight (tap/drag or arrow keys). Dodge the lances. <b id="s">0</b></p>
+<svg id="g" viewBox="0 0 300 400" width="300" height="400"><rect id="k" x="135" y="360" width="30" height="30" fill="#FAFAF9"/></svg><br><button id="r">Restart</button>
+<script>
+var g=document.getElementById('g'),k=document.getElementById('k'),sEl=document.getElementById('s'),x=135,L=[],t=0,score=0,over=false,NS='http://www.w3.org/2000/svg';
+function reset(){L.forEach(function(l){g.removeChild(l.e)});L=[];x=135;score=0;t=0;over=false}
+document.getElementById('r').onclick=reset;
+document.onkeydown=function(e){if(e.key=='ArrowLeft')x-=20;if(e.key=='ArrowRight')x+=20};
+g.addEventListener('pointermove',function(e){if(e.buttons||e.pointerType=='touch'){var b=g.getBoundingClientRect();x=(e.clientX-b.left)/b.width*300-15}});
+g.addEventListener('pointerdown',function(e){var b=g.getBoundingClientRect();x=(e.clientX-b.left)/b.width*300-15});
+function step(){if(!over){t++;if(t%30==0){var e=document.createElementNS(NS,'rect');var lx=Math.random()*290;e.setAttribute('width',8);e.setAttribute('height',40);e.setAttribute('fill','#008300');g.appendChild(e);L.push({x:lx,y:-40,v:2+score/20,e:e})}
+x=Math.max(0,Math.min(270,x));k.setAttribute('x',x);
+for(var i=L.length-1;i>=0;i--){var l=L[i];l.y+=l.v;l.e.setAttribute('x',l.x);l.e.setAttribute('y',l.y);
+if(l.y+40>360&&l.y<390&&l.x+8>x&&l.x<x+30){over=true;sEl.textContent=score+' - Unhorsed! Restart'}
+if(l.y>400){g.removeChild(l.e);L.splice(i,1);score++;sEl.textContent=score}}}
+requestAnimationFrame(step)}step();
+</script></body></html>
