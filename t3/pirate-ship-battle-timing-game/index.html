@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pirate Ship Battle — LeonLink</title>
+<style>body{margin:0;font-family:system-ui,sans-serif;background:#0b2545;color:#fff;text-align:center}h1{margin:12px 0 4px;font-size:1.6rem}#sea{position:relative;max-width:520px;height:220px;margin:10px auto;background:linear-gradient(#13315c,#1d4e89);border-radius:12px;overflow:hidden}#enemy{position:absolute;top:40px;font-size:42px;left:0}#bar{position:relative;max-width:520px;height:22px;margin:8px auto;background:#333;border-radius:11px}#zone{position:absolute;height:100%;background:#2a9d8f;border-radius:11px}#cur{position:absolute;width:6px;height:100%;background:#ffd166}#ship{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:46px}button{font-size:1.3rem;padding:14px 36px;margin:10px;border:0;border-radius:10px;background:#e63946;color:#fff}#msg{min-height:1.5em}</style></head><body>
+<h1>🏴‍☠️ Pirate Ship Battle</h1><p>Fire when the gold marker is in the green zone. Sink 5 ships before you take 3 hits.</p>
+<div id="sea"><div id="enemy">⛵</div><div id="ship">🚢</div></div><div id="bar"><div id="zone"></div><div id="cur"></div></div>
+<div>Sunk: <b id="s">0</b>/5 · Hits taken: <b id="h">0</b>/3</div><div id="msg"></div><button id="fire">FIRE!</button>
+<script>
+let p=0,d=1,sp=1.2,s=0,h=0,zl,zw,ex=0,ed=1,over=false;const $=i=>document.getElementById(i);
+function nz(){zw=Math.max(8,22-s*3);zl=Math.random()*(100-zw);$('zone').style.left=zl+'%';$('zone').style.width=zw+'%';}
+function loop(){if(!over){p+=d*sp;if(p>=100||p<=0)d*=-1;$('cur').style.left=p+'%';ex+=ed*0.6;if(ex>85||ex<0)ed*=-1;$('enemy').style.left=ex+'%';}requestAnimationFrame(loop);}
+function fire(){if(over){s=h=0;sp=1.2;over=false;$('fire').textContent='FIRE!';nz();upd('');return;}
+if(p>=zl&&p<=zl+zw){s++;sp+=0.4;upd('💥 Direct hit!');}else{h++;upd('🌊 Miss — they fire back!');}
+if(s>=5){over=true;upd('🏆 Victory! The seas are yours.');$('fire').textContent='Play again';}
+else if(h>=3){over=true;upd('☠️ Your ship sank.');$('fire').textContent='Play again';}nz();}
+function upd(m){$('s').textContent=s;$('h').textContent=h;$('msg').textContent=m;}
+$('fire').onclick=fire;addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();fire();}});nz();loop();
+</script></body></html>
