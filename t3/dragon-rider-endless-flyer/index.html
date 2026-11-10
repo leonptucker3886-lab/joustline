@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dragon Rider Endless Flyer · Joustline T3</title>
+<style>body{margin:0;background:#120c22;color:#f5e9c8;font-family:system-ui,sans-serif;text-align:center}h1{font-size:1.3rem;margin:.6rem}canvas{background:linear-gradient(#2b1d52,#e0723a);max-width:100%;touch-action:none;border-radius:8px}p{margin:.4rem;font-size:.9rem}a{color:#ffc857}</style></head><body>
+<h1>🐉 Dragon Rider Endless Flyer</h1><canvas id="c" width="400" height="560"></canvas>
+<p>Tap, click or press Space to flap. Fly between the towers. Free play.</p><p><a href="/">← Joustline home</a></p>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');let y,v,t,score,best=+localStorage.dr_best||0,state='ready',frame=0;
+function reset(){y=280;v=0;t=[];score=0;frame=0}reset();
+function flap(){if(state!=='play'){reset();state='play'}v=-7}
+c.addEventListener('pointerdown',e=>{e.preventDefault();flap()});addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();flap()}});
+function loop(){frame++;x.clearRect(0,0,400,560);
+if(state==='play'){v+=.4;y+=v;if(frame%90===0){const g=150,top=60+Math.random()*(560-g-120);t.push({x:400,top,g,p:0})}
+for(const o of t){o.x-=2.6;if(!o.p&&o.x+50<80){o.p=1;score++}
+if(80+18>o.x&&80-18<o.x+50&&(y-14<o.top||y+14>o.top+o.g))end()}
+t=t.filter(o=>o.x>-60);if(y>546||y<14)end()}
+x.fillStyle='#3d2a1e';for(const o of t){x.fillRect(o.x,0,50,o.top);x.fillRect(o.x,o.top+o.g,50,560)}
+x.font='34px serif';x.textAlign='center';x.textBaseline='middle';x.save();x.translate(80,y);x.rotate(Math.max(-.5,Math.min(.8,v/12)));x.scale(-1,1);x.fillText('🐉',0,0);x.restore();
+x.fillStyle='#fff';x.font='bold 28px system-ui';x.fillText(score,200,40);x.font='16px system-ui';x.fillText('Best '+best,200,68);
+if(state!=='play'){x.font='bold 22px system-ui';x.fillText(state==='over'?'Crashed! Tap to fly again':'Tap to start',200,280)}
+requestAnimationFrame(loop)}
+function end(){state='over';if(score>best){best=score;localStorage.dr_best=best}}
+loop();
+</script></body></html>
