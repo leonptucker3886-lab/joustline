@@ -1,9 +1,10 @@
 {
   "name": "joustline",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Joustline - comedic jousting game prototype with tournament ladder",
+  "description": "Joustline - mobile-first comedic jousting game (Chapter One vertical slice + tournament ladder)",
   "scripts": {
+    "start": "node game/tools/serve.mjs 3000",
     "test": "node tests/ladder.test.js"
   },
   "license": "UNLICENSED"

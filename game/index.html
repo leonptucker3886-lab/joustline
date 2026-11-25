@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+<meta name="theme-color" content="#efe2c1" />
+<meta name="description" content="JoustLine — Chapter One: The First Lance. A mobile-first jousting duel. You are Jack, squire of Montrésor: serve Lord Bart Sheen, take up his lance, and ride the lists. A LeonLink game." />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png" />
+<meta name="application-name" content="JoustLine" />
+<meta name="apple-mobile-web-app-title" content="JoustLine" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="mobile-web-app-capable" content="yes" />
+<title>JoustLine — Chapter One: The First Lance</title>
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/intro.css" />
+</head>
+<body>
+<div id="app">
+  <canvas id="stage" aria-label="Jousting arena"></canvas>
+
+  <!-- ----------------------------------------------------------- cold open -->
+  <div id="intro" hidden>
+    <div class="i-present">LeonLink<b>presents</b></div>
+    <canvas id="intro-crest" class="i-crest" aria-hidden="true"></canvas>
+    <div class="i-title">JoustLine<span>Chapter One</span></div>
+    <div class="i-shout">Winning!</div>
+    <div class="i-skip">tap to skip</div>
+  </div>
+
+  <!-- ---------------------------------------------------------- in-match HUD -->
+  <div id="hud">
+    <div class="hud-top">
+      <div class="hud-side">
+        <div class="who" id="you-who">YOU</div>
+        <div class="hpbar"><i id="hp-you"></i></div>
+        <div class="plates" id="plates-you">
+          <i data-z="helm"></i><i data-z="chest"></i><i data-z="shield"></i>
+        </div>
+      </div>
+      <div class="passchip" id="passnum">PASS 1</div>
+      <div class="hud-side right">
+        <div class="who" id="foe-who">RIVAL</div>
+        <div class="hpbar foe"><i id="hp-foe"></i></div>
+        <div class="plates foe" id="plates-foe">
+          <i data-z="helm"></i><i data-z="chest"></i><i data-z="shield"></i>
+        </div>
+      </div>
+    </div>
+    <button id="btn-pause" class="chip-btn" aria-label="Pause">&#10074;&#10074;</button>
+    <div id="callout"><div class="c-main" id="callout-main"></div><div class="c-sub" id="callout-sub"></div></div>
+    <div id="toast"></div>
+  </div>
+
+  <!-- ------------------------------------------------------------- screens -->
+  <div id="screens">
+
+    <section id="scr-title" class="screen active title-screen">
+      <div class="crest" aria-hidden="true">
+        <svg viewBox="0 0 64 74" width="64" height="74">
+          <path d="M32 2 60 10v26c0 18-12 30-28 36C16 66 4 54 4 36V10L32 2Z" fill="#8f2233" stroke="#e8c96a" stroke-width="3" />
+          <path d="M32 16v30M20 30h24" stroke="#e8c96a" stroke-width="5" stroke-linecap="round" />
+        </svg>
+      </div>
+      <h1 class="game-title">JoustLine<span>Chapter One</span></h1>
+      <p class="tagline">You are Jack, squire of Montrésor.<br />Serve a knight. Carry his lance. Take the lists.</p>
+      <div class="stat-strip">
+        <div><span id="title-gold">0</span><small>purse</small></div>
+        <div><span id="title-tokens">0</span><small>glow</small></div>
+        <div><span id="title-wins">0</span><small>rivals down</small></div>
+        <span id="title-level" hidden>0</span>
+      </div>
+      <div class="stack">
+        <button class="btn primary" id="btn-play">The Lists at Amboise</button>
+        <button class="btn" id="btn-retinue">Your retinue</button>
+        <button class="btn" id="btn-armory">The armory</button>
+        <button class="btn ghost" id="btn-help">How to ride</button>
+        <button class="btn" id="btn-install" hidden>Install the game</button>
+      </div>
+      <p class="install-hint" id="install-hint" hidden>Tap <b>Share</b>, then <b>Add to Home Screen</b> for full-screen play.</p>
+      <div class="title-foot">
+        <button class="chip-btn sound" id="btn-sound" aria-label="Toggle sound">&#9834;</button>
+        <span class="fine">A LeonLink game. Three taps a pass.</span>
+        <a class="eco" href="https://leonlink.net" target="_blank" rel="noopener">leonlink.net</a>
+      </div>
+    </section>
+
+    <section id="scr-story" class="screen">
+      <div class="card story-card">
+        <div class="story-kicker" id="story-kicker"></div>
+        <h2 id="story-title"></h2>
+        <p class="story-text" id="story-text"></p>
+        <div class="story-foot">
+          <span class="story-progress" id="story-progress"></span>
+          <button class="btn primary" id="btn-story-next">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="scr-knot" class="screen">
+      <div class="card knot-card">
+        <div class="story-kicker">A Bart-horse</div>
+        <h2>Work the knot</h2>
+        <p class="lede center" id="knot-sub">His leg has seized mid-toast. Ten quick rubs before he topples off Tancrede.</p>
+        <div class="knot-track"><i id="knot-fill"></i></div>
+        <div class="stack">
+          <button class="btn primary" id="btn-knot">Rub</button>
+        </div>
+        <p class="story-progress" id="knot-clock">3.5s</p>
+      </div>
+    </section>
+
+    <section id="scr-ladder" class="screen">
+      <header class="screen-head">
+        <button class="back" data-back="scr-title" aria-label="Back">&#8249;</button>
+        <h2>The Lists</h2>
+        <div class="coin"><span id="ladder-gold">0</span></div>
+      </header>
+      <p class="lede">Six riders stand between this house and its honour. Each one rides harder and hits heavier, and every one you unhorse writes a new charge into your arms.</p>
+      <div id="ladder-list" class="ladder"></div>
+      <div class="screen-foot">
+        <button class="btn" id="btn-ladder-armory">The armory</button>
+      </div>
+    </section>
+
+    <section id="scr-retinue" class="screen">
+      <header class="screen-head">
+        <button class="back" id="btn-retinue-back" aria-label="Back">&#8249;</button>
+        <h2>Your Retinue</h2>
+      </header>
+      <p class="lede">Who carries your banner, who keeps the purse, and whose favour you wear on your helm.</p>
+
+      <h3 class="sect-label">Knight</h3>
+      <div id="knight-list" class="pick-list"></div>
+
+      <h3 class="sect-label">Household</h3>
+      <div id="squire-list" class="pick-list"></div>
+
+      <h3 class="sect-label">Ride for</h3>
+      <div id="lady-list" class="pick-list"></div>
+
+      <div class="screen-foot">
+        <button class="btn primary" id="btn-retinue-done">Back</button>
+      </div>
+    </section>
+
+    <section id="scr-armory" class="screen">
+      <header class="screen-head">
+        <button class="back" data-back="scr-ladder" aria-label="Back">&#8249;</button>
+        <h2>The Armory</h2>
+        <div class="coin"><span id="armory-gold">0</span></div>
+      </header>
+      <p class="lede">Spend the purse on steel. Spend Glow on how the steel looks.</p>
+      <div id="armory-list" class="armory"></div>
+
+      <h3 class="sect-label">Horse armour <span class="glow-chip"><span id="armory-tokens">0</span> Glow</span></h3>
+      <p class="lede small">Barding is bought with Glow, the same wallet the rest of the LeonLink lobby uses. Shields stay the same, but the stands know a rich knight when they see one.</p>
+      <div id="barding-list" class="pick-list"></div>
+
+      <h3 class="sect-label">Coat of arms</h3>
+      <p class="lede small">Field and charge. Charges are not for sale — each one is earned by unhorsing rivals.</p>
+      <div id="heraldry-list" class="heraldry"></div>
+
+      <div class="screen-foot">
+        <button class="btn primary" id="btn-armory-back">Back to the lists</button>
+      </div>
+    </section>
+
+    <section id="scr-help" class="screen">
+      <header class="screen-head">
+        <button class="back" id="btn-help-back" aria-label="Back">&#8249;</button>
+        <h2>How to Ride</h2>
+      </header>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <div><h3>Gallop</h3><p>Tap when the needle is inside the gold band. A full gallop adds real force to your blow.</p></div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div><h3>Aim</h3><p>The window is two seconds and the sweep speeds up. <b>Helm</b> hits hardest, <b>shield</b> barely scratches &mdash; but a shattered shield costs them their guard.</p></div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div><h3>Strike</h3><p>Tap again in the gold window. A perfect strike nearly doubles your damage.</p></div>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <div><h3>Earn your arms</h3><p>Won tilts pay <b>Glow</b> &mdash; the same Glow your wallet holds across the LeonLink lobby. Here it buys horse armour; heraldic charges have to be earned by beating rivals. Your lady will only wear your colours once you are worth them.</p></div>
+        </div>
+        <div class="step">
+          <div class="num">5</div>
+          <div><h3>The Bart-horse</h3><p>Before the lists, Bart's leg seizes mid-toast. <b>Work the knot</b> &mdash; ten quick taps &mdash; before he topples off Tancrede. He will take the credit either way.</p></div>
+        </div>
+      </div>
+      <div class="screen-foot">
+        <button class="btn primary" id="btn-help-start">Ride out</button>
+      </div>
+    </section>
+
+    <section id="scr-result" class="screen">
+      <div class="card result-card">
+        <div class="result-kicker" id="res-kicker">PASS</div>
+        <h2 id="res-title">Victory</h2>
+        <p id="res-sub" class="lede center">You unhorsed them.</p>
+        <p id="res-story" class="res-story"></p>
+        <div class="result-stats">
+          <div><span id="res-gold">+0</span><small>purse</small></div>
+          <div><span id="res-tokens">+0</span><small>glow</small></div>
+          <div><span id="res-passes">0</span><small>passes</small></div>
+          <div><span id="res-hp">0</span><small>left</small></div>
+        </div>
+        <div class="stack">
+          <button class="btn primary" id="btn-res-again">Ride again</button>
+          <button class="btn" id="btn-res-armory">Spend the purse</button>
+          <button class="btn ghost" id="btn-res-ladder">Back to the lists</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="scr-champion" class="screen">
+      <div class="crown" aria-hidden="true">&#9812;</div>
+      <div class="story-kicker">End of Chapter One</div>
+      <h2 class="champ-title">The First Lance</h2>
+      <p class="lede center">Every knight in the realm has heard Jack’s name. The Baron’s ledger is still open on the table, “Surgeons, Paris: paid” written in a neat hand, and the next line is not finished yet.</p>
+      <div class="chapter-next">
+        <b>Chapter Two — Paris</b>
+        <span>The Baron’s household. The ledger. A butterfly, and a boy who is nobody’s squire any more.</span>
+      </div>
+      <div class="stat-strip">
+        <div><span id="champ-gold">0</span><small>purse</small></div>
+        <div><span id="champ-tokens">0</span><small>glow</small></div>
+        <div><span id="champ-runs">0</span><small>tilts</small></div>
+      </div>
+      <div class="stack">
+        <button class="btn primary" id="btn-champ-keep">Back to the lists</button>
+        <button class="btn ghost" id="btn-champ-reset">Start a new house</button>
+      </div>
+    </section>
+
+    <section id="scr-pause" class="screen">
+      <div class="card result-card small">
+        <h2>Halted</h2>
+        <p class="lede center">The marshal calls a pause.</p>
+        <div class="stack">
+          <button class="btn primary" id="btn-resume">Resume the tilt</button>
+          <button class="btn ghost" id="btn-forfeit">Forfeit the pass</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
