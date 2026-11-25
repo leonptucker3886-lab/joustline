@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="mobile-web-app-capable" content="yes" />
-<title>JoustLine — Chapter One: The First Lance</title>
+<title>JoustLine — The First Lance &amp; The Ringer</title>
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="css/intro.css" />
 </head>
@@ -64,7 +64,7 @@
           <path d="M32 16v30M20 30h24" stroke="#e8c96a" stroke-width="5" stroke-linecap="round" />
         </svg>
       </div>
-      <h1 class="game-title">JoustLine<span>Chapter One</span></h1>
+      <h1 class="game-title">JoustLine<span id="title-chapter">Chapter One</span></h1>
       <p class="tagline">You are Jack, squire of Montrésor.<br />Serve a knight. Carry his lance. Take the lists.</p>
       <div class="stat-strip">
         <div><span id="title-gold">0</span><small>purse</small></div>
@@ -115,10 +115,10 @@
     <section id="scr-ladder" class="screen">
       <header class="screen-head">
         <button class="back" data-back="scr-title" aria-label="Back">&#8249;</button>
-        <h2>The Lists</h2>
+        <h2 id="ladder-title">The Lists</h2>
         <div class="coin"><span id="ladder-gold">0</span></div>
       </header>
-      <p class="lede">Six riders stand between this house and its honour. Each one rides harder and hits heavier, and every one you unhorse writes a new charge into your arms.</p>
+      <p class="lede" id="ladder-lede">Six riders stand between this house and its honour. Each one rides harder and hits heavier, and every one you unhorse writes a new charge into your arms.</p>
       <div id="ladder-list" class="ladder"></div>
       <div class="screen-foot">
         <button class="btn" id="btn-ladder-armory">The armory</button>
@@ -235,8 +235,30 @@
         <div><span id="champ-runs">0</span><small>tilts</small></div>
       </div>
       <div class="stack">
-        <button class="btn primary" id="btn-champ-keep">Back to the lists</button>
+        <button class="btn primary" id="btn-champ-next">To Paris &#8250;</button>
+        <button class="btn" id="btn-champ-keep">Back to the lists</button>
         <button class="btn ghost" id="btn-champ-reset">Start a new house</button>
+      </div>
+    </section>
+
+    <section id="scr-paris" class="screen">
+      <div class="crown" aria-hidden="true">&#9812;</div>
+      <div class="story-kicker" id="paris-kicker">End of Chapter Two</div>
+      <h2 class="champ-title" id="paris-title">The Ringer</h2>
+      <p class="lede center" id="paris-text">A season of borrowed armour, half a wage, and four hired lances in the sand. Bart is on the road with a mule and a story about his leg; the Baron is at his ledger; and a sword that is not Jack’s is back in its sheath.</p>
+      <div class="chapter-next">
+        <b id="paris-next">Chapter Three — The Field of the Cloth of Gold</b>
+        <span id="paris-next-text">Silk pavilions, an English duke, and the road to Paris. Summer, 1520.</span>
+      </div>
+      <div class="stat-strip">
+        <div><span id="paris-gold">0</span><small>purse</small></div>
+        <div><span id="paris-tokens">0</span><small>glow</small></div>
+        <div><span id="paris-runs">0</span><small>tilts</small></div>
+      </div>
+      <div class="stack">
+        <button class="btn primary" id="btn-paris-lists">Back to the ring</button>
+        <button class="btn" id="btn-paris-armory">The armory</button>
+        <button class="btn ghost" id="btn-paris-title">The title page</button>
       </div>
     </section>
 

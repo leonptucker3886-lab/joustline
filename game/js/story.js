@@ -234,10 +234,109 @@ export const STORY = {
   },
 };
 
+// Chapter Two: the ring at Paris, 1516. Jack is a knight now, in Bart's armour,
+// riding for half a wage in a circuit of hired lances. The Baron's ledger keeps
+// opening; Bart is somewhere on the road, following a butterfly.
+export const STORY2 = {
+  vau: {
+    intro: [
+      {
+        kicker: 'The Circuit',
+        title: 'The Ringer of Blois',
+        text:
+          'A fair outside Blois, a purse already agreed, and a man who has been paid to lose it. He has decided, between the payment and the trumpet, that he would rather not.',
+      },
+      {
+        kicker: 'The Circuit',
+        title: 'A bigger boy',
+        text:
+          '\u201cThey told me a boy was riding in his master\u2019s armour,\u201d he says, looking you up and down. \u201cI was expecting a bigger boy.\u201d Behind him, the Baron\u2019s steward is writing the half he has not paid yet.',
+      },
+    ],
+    win:
+      'The ringer goes into the sand and stays there, laughing at the sky. \u201cWorth it,\u201d he says, to nobody. The steward closes the purse and does not look at you.',
+    loss:
+      'He puts you down, collects the purse he was paid to lose, and buys you a drink with it. The Baron hears about this before you have got your helm off.',
+  },
+
+  pilgrim: {
+    intro: [
+      {
+        kicker: 'The Circuit',
+        title: 'The Pilgrim',
+        text:
+          'He rides with a vow stitched inside his collar and a hangover the size of a cathedral. The vow, as far as anyone can work out, forbids striking a man below the head.',
+      },
+      {
+        kicker: 'The Circuit',
+        title: 'Pious, at the time',
+        text:
+          '\u201cI swore it at Compostela,\u201d he says cheerfully. \u201cIt seemed pious at the time.\u201d He lowers his lance, which is the longest on the circuit, and points it at your helm.',
+      },
+    ],
+    win:
+      'He comes off at the second pass, sits up in the sand, and asks whether the vow counts if he was unhorsed first. A priest in the crowd tells him it does not. He looks relieved.',
+    loss:
+      'His lance finds the helm and the world goes white and then very quiet. He helps you up afterwards and apologises twice, which is somehow the worst part.',
+  },
+
+  widow: {
+    intro: [
+      {
+        kicker: 'The Circuit',
+        title: 'The Widow\u2019s Man',
+        text:
+          'A fast rider in borrowed purple, sent by a widow who is owed money by a knight who is not here. The debt has been carried down the road for two years. It has arrived at you.',
+      },
+      {
+        kicker: 'The Circuit',
+        title: 'You will do',
+        text:
+          '\u201cYour master owes my mistress money,\u201d he says. \u201cYou will do until he is well enough to be unhorsed.\u201d He does not say it unkindly, which is the only cruel thing about it.',
+      },
+    ],
+    win:
+      'He goes down clean, gets up clean, and bows to you before he bows to the stands. \u201cI will tell her the squire paid part of it,\u201d he says. You do not correct him about the word squire.',
+    loss:
+      'He takes you off at the chest with a hit you never see. Riding back, he leans over: \u201cTell your master the interest is running.\u201d The ledger, somewhere, turns a page.',
+  },
+
+  otherlance: {
+    intro: [
+      {
+        kicker: 'The Circuit',
+        title: 'The Baron\u2019s other lance',
+        text:
+          'The last rider of the season wears the Baron\u2019s own colours, on the Baron\u2019s own horse, with the Baron\u2019s own signature on the purse. He is what the Baron would have bought if he had thought of it sooner.',
+      },
+      {
+        kicker: 'The Circuit',
+        title: 'In case',
+        text:
+          '\u201cThe Baron sends his regards,\u201d he says. \u201cHe also sends me, in case the regards are not enough.\u201d He watches the way you hold the lance, and starts working out where you will put it.',
+      },
+    ],
+    win:
+      'The Baron\u2019s other lance goes into the sand next to the Baron\u2019s other colours, and for a moment the whole ring is quiet enough to hear a steward doing arithmetic.',
+    loss:
+      'He unhorses you with the shot you always use, which is his entire point. \u201cHe knows your line,\u201d he says, riding past. \u201cHe has known it for years.\u201d',
+  },
+};
+
 /** The end of Chapter One. Shown on the champion screen. */
 export const FINALE = {
   kicker: 'Chapter One',
   title: 'The First Lance',
   text:
     'Every knight in the realm has heard a squire\u2019s name. The Baron\u2019s ledger is still open on the table, \u201cSurgeons, Paris: paid\u201d written in a neat hand, and the next line is not finished yet.',
+};
+
+/** The end of Chapter Two, shown on the Paris screen. */
+export const CH2_FINALE = {
+  kicker: 'End of Chapter Two',
+  title: 'The Ringer',
+  text:
+    'A season of borrowed armour, half a wage, and four hired lances in the sand. Bart is on the road with a mule and a story about his leg; the Baron is at his ledger; and a sword that is not yours is back in its sheath.',
+  nextTitle: 'Chapter Three \u2014 The Field of the Cloth of Gold',
+  nextText: 'Silk pavilions, an English duke, and the road to Paris. Summer, 1520.',
 };

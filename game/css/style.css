@@ -545,9 +545,9 @@ body.in-match #hud { opacity: 1; }
   background-clip: text;
   color: transparent;
 }
-#scr-champion { justify-content: center; align-items: center; text-align: center; gap: 12px; }
-#scr-champion .stack { margin-top: 10px; }
-#scr-champion .stat-strip { width: 100%; max-width: 420px; }
+#scr-champion, #scr-paris { justify-content: center; align-items: center; text-align: center; gap: 12px; }
+#scr-champion .stack, #scr-paris .stack { margin-top: 10px; }
+#scr-champion .stat-strip, #scr-paris .stat-strip { width: 100%; max-width: 420px; }
 
 @media (min-height: 760px) {
   .title-screen { gap: 18px; }

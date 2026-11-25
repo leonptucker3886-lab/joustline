@@ -1,8 +1,9 @@
-// Chapter One cutscenes: painted miniature plates with slow camera moves,
-// crossfades, dust and a parchment caption. Tap to advance, skip always there.
+// Cutscenes: painted miniature plates with slow camera moves, crossfades, dust
+// and a parchment caption. Tap to advance, skip always there.
 //
-// Canon: docs/STORY_BIBLE.md v0.4 §4 and docs/scenes/CH1_JACK_FINALE.md.
-// The squire is Jacques, called Jack.
+// Canon: docs/STORY_BIBLE.md v0.4 §4, docs/scenes/CH1_JACK_FINALE.md, and
+// docs/CH2_PARIS.md (forced knighthood; the inn where Charles de Wierd finds
+// Bart). The squire is Jacques, called Jack.
 
 import { Sfx, unlock } from './audio.js';
 
@@ -162,6 +163,77 @@ export const SCENES = {
         img: 'mounted.jpg',
         d: 5.8,
         cap: 'Two grooms lift him into Bart\u2019s saddle. The armour is far too big. The helm spins when he nods.',
+      },
+    ],
+  },
+
+  knighthood: {
+    id: 'knighthood',
+    shots: [
+      {
+        img: 'ch2-hall.jpg',
+        d: 5.0,
+        sfx: 'crowdMurmur',
+        cap: 'Vaudrecourt, 1516. A sword, a cushion, and a Baron who has just thought of something.',
+      },
+      {
+        img: 'ch2-hall.jpg',
+        d: 5.6,
+        who: 'The Baron',
+        cap: '\u201cKneel, squire.\u201d The flat of Bart\u2019s own blade, on both shoulders. \u201cSir Jacques of Montr\u00e9sor.\u201d',
+      },
+      {
+        img: 'ch2-hall.jpg',
+        d: 5.4,
+        sfx: 'trumpet',
+        cap: 'The hall applauds a knight wearing another man\u2019s armour and another man\u2019s name. Nobody laughs. That is worse.',
+      },
+      {
+        img: 'ch2-armour.jpg',
+        d: 5.2,
+        sfx: 'thump',
+        cap: 'The helm turns round when he nods. Mildahouse sighs, and lets him climb up her neck anyway.',
+      },
+      {
+        img: 'ch2-armour.jpg',
+        d: 5.4,
+        who: 'The Baron',
+        cap: '\u201cYour pay. Half, for the household.\u201d Counted out on the steps, in front of the grooms, where everyone can see it is fair.',
+      },
+    ],
+  },
+
+  inn: {
+    id: 'inn',
+    shots: [
+      {
+        img: 'ch2-inn.jpg',
+        d: 5.4,
+        sfx: 'crowdMurmur',
+        cap: 'The inn by the Paris gate. A candle, a bill, and a sword across his knees.',
+      },
+      {
+        img: 'ch2-inn.jpg',
+        d: 5.2,
+        cap: 'He is nobody\u2019s squire now. He is still carrying somebody else\u2019s steel.',
+      },
+      {
+        img: 'ch2-charles.jpg',
+        d: 4.6,
+        sfx: 'harpCut',
+        who: 'Charles de Wierd',
+        cap: '\u201cI FOUND HIM!\u201d The door bangs. \u201cBart! Heading for the castle! Tonight!\u201d',
+      },
+      {
+        img: 'ch2-charles.jpg',
+        d: 5.0,
+        cap: 'Nobody in the taproom looks up. Charles is very used to this.',
+      },
+      {
+        img: 'ch2-dawn.jpg',
+        d: 5.8,
+        sfx: 'harp',
+        cap: 'The sword goes back in its sheath. In the morning there is a road, and the Baron\u2019s half of everything waiting at the end of it.',
       },
     ],
   },
