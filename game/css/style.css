@@ -360,6 +360,7 @@ body.in-match #hud { opacity: 1; }
   color: rgba(199, 183, 156, 0.65);
 }
 .story-foot .btn { min-width: 120px; }
+.story-skip { width: 100%; margin-top: 12px; min-height: 46px; font-size: 14px; }
 .res-story {
   margin: 14px 0 0;
   font-size: 13.5px;
