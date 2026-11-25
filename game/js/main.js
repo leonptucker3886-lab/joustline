@@ -133,6 +133,8 @@ function updateTitle() {
   $('title-wins').textContent = winsNow().length + '/' + rivalsNow().length;
   $('title-chapter').textContent = chNow().name;
   $('btn-play').textContent = chNow().lists;
+  // Skipping only makes sense while Chapter One is still unfinished.
+  $('btn-skip').hidden = chNow().n !== 1 || winsNow().length >= rivalsNow().length;
   $('you-who').textContent = knightOf(save).name.split(' ').slice(-1)[0].toUpperCase();
   const foot = document.querySelector('.title-foot .fine');
   if (foot) foot.textContent = knightOf(save).name + ' rides for ' + ladyOf(save).name;
@@ -398,6 +400,9 @@ function showStory(panels, done) {
   renderStory();
   hideScreens();
   show('scr-story');
+  // The prologue is Chapter One, so the ring shortcut is offered there too —
+  // otherwise a new player has to sit through the whole cold open to reach it.
+  $('btn-story-skip').hidden = panels !== PROLOGUE || chNow().n !== 1;
 }
 
 /** First meeting with a rival gets its story panels; later meetings go straight in. */
@@ -574,6 +579,30 @@ function endMatch(res) {
 }
 
 /* ------------------------------------------------------ chapter two */
+
+/**
+ * A shortcut for anyone who wants the ring, not Amboise: Chapter Two starts
+ * with a randomized level-1 loadout instead of bare steel, built from the
+ * things a first season would plausibly have bought.
+ */
+function skipToChapterTwo() {
+  const pick = (list) => list[Math.floor(Math.random() * list.length)];
+  save = emptySave();
+  save.seenPrologue = true;
+  save.seenChapter = true;
+  save.knotDone = true;
+  save.seenTutorial = true;
+  save.up = { lance: 1, armor: 1, horse: 1 };
+  save.coat = {
+    field: pick(FIELDS.filter((f) => f.unlock === 0)).id,
+    charge: pick(CHARGES.filter((c) => c.unlock === 0)).id,
+  };
+  save.knight = pick(KNIGHTS).id;
+  save.squire = pick(SQUIRES).id;
+  save.lady = pick(LADIES.filter((l) => l.unlock === 0)).id;
+  applyStyle();
+  startChapterTwo();
+}
 
 // To Paris: the Baron knights him against his will, hands him half a wage, and
 // puts him in the ring. The knighthood plays once.
@@ -861,6 +890,19 @@ $('btn-champ-keep').addEventListener('click', () => {
   renderLadder();
   show('scr-ladder');
 });
+
+function requestSkipToChapterTwo() {
+  const ok = window.confirm(
+    'Skip straight to Chapter Two? This starts a fresh house in the Paris ring, with a randomised set of level-1 gear and colours.'
+  );
+  if (!ok) return;
+  unlock();
+  Sfx.ui();
+  skipToChapterTwo();
+}
+
+$('btn-skip').addEventListener('click', requestSkipToChapterTwo);
+$('btn-story-skip').addEventListener('click', requestSkipToChapterTwo);
 
 $('btn-champ-next').addEventListener('click', () => {
   unlock();
