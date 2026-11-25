@@ -3,7 +3,7 @@
 import * as Art from './art.js';
 import { drawCrest } from './crest.js';
 import { Match } from './match.js';
-import { PROLOGUE, FINALE_BEATS, STORY } from './story.js';
+import { PROLOGUE, FINALE_BEATS, STORY, STORY2, CH2_FINALE } from './story.js';
 import { playScene, SCENES } from './scenes.js';
 import {
   RIVALS,
@@ -31,6 +31,8 @@ import {
   heroPal,
   goldEarn,
   tokenEarn,
+  chapterOf,
+  beatenIn,
 } from './data.js';
 import { Sfx, unlock, setMuted, vibrate } from './audio.js';
 
@@ -46,6 +48,14 @@ let armoryReturn = 'scr-ladder';
 let W = 1;
 let H = 1;
 let idleT = 0;
+
+/* ------------------------------------------------------------- chapter */
+
+// Chapter One is the Amboise ladder in Bart's absence; Chapter Two is the
+// Paris ring, with its own rivals, its own tighter rules, and its own wins.
+const chNow = () => chapterOf(save);
+const rivalsNow = () => chNow().rivals;
+const winsNow = () => beatenIn(save);
 
 const canvas = $('stage');
 const ctx = canvas.getContext('2d', { alpha: false });
@@ -120,7 +130,9 @@ function syncHUD() {
 function updateTitle() {
   $('title-gold').textContent = save.gold;
   $('title-tokens').textContent = save.tokens;
-  $('title-wins').textContent = save.beaten.length + '/' + RIVALS.length;
+  $('title-wins').textContent = winsNow().length + '/' + rivalsNow().length;
+  $('title-chapter').textContent = chNow().name;
+  $('btn-play').textContent = chNow().lists;
   $('you-who').textContent = knightOf(save).name.split(' ').slice(-1)[0].toUpperCase();
   const foot = document.querySelector('.title-foot .fine');
   if (foot) foot.textContent = knightOf(save).name + ' rides for ' + ladyOf(save).name;
@@ -132,16 +144,22 @@ function applyStyle() {
 }
 
 function isUnlocked(i) {
-  return i === 0 || save.beaten.includes(RIVALS[i - 1].id);
+  return i === 0 || winsNow().includes(rivalsNow()[i - 1].id);
 }
 
 function renderLadder() {
+  const ch = chNow();
   $('ladder-gold').textContent = save.gold;
+  $('ladder-title').textContent = ch.n === 2 ? 'The Ring' : 'The Lists';
+  $('ladder-lede').textContent =
+    ch.n === 2
+      ? 'A season of ringers: hired lances in borrowed colours, half a purse on the steps, and men who learn the plate you keep hitting. Change your line or lose the tilt.'
+      : 'Six riders stand between this house and its honour. Each one rides harder and hits heavier, and every one you unhorse writes a new charge into your arms.';
   const list = $('ladder-list');
   list.innerHTML = '';
-  RIVALS.forEach((r, i) => {
+  rivalsNow().forEach((r, i) => {
     const unlocked = isUnlocked(i);
-    const beaten = save.beaten.includes(r.id);
+    const beaten = winsNow().includes(r.id);
     const el = document.createElement('button');
     el.className = 'rival-row' + (beaten ? ' beaten' : '') + (unlocked ? '' : ' locked');
     el.disabled = !unlocked;
@@ -389,11 +407,11 @@ function beginRival(rival) {
     show('scr-ladder');
     startMatch(rival);
   };
-  const chapter = STORY[rival.id];
-  if (chapter && !save.story[rival.id]) {
+  const arc = STORY2[rival.id] || STORY[rival.id];
+  if (arc && !save.story[rival.id]) {
     save.story[rival.id] = true;
     saveGame(save);
-    showStory(chapter.intro, enter);
+    showStory(arc.intro, enter);
     return;
   }
   enter();
@@ -489,6 +507,7 @@ function launch(rival) {
     foeStats,
     ui,
     onFinish: endMatch,
+    rules: chNow().rules,
   });
   match.layout(W, H);
   match.start();
@@ -504,7 +523,7 @@ function endMatch(res) {
   document.body.classList.remove('in-match');
   const ps = playerStats(save.up, save);
 
-  const firstClear = !!res.win && !save.beaten.includes(res.rival.id);
+  const firstClear = !!res.win && !winsNow().includes(res.rival.id);
   const gold = goldEarn(save, {
     win: res.win,
     youHP: res.youHP,
@@ -517,7 +536,7 @@ function endMatch(res) {
     maxHP: ps.maxHP,
     firstClear,
   });
-  if (firstClear) save.beaten.push(res.rival.id);
+  if (firstClear) winsNow().push(res.rival.id);
   save.gold += gold;
   save.tokens += tokens;
   save.runs += 1;
@@ -527,7 +546,11 @@ function endMatch(res) {
   else Sfx.defeat();
   updateTitle();
 
-  if (res.win && save.beaten.length >= RIVALS.length) {
+  if (res.win && winsNow().length >= rivalsNow().length) {
+    if (chNow().n === 2) {
+      finishChapterTwo();
+      return;
+    }
     $('champ-gold').textContent = save.gold;
     $('champ-tokens').textContent = save.tokens;
     $('champ-runs').textContent = save.runs;
@@ -544,10 +567,58 @@ function endMatch(res) {
   $('res-tokens').textContent = '+' + tokens;
   $('res-passes').textContent = res.passes;
   $('res-hp').textContent = Math.max(0, Math.round(res.youHP));
-  const chapter = STORY[res.rival.id];
-  $('res-story').textContent = chapter ? (res.win ? chapter.win : chapter.loss) : '';
+  const arc = STORY2[res.rival.id] || STORY[res.rival.id];
+  $('res-story').textContent = arc ? (res.win ? arc.win : arc.loss) : '';
   document.querySelector('.result-card').classList.toggle('lose', !res.win);
   show('scr-result');
+}
+
+/* ------------------------------------------------------ chapter two */
+
+// To Paris: the Baron knights him against his will, hands him half a wage, and
+// puts him in the ring. The knighthood plays once.
+function startChapterTwo() {
+  save.chapter = 2;
+  save.ch2Seen = save.ch2Seen || {};
+  saveGame(save);
+  updateTitle();
+
+  const toRing = () => {
+    renderLadder();
+    show('scr-ladder');
+  };
+
+  if (save.ch2Seen.knighthood) {
+    toRing();
+    return;
+  }
+  save.ch2Seen.knighthood = true;
+  saveGame(save);
+  playScene(SCENES.knighthood, toRing);
+}
+
+// The ring is swept. Charles de Wierd arrives with news of Bart, and the sword
+// goes back in its sheath.
+function finishChapterTwo() {
+  save.ch2Seen = save.ch2Seen || {};
+  const toCard = () => {
+    $('paris-kicker').textContent = CH2_FINALE.kicker;
+    $('paris-title').textContent = CH2_FINALE.title;
+    $('paris-text').textContent = CH2_FINALE.text;
+    $('paris-next').textContent = CH2_FINALE.nextTitle;
+    $('paris-next-text').textContent = CH2_FINALE.nextText;
+    $('paris-gold').textContent = save.gold;
+    $('paris-tokens').textContent = save.tokens;
+    $('paris-runs').textContent = save.runs;
+    show('scr-paris');
+  };
+  if (save.ch2Seen.inn) {
+    toCard();
+    return;
+  }
+  save.ch2Seen.inn = true;
+  saveGame(save);
+  playScene(SCENES.inn, toCard);
 }
 
 /* ---------------------------------------------------------------- loop */
@@ -789,6 +860,31 @@ $('btn-champ-keep').addEventListener('click', () => {
   Sfx.ui();
   renderLadder();
   show('scr-ladder');
+});
+
+$('btn-champ-next').addEventListener('click', () => {
+  unlock();
+  Sfx.ui();
+  startChapterTwo();
+});
+
+$('btn-paris-lists').addEventListener('click', () => {
+  Sfx.ui();
+  renderLadder();
+  show('scr-ladder');
+});
+
+$('btn-paris-armory').addEventListener('click', () => {
+  Sfx.ui();
+  armoryReturn = 'scr-ladder';
+  renderArmory();
+  show('scr-armory');
+});
+
+$('btn-paris-title').addEventListener('click', () => {
+  Sfx.ui();
+  updateTitle();
+  show('scr-title');
 });
 
 $('btn-champ-reset').addEventListener('click', () => {

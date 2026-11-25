@@ -2,7 +2,7 @@
   "name": "joustline",
   "version": "0.3.0",
   "private": true,
-  "description": "Joustline - mobile-first comedic jousting game (Chapter One vertical slice + tournament ladder)",
+  "description": "Joustline - mobile-first comedic jousting game (Chapters One and Two: the Amboise ladder and the Paris ring)",
   "scripts": {
     "start": "node game/tools/serve.mjs 3000",
     "test": "node tests/ladder.test.js"

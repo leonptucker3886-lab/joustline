@@ -9,7 +9,7 @@ import {
   drawKnight,
   drawCrowdCheer,
 } from './art.js';
-import { ZONES, STRIKE_LABEL, computeDamage, applyHit, rollRivalPass } from './data.js';
+import { ZONES, STRIKE_LABEL, CH1_RULES, computeDamage, applyHit, rollRivalPass } from './data.js';
 import { Sfx, vibrate } from './audio.js';
 
 const TAU = Math.PI * 2;
@@ -29,12 +29,22 @@ const STRIKE_TIME = 1.5;
 const CHARGE_TIME = 2.3; // seconds of open ground between the riders and the hit
 
 export class Match {
-  constructor({ rival, stats, foeStats, ui, onFinish }) {
+  constructor({ rival, stats, foeStats, ui, onFinish, rules }) {
     this.rival = rival;
     this.stats = stats;
     this.foeStats = foeStats;
     this.ui = ui;
     this.onFinish = onFinish;
+
+    // Chapter Two hands in a tighter ruleset; Chapter One keeps its own.
+    this.rules = rules || CH1_RULES;
+    this.perfectW = stats.perfectWindow * (this.rules.perfectScale || 1);
+    this.aimTime = this.rules.aimTime || AIM_TIME;
+    this.strikeTime = this.rules.strikeTime || STRIKE_TIME;
+    // A rival learns the plate you keep hitting, so no single line carries a tilt.
+    this.zoneHits = { helm: 0, chest: 0, shield: 0 };
+    this.guarded = {};
+    this.readyHold = 0.62;
 
     this.you = {
       hp: stats.maxHP,
@@ -141,7 +151,11 @@ export class Match {
     this.zoomTarget = 0.92;
     this.foeRoll = this.rollFoe();
     this.ui.setPass?.(this.pass);
-    this.ui.prompt('MAKE READY', 'Ready your lance');
+    // A rival's style is the only read the player gets, so it stays up long
+    // enough to take in before the first gallop.
+    const tell = this.pass === 1 && this.rival.tell;
+    this.readyHold = tell ? 2.8 : 0.62;
+    this.ui.prompt('MAKE READY', tell || 'Ready your lance');
     if (this.pass === 1) Sfx.whoosh();
     Sfx.crowdMurmur(2.4);
   }
@@ -203,7 +217,7 @@ export class Match {
     const half = (band.b - band.a) / 2;
     // Dwelling bleeds the accuracy bonus away, so a late lock still lands but
     // no longer lands clean.
-    const patience = clamp(1 - this.phaseT / (AIM_TIME * 1.6), 0.2, 1);
+    const patience = clamp(1 - this.phaseT / (this.aimTime * 1.6), 0.2, 1);
     this.aimQ = 1 + (1 - Math.abs(r - mid) / half) * 0.14 * patience;
     Sfx.lock();
     vibrate(12);
@@ -214,8 +228,9 @@ export class Match {
   lockStrike() {
     this.strikeLocked = true;
     const d = Math.abs(this.strikePos - 0.5);
-    if (d <= this.stats.perfectWindow) this.strikeQ = 'perfect';
-    else if (d <= GOOD_BAND) this.strikeQ = 'good';
+    const cleanAim = this.aimQ >= (this.rules.perfectAim || 0);
+    if (d <= this.perfectW && cleanAim) this.strikeQ = 'perfect';
+    else if (d <= this.rules.goodBand) this.strikeQ = 'good';
     else this.strikeQ = 'poor';
 
     if (this.strikeQ === 'perfect') {
@@ -252,14 +267,21 @@ export class Match {
     const youStrikeQ = this.strikeQ;
     const foeStrikeQ = this.foeRoll.strikeQ;
 
+    // A plate he has already learned is worth less and takes less: the player
+    // has to change the line instead of hammering the helm every pass.
+    const guardedNow = !!this.guarded[zYou.id];
+    const zoneMult = (this.rules.zoneMult && this.rules.zoneMult[zYou.id] != null) ? this.rules.zoneMult[zYou.id] : zYou.mult;
+    const guardCut = guardedNow ? this.rules.guardCut || 1 : 1;
+    const guardDeflect = guardedNow ? this.rules.guardDeflect || 0 : 0;
+
     const youDmg = computeDamage({
       lance: this.stats.lance,
       speed: this.gallopPower,
-      zoneMult: zYou.mult,
+      zoneMult,
       aimQ: this.aimQ,
       strikeQ: youStrikeQ,
-      deflect: foeDeflect,
-    });
+      deflect: foeDeflect + guardDeflect,
+    }) * guardCut;
     const foeDmg = computeDamage({
       lance: this.rival.lance,
       speed: this.foeRoll.speed,
@@ -269,10 +291,14 @@ export class Match {
       deflect: youDeflect,
     });
 
-    const foeHit = applyHit(this.foe, zYou.id, youDmg);
+    const foeHit = applyHit(this.foe, zYou.id, youDmg, guardedNow ? this.rules.guardAbsorb : 0.55);
     const youHit = applyHit(this.you, zFoe.id, foeDmg);
 
-    this.lastHit = { foeHit, youHit, youDmg, foeDmg, zYou, zFoe, youStrikeQ, foeStrikeQ };
+    this.lastHit = { foeHit, youHit, youDmg, foeDmg, zYou, zFoe, youStrikeQ, foeStrikeQ, guardedNow };
+
+    this.zoneHits[zYou.id] = (this.zoneHits[zYou.id] || 0) + 1;
+    const learnAfter = this.rival.learn != null ? this.rival.learn : this.rules.learn || 0;
+    if (learnAfter && this.zoneHits[zYou.id] >= learnAfter) this.guarded[zYou.id] = true;
 
     const cx = this.W * 0.5;
     const cy = this.groundY - this.k * 96;
@@ -293,7 +319,7 @@ export class Match {
       x: this.foe.x + this.k * 10,
       y: this.groundY - this.k * 150,
       text: '-' + Math.max(1, Math.round(foeHit.dealt)),
-      sub: STRIKE_LABEL[youStrikeQ],
+      sub: guardedNow ? 'GUARDED \u00b7 ' + STRIKE_LABEL[youStrikeQ] : STRIKE_LABEL[youStrikeQ],
       color: youStrikeQ === 'perfect' ? '#ffe08a' : '#fff4e0',
       life: 1.4,
       max: 1.4,
@@ -315,6 +341,9 @@ export class Match {
     this.foe.lean = foeStrikeQ === 'perfect' ? 0.1 : 0.16;
     this.you.lean = youStrikeQ === 'perfect' ? 0.1 : 0.16;
 
+    if (!guardedNow && this.guarded[zYou.id]) {
+      this.ui.toast('HE GUARDS THE ' + zYou.label);
+    }
     if (foeHit.broke) {
       Sfx.splinter();
       this.spawnSparks(this.foe.x + this.k * 34, this.groundY - this.k * 70, 18, '#fff2c6');
@@ -435,7 +464,7 @@ export class Match {
     }
 
     // ---- phase logic
-    if (this.phase === 'ready' && this.phaseT > 0.62) {
+    if (this.phase === 'ready' && this.phaseT > this.readyHold) {
       this.phase = 'gallop';
       this.phaseT = 0;
       this.ui.prompt('GALLOP', 'Tap when the needle hits gold');
@@ -475,7 +504,7 @@ export class Match {
           this.reticle = 0;
           this.reticleDir = 1;
         }
-        if (this.phaseT > AIM_TIME) this.lockAim();
+        if (this.phaseT > this.aimTime) this.lockAim();
       } else if (this.phaseT > 0.45) {
         this.phase = 'impact';
         this.phaseT = 0;
@@ -499,7 +528,7 @@ export class Match {
           this.strikePos = 0;
           this.strikeDir = 1;
         }
-        if (this.phaseT > STRIKE_TIME) {
+        if (this.phaseT > this.strikeTime) {
           this.strikeQ = 'poor';
           this.resolve();
         }
@@ -710,7 +739,8 @@ export class Match {
 
     const pos = mode === 'gallop' ? this.needle : this.strikePos;
     const locked = mode === 'gallop' ? this.locked : this.strikeLocked;
-    const perfect = mode === 'gallop' ? 0.14 : this.stats.perfectWindow;
+    const perfect = mode === 'gallop' ? 0.14 : this.perfectW;
+    const goodBand = this.rules.goodBand || GOOD_BAND;
 
     // frame
     ctx.save();
@@ -732,7 +762,7 @@ export class Match {
 
     // good band
     ctx.fillStyle = 'rgba(232,201,106,0.16)';
-    ctx.fillRect(x0 + w * (0.5 - GOOD_BAND), y, w * GOOD_BAND * 2, h);
+    ctx.fillRect(x0 + w * (0.5 - goodBand), y, w * goodBand * 2, h);
     // perfect band
     const pg = ctx.createLinearGradient(x0 + w * (0.5 - perfect), 0, x0 + w * (0.5 + perfect), 0);
     pg.addColorStop(0, 'rgba(255,214,120,0.35)');
@@ -798,7 +828,7 @@ export class Match {
 
     // clock on the aim: it used to be possible to wait out the sweep forever
     if (!this.locked) {
-      const left = clamp(1 - this.phaseT / AIM_TIME, 0, 1);
+      const left = clamp(1 - this.phaseT / this.aimTime, 0, 1);
       ctx.fillStyle = 'rgba(0,0,0,0.55)';
       this.roundRect(ctx, railX - railW / 2 - 6, top - 28, railW + 12, 7, 3.5);
       ctx.fill();
@@ -816,6 +846,8 @@ export class Match {
       const plate = f.plates[z.id] || 0;
       const maxP = f.maxPlates[z.id] || 1;
       const frac = clamp(plate / maxP, 0, 1);
+      const guarded = !!this.guarded[z.id];
+      const mult = (this.rules.zoneMult && this.rules.zoneMult[z.id] != null) ? this.rules.zoneMult[z.id] : z.mult;
 
       ctx.fillStyle = active ? 'rgba(255,226,150,0.28)' : 'rgba(255,255,255,0.05)';
       this.roundRect(ctx, railX - railW / 2, by + 2, railW, bh - 4, 6);
@@ -837,6 +869,18 @@ export class Match {
         ctx.stroke();
       }
 
+      // a plate he is watching is hatched out: the honest signal to change line
+      if (guarded) {
+        ctx.strokeStyle = 'rgba(160, 40, 30, 0.5)';
+        ctx.lineWidth = 1.2;
+        for (let gy = by + 8; gy < by + bh - 10; gy += 7) {
+          ctx.beginPath();
+          ctx.moveTo(railX - railW / 2 + 2, gy);
+          ctx.lineTo(railX + railW / 2 - 2, gy + 6);
+          ctx.stroke();
+        }
+      }
+
       // labels, inked onto a parchment tab so they read over sky or crowd
       const labelRight = railX - railW / 2 - 10;
       const tabW = clamp(W * 0.19, 62, 82);
@@ -852,9 +896,9 @@ export class Match {
       ctx.fillStyle = active ? '#7a2d14' : '#4a3518';
       ctx.font = `700 ${Math.round(clamp(W * 0.032, 10, 15))}px ui-sans-serif, system-ui, sans-serif`;
       ctx.fillText(z.label, labelRight - 7, by + bh / 2 - 1);
-      ctx.fillStyle = '#6b5533';
+      ctx.fillStyle = guarded ? '#8f2233' : '#6b5533';
       ctx.font = `600 ${Math.round(clamp(W * 0.026, 9, 12))}px ui-sans-serif, system-ui, sans-serif`;
-      ctx.fillText('\u00d7' + z.mult.toFixed(2).replace(/0$/, ''), labelRight - 7, by + bh / 2 + 13);
+      ctx.fillText(guarded ? 'GUARDED' : '\u00d7' + mult.toFixed(2).replace(/0$/, ''), labelRight - 7, by + bh / 2 + 13);
     }
 
     // reticle

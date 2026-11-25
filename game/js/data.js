@@ -50,6 +50,46 @@ export const GALLOP_LABEL = [
   [0, 'HALF-HEARTED'],
 ];
 
+/* ------------------------------------------------- Chapter Two: the ring */
+
+/**
+ * Chapter Two carries the combat tune, so these tilts are not Chapter One's
+ * tilt repeated: the helm stops being the only sensible target, a rival guards
+ * whatever plate you keep hitting, and the timing windows are tighter. Rules
+ * are data so the Chapter One balance stays exactly as it shipped.
+ */
+export const CH1_RULES = {
+  id: 'ch1',
+  goodBand: 0.22,
+  perfectScale: 1,
+  perfectAim: 0,
+  zoneMult: null,
+  learn: 0,
+};
+
+export const CH2_RULES = {
+  id: 'ch2',
+  goodBand: 0.17,
+  perfectScale: 0.8, // the perfect band is a fifth narrower
+  perfectAim: 1.07, // ... and a pure strike needs a clean aim to count
+  zoneMult: { helm: 1.35, chest: 1.0, shield: 0.8 },
+  learn: 2, // hits on one plate before they start guarding it
+  guardAbsorb: 0.86,
+  guardCut: 0.82,
+  guardDeflect: 0.1,
+  aimTime: 1.7,
+  strikeTime: 1.25,
+};
+
+/** How each rival actually rides. Weights are for the three plates. */
+const RIVAL_STYLES = {
+  classic: { helm: 0.2, shield: 0.34, speed: 0.42, gain: 0.55, accuracy: 0.03, jitter: 0.14 },
+  guard: { helm: 0.06, shield: 0.54, speed: 0.4, gain: 0.42, accuracy: 0.05, jitter: 0.1 },
+  brute: { helm: 0.64, shield: 0.06, speed: 0.5, gain: 0.4, accuracy: 0.06, jitter: 0.16 },
+  fencer: { helm: 0.08, shield: 0.06, speed: 0.44, gain: 0.5, accuracy: 0.08, jitter: 0.08 },
+  reader: { helm: 0.14, shield: 0.18, speed: 0.5, gain: 0.55, accuracy: 0.07, jitter: 0.09 },
+};
+
 /* ------------------------------------------------------------- the retinue */
 
 /**
@@ -304,13 +344,13 @@ export function computeDamage({ lance, speed, zoneMult, aimQ, strikeQ, deflect }
  * Apply damage to a fighter's plates and body. Mutates fighter.plates/hp.
  * Returns a small report used for hit sparks, toasts and audio.
  */
-export function applyHit(fighter, zoneId, raw) {
+export function applyHit(fighter, zoneId, raw, absorbRate = 0.55) {
   const plates = fighter.plates;
   const key = plates[zoneId] !== undefined ? zoneId : 'chest';
   const plate = plates[key];
   let absorbed = 0;
   if (plate > 0) {
-    absorbed = Math.min(plate, raw * 0.55);
+    absorbed = Math.min(plate, raw * absorbRate);
     plates[key] = plate - absorbed;
   }
   const dealt = raw - absorbed;
@@ -405,18 +445,102 @@ export const RIVALS = [
   },
 ];
 
+/*
+ * Chapter Two: the ring at Paris, 1516. These are ringers — men hired to ride
+ * in another man's colours, which is exactly what Jack is now. No new
+ * historical names: the circuit's hired lances ride under epithets.
+ */
+export const CH2_RIVALS = [
+  {
+    id: 'vau',
+    name: 'The Ringer of Blois',
+    house: 'Hired to lose, and not doing it',
+    hp: 178,
+    lance: 30,
+    skill: 0.5,
+    reward: 280,
+    style: 'guard',
+    tell: 'Shield up, lance low. Break the guard or wear out your arm.',
+    taunt: 'They told me a boy was riding in his master\u2019s armour. I was expecting a bigger boy.',
+    pal: { horse: '#3c3a30', horseDark: '#232118', cloth: '#2f5aa8', cloth2: '#d9c07a', plate: '#c8d3e0', plateDark: '#77839a', plume: '#cfd9ea' },
+  },
+  {
+    id: 'pilgrim',
+    name: 'The Pilgrim',
+    house: 'A vow, a hangover, and a very long lance',
+    hp: 212,
+    lance: 34,
+    skill: 0.62,
+    reward: 360,
+    style: 'brute',
+    tell: 'All weight, all height. He only ever swings at the helm.',
+    taunt: 'I swore to strike no man below the head. It seemed pious at the time.',
+    pal: { horse: '#4a3a2a', horseDark: '#2a2117', cloth: '#6b5230', cloth2: '#e0d6b8', plate: '#b9b3a2', plateDark: '#6e6a5c', plume: '#e8dfc4' },
+  },
+  {
+    id: 'widow',
+    name: 'The Widow\u2019s Man',
+    house: 'Rides for a purse and a grudge',
+    hp: 246,
+    lance: 38,
+    skill: 0.75,
+    reward: 460,
+    style: 'fencer',
+    tell: 'Fast and straight: the chest, every pass, and never a wasted inch.',
+    taunt: 'Your master owes my mistress money. You will do until he is well enough to be unhorsed.',
+    pal: { horse: '#2f2a33', horseDark: '#191620', cloth: '#3a2a4a', cloth2: '#c9a6ff', plate: '#c4bfd6', plateDark: '#6f6a86', plume: '#b79ce8' },
+  },
+  {
+    id: 'otherlance',
+    name: 'The Baron\u2019s Other Lance',
+    house: 'Your replacement, in your master\u2019s colours',
+    hp: 292,
+    lance: 43,
+    skill: 0.9,
+    reward: 640,
+    style: 'reader',
+    tell: 'He watches where you strike, and guards it. Keep changing your line.',
+    taunt: 'The Baron sends his regards. He also sends me, in case the regards are not enough.',
+    learn: 1,
+    pal: { horse: '#241f22', horseDark: '#12100f', cloth: '#1d1a1f', cloth2: '#8f1f2a', plate: '#5d5a63', plateDark: '#35323a', plume: '#c22a35' },
+  },
+];
+
+/** The chapter you are riding: its lists, its rivals, and its rules. */
+export function chapterOf(save) {
+  const two = !!save && save.chapter === 2;
+  return two
+    ? { n: 2, name: 'Chapter Two', title: 'The Ringer', lists: 'The Ring at Paris', rivals: CH2_RIVALS, rules: CH2_RULES }
+    : { n: 1, name: 'Chapter One', title: 'The First Lance', lists: 'The Lists at Amboise', rivals: RIVALS, rules: CH1_RULES };
+}
+
+/** Where this chapter's wins live. Returns the live array, so push works. */
+export function beatenIn(save) {
+  if (!save) return [];
+  if (save.chapter === 2) {
+    if (!Array.isArray(save.beaten2)) save.beaten2 = [];
+    return save.beaten2;
+  }
+  return save.beaten;
+}
+
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const rnd = (a, b) => a + Math.random() * (b - a);
 
-/** One pass of rival AI: how hard they run, where they aim, how cleanly they strike. */
+/**
+ * One pass of rival AI: how hard they run, where they aim, how cleanly they
+ * strike. Their style is the whole read — a guard leans on the shield, a brute
+ * hunts the helm, a fencer rides at the chest.
+ */
 export function rollRivalPass(rival) {
   const s = rival.skill;
-  const speed = clamp(0.42 + s * 0.55 + rnd(-0.14, 0.14), 0.1, 1);
-  const helmW = 0.2 + s * 0.32;
-  const shieldW = 0.34 - s * 0.22;
+  const st = RIVAL_STYLES[rival.style] || RIVAL_STYLES.classic;
+  const speed = clamp(st.speed + s * st.gain + rnd(-st.jitter, st.jitter), 0.1, 1);
+  const helmW = clamp(st.helm + s * 0.22, 0, 0.9);
+  const shieldW = clamp(st.shield - s * 0.12, 0, 0.9 - helmW);
   const r = Math.random();
   const zone = r < helmW ? 0 : r < helmW + (1 - helmW - shieldW) ? 1 : 2;
-  const aimQ = 1 + rnd(0.03, 0.13);
+  const aimQ = 1 + rnd(st.accuracy * 0.6, st.accuracy * 2.2);
   const q = Math.random();
   const strikeQ = q < 0.04 + s * 0.5 ? 'perfect' : q < 0.93 ? 'good' : 'poor';
   return { speed, zone: ZONES[zone].id, aimQ, strikeQ };
@@ -426,6 +550,9 @@ export function emptySave() {
   return {
     gold: 0,
     tokens: 0,
+    chapter: 1,
+    beaten2: [],
+    ch2Seen: {},
     up: { lance: 0, armor: 0, horse: 0 },
     beaten: [],
     runs: 0,
@@ -453,7 +580,10 @@ export function loadSave() {
       up: { ...base.up, ...(parsed.up || {}) },
       coat: { ...base.coat, ...(parsed.coat || {}) },
       tokens: parsed.tokens || 0,
+      chapter: parsed.chapter === 2 ? 2 : 1,
       beaten: Array.isArray(parsed.beaten) ? parsed.beaten : [],
+      beaten2: Array.isArray(parsed.beaten2) ? parsed.beaten2 : [],
+      ch2Seen: parsed.ch2Seen && typeof parsed.ch2Seen === 'object' ? parsed.ch2Seen : {},
       story: parsed.story && typeof parsed.story === 'object' ? parsed.story : {},
     };
   } catch {

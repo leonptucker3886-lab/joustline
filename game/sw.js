@@ -2,7 +2,7 @@
 // from a home-screen icon. Everything is network-first while online, so a
 // deploy is picked up on the next load, and falls back to the cache offline.
 
-const VERSION = 'joustline-v12';
+const VERSION = 'joustline-v13';
 
 const PRECACHE = [
   './',
